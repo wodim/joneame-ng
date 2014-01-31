@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for post in posts %}
+        {% include 'post.html' %}
+        {{ post.children }}
+    {% endfor %}
+    {% if pagination %}
+        {% import "utils.html" as utils %}
+        {{ utils.render_pagination(pagination, endpoint) }}
+    {% endif %}
+{% endblock %}
