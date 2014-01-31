@@ -24,6 +24,8 @@ db.init_app(app)
 UserView.register(app)
 LinkView.register(app)
 LinkListView.register(app)
+PostView.register(app)
+PostListView.register(app)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=55500)

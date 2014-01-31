@@ -19,9 +19,7 @@ class LinkListView(FlaskView):
     route_base = '/'
     
     @route('/', endpoint='LinkListView:home')
-    @route('/page/<int:page>', endpoint='LinkListView:home')
-    @route('/queue', endpoint='LinkListView:queue')
-    @route('/queue/page/<int:page>', endpoint='LinkListView:queue')
+    @route('/queue/', endpoint='LinkListView:queue')
     def get(self, page=1):
         if request.endpoint == 'LinkListView:home' or request.endpoint == 'LinkListView:home_paged':
             query = LinkModel.query \
