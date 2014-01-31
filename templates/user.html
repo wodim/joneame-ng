@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<dl>
+    <dt>ID:</dt>
+    <dd>{{ user.user_id }}</dd>
+    <dt>Nick:</dt>
+    <dd>{{ user.user_login }}</dd>
+    <dt>IP:</dt>
+    <dd>{{ user.user_ip }}</dd>
+    <dt>Links:</dt>
+    <dd>{{ user.links }}</dd>
+</dl>
+{% endblock %}

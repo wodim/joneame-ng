@@ -1,0 +1,5 @@
+[database]
+uri = mysql://joneame:joneame@localhost/joneame
+
+[misc]
+page_size = 24

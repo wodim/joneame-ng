@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}" />
+        <title>Jonéame</title>
+    </head>
+    <body>
+        <div class="canvas">
+            <div class="header">
+                <div class="logo"><a href="{{ url_for('LinkListView:home') }}">Jonéame</a></div>
+                <ul class="sections">
+                    <li><a href="#">enviar nueva</a>
+                    <li><a href="{{ url_for('LinkListView:queue') }}">pendientes</a>
+                    <li><a href="#">cotillona</a>
+                    <li><a href="#">notitas</a>
+                    <li><a href="#">encuestas</a>
+                </ul>
+            </div>
+            <div class="grid">
+                <div class="sidebar">
+                    {% block sidebar %}{% endblock %}
+                </div>
+                <div class="content">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

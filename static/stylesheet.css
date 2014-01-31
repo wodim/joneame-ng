@@ -1,0 +1,164 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* jonéame */
+
+/* general */
+body {
+    font-family: "Arial", sans-serif;
+    font-size: 10pt;
+}
+a {
+    text-decoration: none;
+}
+.canvas {
+    width: 950px;
+    margin: 0 auto;
+}
+.grid {
+    margin-top: 20px;
+}
+.content {
+    width: 650px;
+    float: left;
+}
+
+/* header */
+.header {
+    height: 50px;
+    background: #689acc;
+    background: linear-gradient(to bottom, #689acc 0%, #567EA6 100%);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: 0px 1px 2px #aaa;
+    padding: 0 10px;
+}
+.header a {
+    color: white;
+}
+.header .logo {
+    font-size: 11pt;
+    line-height: 50px;
+    padding: 0 10px;
+    margin-right: 5px;
+}
+.header .logo,
+.header .sections {
+    float: left;
+}
+.header .sections li {
+    display: inline-block;
+}
+.header .sections li a {
+    display: block;
+    padding: 0 10px;
+    line-height: 50px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-shadow: 0 1px 2px black;
+}
+.header .sections li a:hover {
+    background: linear-gradient(to bottom, #689acc 0%, #4C6C8C 100%);
+}
+
+/* sidebar */
+.sidebar {
+    background: red;
+}
+
+/* link view */
+.content article {
+    width: 650px;
+    display: inline-block;
+    padding: 10px;
+}
+.content article .shakebox {
+    width: 60px;
+    height: 40px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
+.content article .shakebox .votes {
+    font-size: 20pt;
+    font-weight: bold;
+}
+.content article .entry {
+    margin-left: 70px;
+}
+.content article .entry .title,
+.content article .entry .submitted,
+.content article .entry .text {
+    margin-bottom: 5px;
+}
+.content article .entry .title .hostname,
+.content article .entry .submitted,
+.content article .entry .comments a {
+    color: #666;
+}
+.content article .entry .title a {
+    font-size: 12pt;
+}
+.content article .entry .title .hostname {
+    font-size: 8pt;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.content article .entry .submitted img {
+    float: left;
+    padding: 3px;
+}
+.content article .entry .comments,
+.content article .entry .submitted {
+    font-size: 8pt;
+}
+.content article .entry .comments {
+    font-weight: bold;
+}

@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include 'link.html' %}
+{% for comment in link.comments %}
+    {% include 'comment.html' %}
+{% endfor %}
+{% endblock %}
