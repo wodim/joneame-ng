@@ -54,6 +54,7 @@ body {
     font-family: "Arimo", "Arial", sans-serif;
     font-size: 10pt;
     color: #333;
+    letter-spacing: -0.3px;
 }
 a {
     text-decoration: none;
@@ -143,7 +144,7 @@ strong {
 .content article {
     width: 650px;
     display: inline-block;
-    padding: 10px;
+    margin-bottom: 25px;
 }
 .content article .shakebox {
     width: 60px;
@@ -208,10 +209,53 @@ strong {
     font-size: 10pt;
 }
 .content article .entry .submitted {
-    font-size: 9pt;
     line-height: 14px;
 }
 .content article .entry .text {
     line-height: 16px;
     letter-spacing: -0.3px;
+}
+
+/* comments */
+.comments > li {
+    margin-bottom: 8px;
+}
+.comments li .avatar {
+    float: left;
+    width: 32px;
+}
+.comments li .comment-text {
+    margin-left: 38px;
+    padding: 2px 10px 8px;
+    background: #eee;
+    line-height: 18px;
+}
+.comments li .comment-text .order {
+    background: #5a8cbe;
+    font-weight: bold;
+    font-size: 9pt;
+    padding: 2px 5px;
+    color: white;
+}
+.comments li .comment-meta {
+    margin-left: 38px;
+    line-height: 28px;
+    color: #666;
+    font-size: 10pt;
+    background: #eee;
+    padding: 0 10px;
+
+}
+.comments li .comment-meta ul li {
+    display: inline;
+    margin-right: 10px;
+}
+.comments li .comment-meta ul li:last-child {
+    margin-right: 0;
+}
+.comments li .comment-meta ul.left {
+    display: inline;
+}
+.comments li .comment-meta ul.right {
+    float: right;
 }

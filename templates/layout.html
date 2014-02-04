@@ -24,8 +24,9 @@
             <div class="header">
                 <div class="quote">
                     <i class="fa fa-quote-left"></i>
-                    <strong>nick_usuario:</strong>
-                    Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. 
+                    {% set quote = random_quote() %}
+                    <strong>{{ quote.user.user_login }}:</strong>
+                    {{ quote.quote_text }}
                 </div>
             </div>
         </div>

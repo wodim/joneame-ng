@@ -1,8 +1,22 @@
-<dl>
-    <dt>Count:</dt>
-    <dd>{{ comment.comment_order }}</dd>
-    <dt>Nick:</dt>
-    <dd>{{ comment.user.user_login }}</dd>
-    <dt>Texto:</dt>
-    <dd>{{ comment.comment_content }}</dd>
-</dl>
+<li>
+    <img class="avatar" src="http://joneame.net/img/v2/admin-avatar-40.png" />
+    <div class="comment-meta">
+        <ul class="left">
+            <li>
+                <a href="{{ url_for('UserView:get', user_login=link.user.user_login) }}">
+                    <i class="fa fa-user"></i>
+                    <strong>{{ comment.user.user_login }}</strong>
+                </a>
+            <li>
+                <i class="fa fa-clock-o"></i>
+                {{ comment.comment_date }}
+        </ul>
+        <ul class="right">
+            <li>
+                <i class="fa fa-star-o"></i>
+        </ul>
+    </div>
+    <div class="comment-text">
+        <a class="order" href="#">#{{ comment.comment_order }}</a>
+        {{ comment.comment_content }}
+    </div>

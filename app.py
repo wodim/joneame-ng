@@ -21,11 +21,18 @@ app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions = [30])
 db.app = app
 db.init_app(app)
 
+@app.context_processor
+def inject():
+	return {
+		'random_quote': random_quote
+	}
+
 UserView.register(app)
 LinkView.register(app)
 LinkListView.register(app)
 PostView.register(app)
 PostListView.register(app)
+QuoteView.register(app)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=55500)
