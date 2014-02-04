@@ -2,7 +2,13 @@
 {% block content %}
     {% for post in posts %}
         {% include 'post.html' %}
-        {{ post.children }}
+        {% if post.children %}
+            <div style="border-left: 3px solid red; margin-left: 10px; margin-bottom: 10px; ">
+                {% for post in post.children %}
+                    {% include "post.html" %}
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
     {% if pagination %}
         {% import "utils.html" as utils %}

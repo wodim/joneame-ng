@@ -1,5 +1,8 @@
 <article>
     ID: {{ post.post_id }}<br />
     Usuario: {{ post.user.user_id }}/{{ post.user.user_login }}<br />
-    Texto: {{ post.post_content }}
+    Texto: {{ post.post_content }}<br />
+    {% if post.children %}
+        (Tiene hijos)
+    {% endif %}
 </article>

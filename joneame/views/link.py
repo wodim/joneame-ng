@@ -30,6 +30,11 @@ class LinkListView(FlaskView):
                 .filter(LinkModel.link_status == 'queued', LinkModel.link_sent_date > (datetime.utcnow() - timedelta(weeks=4))) \
                 .order_by('link_date desc')
         
+        try:
+            page = int(request.args['page'])
+        except:
+            page = 1
+        
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         links = pagination.items
         

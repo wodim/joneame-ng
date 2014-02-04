@@ -3,10 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic" />
         <title>Jonéame</title>
     </head>
     <body>
-        <div class="canvas">
+        <div class="cover">
             <div class="header">
                 <div class="logo"><a href="{{ url_for('LinkListView:home') }}">Jonéame</a></div>
                 <ul class="sections">
@@ -14,9 +16,20 @@
                     <li><a href="{{ url_for('LinkListView:queue') }}">pendientes</a>
                     <li><a href="#">cotillona</a>
                     <li><a href="{{ url_for('PostListView:get') }}">notitas</a>
-                    <li><a href="#">encuestas</a>
+                    {# <li><a href="#">encuestas</a> #}
                 </ul>
             </div>
+        </div>
+        <div class="subcover">
+            <div class="header">
+                <div class="quote">
+                    <i class="fa fa-quote-left"></i>
+                    <strong>nick_usuario:</strong>
+                    Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. Corto de prueba. BEHEHE. 
+                </div>
+            </div>
+        </div>
+        <div class="canvas">
             <div class="grid">
                 <div class="sidebar">
                     {% block sidebar %}{% endblock %}

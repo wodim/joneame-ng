@@ -24,6 +24,7 @@ class UserModel(db.Model):
     links = db.relationship('LinkModel', backref='user')
     comments = db.relationship('CommentModel', backref='user')
     posts = db.relationship('PostModel', backref='user')
+    quotes = db.relationship('QuoteModel', backref='user')
 
     def __repr__(self):
         return '<User %r, nick %r>' % (self.user_id, self.user_login)
