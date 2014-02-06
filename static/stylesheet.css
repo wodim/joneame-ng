@@ -78,9 +78,9 @@ strong {
 /* header */
 /* first */
 .cover {
-    background: #4f7ba7;
     width: 100%;
     height: 40px;
+    background: #5a8cbe;
 }
 .cover .header {
     padding: 0 10px;
@@ -115,7 +115,7 @@ strong {
 }
 /* second */
 .subcover {
-    background: #5a8cbe;
+    background: #4f7ba7;
     width: 100%;
     height: 30px;
 }
@@ -156,11 +156,19 @@ strong {
     font-size: 20pt;
     font-weight: bold;
     line-height: 45px;
-    background: #eee;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
-.content article .shakebox .votes a {
+.content article.status_published .shakebox .votes {
+    background: #5a8cbe;
+}
+.content article.status_published .shakebox .votes a {
+    color: white;
+}
+.content article.status_queued .shakebox .votes {
+    background: #eee;
+}
+.content article.status_queued .shakebox .votes a {
     color: #333;
 }
 .content article .shakebox .shakeit {
@@ -170,6 +178,7 @@ strong {
     width: 60px;
     font-size: 9pt;
     color: white;
+    border-top: 1px #4f7ba7 solid;
 }
 .content article .entry {
     margin-left: 70px;

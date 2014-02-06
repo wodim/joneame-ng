@@ -15,7 +15,7 @@ class PostModel(db.Model):
     post_type = db.Column(db.Enum(['normal', 'admin', 'poll']))
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
-    children = db.relationship('PostModel')
+    children = db.relationship('PostModel') # , primaryjoin='and_(PostModel.post_id==PostModel.post_parent, PostModel.post_parent==0)')
 
     def __repr__(self):
         return '<Post %r, author %r, content %r>' % (self.post_id, self.user.user_login, self.post_content[:100]) 

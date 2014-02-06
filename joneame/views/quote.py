@@ -16,8 +16,8 @@ def random_quote():
 class QuoteView(FlaskView):
     route_base = '/'
     
-    @route('/corto/<int:post_id>')
-    def get(self, post_id):
+    @route('/corto/<int:quote_id>')
+    def get(self, quote_id):
         quote = QuoteModel.query.filter(QuoteModel.quote_id == quote_id).first_or_404()
         
         return render_template('quoteview.html', quote=quote)
