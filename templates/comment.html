@@ -3,7 +3,7 @@
     <div class="comment-meta">
         <ul class="left">
             <li>
-                <a href="{{ url_for('UserView:get', user_login=link.user.user_login) }}">
+                <a href="{{ url_for('UserView:get', user_login=comment.user.user_login) }}">
                     <i class="fa fa-user"></i>
                     <strong>{{ comment.user.user_login }}</strong>
                 </a>

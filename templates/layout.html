@@ -33,7 +33,9 @@
         <div class="canvas">
             <div class="grid">
                 <div class="sidebar">
-                    {% block sidebar %}{% endblock %}
+                    {% for sidebox in g.sidebar %}
+                        {{ sidebox|safe }}
+                    {% endfor %}
                 </div>
                 <div class="content">
                     {% block content %}{% endblock %}

@@ -1,6 +1,7 @@
-from flask import abort, render_template, request
+from flask import abort, render_template, request, g
 from flask.ext.classy import FlaskView, route
 
+from .sidebox import Sidebox
 from ..models import LinkModel, UserModel
 from ..config import _cfgi
 
@@ -17,7 +18,7 @@ class LinkView(FlaskView):
 
 class LinkListView(FlaskView):
     route_base = '/'
-    
+
     @route('/', endpoint='LinkListView:home')
     @route('/queue/', endpoint='LinkListView:queue')
     def get(self, page=1):
@@ -40,5 +41,7 @@ class LinkListView(FlaskView):
         
         if links == None:
             abort(404)
-        
+
+        g.sidebar = [Sidebox.top_links()]
+
         return render_template('linklist.html', links=links, pagination=pagination, endpoint=request.endpoint)
