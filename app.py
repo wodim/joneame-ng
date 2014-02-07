@@ -23,9 +23,9 @@ db.init_app(app)
 
 @app.context_processor
 def inject():
-	return {
-		'random_quote': random_quote
-	}
+    return {
+        'random_quote': random_quote
+    }
 
 UserView.register(app)
 LinkView.register(app)
