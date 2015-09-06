@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -12,8 +12,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     margin: 0;
@@ -24,7 +24,7 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
@@ -51,14 +51,14 @@ table {
 
 /* general */
 body {
-    font-family: "Arimo", "Arial", sans-serif;
-    font-size: 10pt;
+    font-family: /* "Arimo", */ "Arial", sans-serif;
+    font-size: 12px;
     color: #333;
-    letter-spacing: -0.3px;
+    /* letter-spacing: -0.3px; */
 }
 a {
     text-decoration: none;
-    color: #5a8cbe; /* #3667ab; */
+    color: #4f7ba7; /* #3667ab; */
 }
 .canvas {
     width: 950px;
@@ -129,20 +129,67 @@ strong {
     line-height: 30px;
     width: 700px;
     /* background: red; */
-    letter-spacing: -0.3px;
+    /* letter-spacing: -0.3px; */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 9.5pt;
 }
 
 /* sidebar */
 .sidebar {
+    float: right;
+    width: 300px;
+}
+.sidebar .sidebox {
+
+}
+.sidebar .sidebox h3 {
+    background: #5a8cbe;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+    font-size: 11pt;
+    /*
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    */
+    border-bottom: 3px solid #4f7ba7;
+    color: white;
+    margin-bottom: 6px;
+}
+.sidebar .sidebox ul.links {
+    margin: 12px 4px 0;
+    width: 300px;
+}
+.sidebar .sidebox ul.links li {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 9pt;
+}
+.sidebar .sidebox ul.links li a div.votes {
+    float: left;
+    padding: 8px 20px;
     background: red;
+    font-weight: bold;
+    font-size: 11pt;
+    margin-left: 3px;
+    border-radius: 3px;
+}
+.sidebar .sidebox ul.links li a div.votes.status_published {
+    color: white;
+    background: #5a8cbe;
+}
+.sidebar .sidebox ul.links li a div.title {
+    margin-left: 58px;
+    margin-top: 1px;
+    margin-bottom: 5px;
+    line-height: 14px;
 }
 
 /* link view */
 .content article {
-    width: 650px;
+    width: 600px;
     display: inline-block;
     margin-bottom: 25px;
 }
@@ -184,14 +231,14 @@ strong {
     margin-left: 70px;
     margin-top: 0px;
 }
-.content article .entry .title,
 .content article .entry .submitted,
-.content article .entry .text {
-    margin-bottom: 5px;
+.content article .entry .text,
+.content article .entry .meta {
+    margin-top: 8px;
 }
 .content article .entry .title .hostname,
 .content article .entry .submitted,
-.content article .entry .comments a {
+.content article .entry .meta a {
     color: #666;
 }
 .content article .entry .title a {
@@ -267,4 +314,57 @@ strong {
 }
 .comments li .comment-meta ul.right {
     float: right;
+}
+
+/* posts */
+.posts {
+}
+.posts ul.parents li .avatar {
+    float: left;
+    width: 32px;
+}
+.posts ul.parents li .post-meta {
+    margin-left: 38px;
+    line-height: 28px;
+    color: #666;
+    font-size: 10pt;
+    background: #eee;
+    padding: 0 10px;
+}
+.posts ul.parents li .post-meta ul li {
+    display: inline;
+    margin-right: 10px;
+}
+.posts ul.parents li .post-meta ul li:last-child {
+    margin-right: 0;
+}
+.posts ul.parents li .post-meta ul.left {
+    display: inline;
+}
+.posts ul.parents li .post-meta ul.right {
+    float: right;
+}
+.posts ul.parents li .post-text {
+    margin-left: 38px;
+    padding: 2px 10px 8px;
+    background: #eee;
+    line-height: 18px;
+}
+
+.posts ul.children li  {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+/* parches de responsividad */
+@media (max-width: 950px) {
+    .canvas, .content,
+    .cover .header, .subcover .header,
+    .subcover .header .quote,
+    .content article {
+        width: auto;
+    }
+    .canvas .grid .sidebar {
+        display: none;
+    }
 }

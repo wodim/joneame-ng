@@ -1,17 +1,21 @@
 {% extends 'layout.html' %}
 {% block content %}
-    {% for post in posts %}
-        {% include 'post.html' %}
-        {% if post.children %}
-            <div style="border-left: 3px solid red; margin-left: 10px; margin-bottom: 10px; ">
-                {% for post in post.children %}
-                    {% include "post.html" %}
-                {% endfor %}
-            </div>
+    <div class="posts">
+        <ul class="parents">
+            {% for post in posts %}
+                {% include 'post.html' %}
+                {% if post.children %}
+                    <ul class="children">
+                        {% for post in post.children %}
+                            {% include "postchild.html" %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% if pagination %}
+            {% import "utils.html" as utils %}
+            {{ utils.render_pagination(pagination, endpoint) }}
         {% endif %}
-    {% endfor %}
-    {% if pagination %}
-        {% import "utils.html" as utils %}
-        {{ utils.render_pagination(pagination, endpoint) }}
-    {% endif %}
+    </div>
 {% endblock %}

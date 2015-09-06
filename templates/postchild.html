@@ -1,12 +1,13 @@
 <li>
     <img class="avatar" src="http://joneame.net/img/v2/admin-avatar-40.png" alt="avatar de {{ post.user.user_login }}" />
+    <div class="post-text">
+        <a href="{{ url_for('UserView:get', user_login=post.user.user_login) }}">
+            <strong>{{ post.user.user_login }}</strong>
+        </a>
+        hijo{{ post.post_content }}
+    </div>
     <div class="post-meta">
         <ul class="left">
-            <li>
-                <a href="{{ url_for('UserView:get', user_login=post.user.user_login) }}">
-                    <i class="fa fa-user"></i>
-                    <strong>{{ post.user.user_login }}</strong>
-                </a>
             <li>
                 <i class="fa fa-clock-o"></i>
                 {{ post.post_date }}
@@ -15,10 +16,4 @@
             <li>
                 <i class="fa fa-star-o"></i>
         </ul>
-    </div>
-    <div class="post-text">
-        {{ post.post_content }}
-        {% if post.children %}
-            (Tiene hijos)
-        {% endif %}
     </div>

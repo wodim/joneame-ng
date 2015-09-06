@@ -23,9 +23,13 @@
         <div class="subcover">
             <div class="header">
                 <div class="quote">
-                    <i class="fa fa-quote-left"></i>
                     {% set quote = random_quote() %}
-                    <strong>{{ quote.user.user_login }}:</strong>
+                    <a href="{{ url_for('QuoteView:get', quote_id=quote.quote_id) }}">
+                        <i class="fa fa-quote-left"></i>
+                    </a>
+                    <a href="{{ url_for('UserView:get', user_login=quote.user.user_login) }}">
+                        <strong>{{ quote.user.user_login }}:</strong>
+                    </a>
                     {{ quote.quote_text }}
                 </div>
             </div>

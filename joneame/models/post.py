@@ -18,4 +18,4 @@ class PostModel(db.Model):
     children = db.relationship('PostModel') # , primaryjoin='and_(PostModel.post_id==PostModel.post_parent, PostModel.post_parent==0)')
 
     def __repr__(self):
-        return '<Post %r, author %r, content %r>' % (self.post_id, self.user.user_login, self.post_content[:100]) 
+        return '<Post %r, author %r, content %r>' % (self.post_id, self.user.user_login, self.post_content[:100])

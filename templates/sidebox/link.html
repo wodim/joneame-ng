@@ -1,7 +1,11 @@
 <div class="sidebox">
     <h3>{{ sidebox_name }}</h3>
+    <ul class="links">
     {% for link in links %}
-        {{ link }}
-        {{ link.link_title }}
+        <li>
+            <a href="{{ url_for('LinkView:get', link_uri=link.link_uri) }}">
+                <div class="votes status_{{ link.link_status }}">{{ link.link_votes }}</div>
+                <div class="title">{{ link.link_title }}</div>
+            </a>
     {% endfor %}
 </div>

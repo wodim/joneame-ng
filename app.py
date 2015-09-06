@@ -13,8 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = _cfg('database', 'uri')
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['PROFILE'] = True
 
-app.jinja_env.trim_blocks = True
-app.jinja_env.lstrip_blocks = True
+#app.jinja_env.trim_blocks = True
+#app.jinja_env.lstrip_blocks = True
 
 app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions = [30])
 
