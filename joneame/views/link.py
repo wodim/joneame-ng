@@ -9,11 +9,11 @@ from datetime import datetime, timedelta
 
 class LinkView(FlaskView):
     route_base = '/'
-    
+
     @route('/historia/<link_uri>')
     def get(self, link_uri):
         link = LinkModel.query.filter(LinkModel.link_uri == link_uri).first_or_404() # TODO revisar fecha de activacion
-        
+
         return render_template('linkview.html', link=link)
 
 class LinkListView(FlaskView):
@@ -30,18 +30,18 @@ class LinkListView(FlaskView):
             query = LinkModel.query \
                 .filter(LinkModel.link_status == 'queued', LinkModel.link_sent_date > (datetime.utcnow() - timedelta(weeks=4))) \
                 .order_by('link_date desc')
-        
+
         try:
             page = int(request.args['page'])
         except:
             page = 1
-        
+
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         links = pagination.items
-        
+
         if links == None:
             abort(404)
 
-        g.sidebar = [Sidebox.top_links()]
+        g.sidebar = [Sidebox.top_links(), Sidebox.last_comments()]
 
         return render_template('linklist.html', links=links, pagination=pagination, endpoint=request.endpoint)

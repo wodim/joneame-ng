@@ -1,7 +1,7 @@
 from flask import abort, render_template, request, redirect
 from flask.ext.classy import FlaskView, route
 
-from ..models import PostModel, LinkModel, UserModel
+from ..models import PostModel, LinkModel, UserModel, CommentModel
 from ..config import _cfgi
 from ..database import db
 
@@ -15,19 +15,26 @@ class Sidebox():
 
         links = [x for (x, y) in query]
 
-        return render_template('sidebox/link.html', sidebox_name='populares', links=links)
+        return render_template('sidebox/link.html', sidebox_name='hot links', links=links)
 
+    @classmethod
     def top_links_nsfw(self):
         pass
 
+    @classmethod
     def top_queued_links(self):
         pass
 
+    @classmethod
     def top_comments(self):
         pass
 
+    @classmethod
     def last_comments(self):
-        pass
+        comments = db.session.query(CommentModel).order_by('comment_id desc').limit(10).all()
 
+        return render_template('sidebox/comment.html', sidebox_name='last comments', comments=comments)
+
+    @classmethod
     def top_posts(self):
         pass

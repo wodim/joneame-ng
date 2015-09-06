@@ -6,7 +6,7 @@
             </a>
         </div>
         <a class="shakeit" href="#">
-            votar
+            vote
         </a>
     </div>
     <div class="entry">
@@ -33,18 +33,26 @@
                 <a href="{{ url_for('LinkView:get', link_uri=link.link_uri) }}">
                     <i class="fa fa-comments"></i>
                     {% if link.link_comments == 1 %}
-                        {{ link.link_comments }} comentario
+                        {{ link.link_comments }} comment
                     {% else %}
-                        {{ link.link_comments }} comentarios
+                        {{ link.link_comments }} comments
                     {% endif %}
                 </a>
             <li>
-                <i class="fa fa-external-link-square"></i>
-                xx visitas
+                <strong>charisma:</strong> {{ link.link_karma }}
             <li>
-                <i class="fa fa-facebook"></i>
+                <i class="fa fa-external-link-square"></i>
+                xx clicks
+        </ul>
+        <ul class="meta">
+            <li>
+                <strong>users:</strong> {{ link.link_votes }}
+                <strong>anonymous:</strong> {{ link.link_anonymous }}
+                <strong>downvotes:</strong> {{ link.link_negatives }}
             <li>
                 <i class="fa fa-twitter"></i>
+            <li>
+                <i class="fa fa-facebook"></i>
             <li>
                 <i class="fa fa-star"></i>
         </ul>
