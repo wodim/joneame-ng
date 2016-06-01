@@ -1,5 +1,5 @@
 <li>
-    <img class="avatar" src="http://joneame.net/img/v2/admin-avatar-40.png" alt="avatar de {{ comment.user.user_login }}" />
+    <img class="avatar" src="{{ comment.user.get_avatar_url() }}" alt="avatar de {{ comment.user.user_login }}" />
     <div class="comment-meta">
         <ul class="left">
             <li>
@@ -7,16 +7,20 @@
                     <i class="fa fa-user"></i>
                     <strong>{{ comment.user.user_login }}</strong>
                 </a>
+            </li>
             <li>
                 <i class="fa fa-clock-o"></i>
                 {{ comment.comment_date }}
+            </li>
         </ul>
         <ul class="right">
             <li>
                 <i class="fa fa-star-o"></i>
+            </li>
         </ul>
     </div>
     <div class="comment-text">
         <a class="order" href="#">#{{ comment.comment_order }}</a>
         {{ comment.comment_content }}
     </div>
+</li>

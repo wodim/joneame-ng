@@ -1,5 +1,5 @@
 from flask import abort, render_template, request, redirect
-from flask.ext.classy import FlaskView, route
+from flask_classy import FlaskView, route
 
 from ..models import QuoteModel, UserModel
 from ..config import _cfgi

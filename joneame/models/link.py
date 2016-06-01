@@ -1,4 +1,6 @@
-from urlparse import urlparse
+from urllib import parse as urlparse
+
+from sqlalchemy.orm import backref
 
 from ..database import db
 
@@ -36,15 +38,8 @@ class LinkModel(db.Model):
     link_comentarios_permitidos = db.Column(db.Boolean)
     link_votos_permitidos = db.Column(db.Boolean)
     link_broken_link = db.Column(db.Boolean)
-    
-    comments = db.relationship('CommentModel', backref='link')
-    
-    @property
-    def custom(self):
-        custom = {}
-        custom['link_url_hostname'] = urlparse(self.link_url).hostname
-        
-        return custom
+
+    comments = db.relationship('CommentModel', backref='link', lazy="dynamic")
 
     def __repr__(self):
         return '<Link %r, author %r>' % (self.link_id, self.link_author)

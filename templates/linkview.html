@@ -2,8 +2,12 @@
 {% block content %}
 {% include 'link.html' %}
 <ul class="comments">
-{% for comment in link.comments %}
-    {% include 'comment.html' %}
-{% endfor %}
+    {% for comment in comments %}
+        {% include 'comment.html' %}
+    {% endfor %}
+    {% if pagination %}
+        {% import "utils.html" as utils %}
+        {{ utils.render_pagination(pagination, endpoint, link_uri=link.link_uri) }}
+    {% endif %}
 </ul>
 {% endblock %}

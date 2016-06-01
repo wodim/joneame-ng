@@ -1,5 +1,5 @@
 from flask import abort, render_template, request, redirect
-from flask.ext.classy import FlaskView, route
+from flask_classy import FlaskView, route
 
 from ..models import PostModel, UserModel
 from ..config import _cfgi
@@ -22,16 +22,11 @@ class PostListView(FlaskView):
     @route('/posts/')
     def get(self, page=1):
         query = PostModel.query.filter(PostModel.post_parent == 0).order_by('post_date desc')
-
-        try:
-            page = int(request.args['page'])
-        except:
-            page = 1
-
+        page = request.args.get('page', 1, type=int)
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         posts = pagination.items
 
-        if posts == None:
+        if not posts:
             abort(404)
 
         return render_template('postlist.html', posts=posts, pagination=pagination, endpoint=request.endpoint)

@@ -1,8 +1,8 @@
 from flask import abort, render_template, request, g
-from flask.ext.classy import FlaskView, route
+from flask_classy import FlaskView, route
 
 from .sidebox import Sidebox
-from ..models import LinkModel, UserModel
+from ..models import LinkModel, UserModel, CommentModel
 from ..config import _cfgi
 
 from datetime import datetime, timedelta
@@ -14,7 +14,14 @@ class LinkView(FlaskView):
     def get(self, link_uri):
         link = LinkModel.query.filter(LinkModel.link_uri == link_uri).first_or_404() # TODO revisar fecha de activacion
 
-        return render_template('linkview.html', link=link)
+        query = CommentModel.query.filter(CommentModel.comment_link_id == link.link_id)
+        page = request.args.get('page', 1, type=int)
+        pagination = query.paginate(page, _cfgi('misc', 'page_size'))
+        comments = pagination.items
+
+        return render_template('linkview.html', link=link, comments=comments,
+                                    pagination=pagination,
+                                    endpoint=request.endpoint)
 
 class LinkListView(FlaskView):
     route_base = '/'
@@ -22,26 +29,23 @@ class LinkListView(FlaskView):
     @route('/', endpoint='LinkListView:home')
     @route('/queue/', endpoint='LinkListView:queue')
     def get(self, page=1):
-        if request.endpoint == 'LinkListView:home' or request.endpoint == 'LinkListView:home_paged':
-            query = LinkModel.query \
-                .filter(LinkModel.link_status == 'published') \
-                .order_by('link_date desc')
-        if request.endpoint == 'LinkListView:queue' or request.endpoint == 'LinkListView:queue_paged':
-            query = LinkModel.query \
-                .filter(LinkModel.link_status == 'queued', LinkModel.link_sent_date > (datetime.utcnow() - timedelta(weeks=4))) \
-                .order_by('link_date desc')
+        query = LinkModel.query
+        if request.endpoint == 'LinkListView:home':
+            query = query.filter(LinkModel.link_status == 'published')
+        elif request.endpoint == 'LinkListView:queue':
+            query = query.filter(LinkModel.link_status == 'queued')
+            query = query.filter(LinkModel.link_sent_date > (datetime.utcnow() - timedelta(weeks=4)))
 
-        try:
-            page = int(request.args['page'])
-        except:
-            page = 1
-
+        query = query.order_by('link_date desc')
+        page = request.args.get('page', 1, type=int)
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         links = pagination.items
 
-        if links == None:
+        if not links:
             abort(404)
 
         g.sidebar = [Sidebox.top_links(), Sidebox.last_comments()]
 
-        return render_template('linklist.html', links=links, pagination=pagination, endpoint=request.endpoint)
+        return render_template('linklist.html', links=links,
+                                    pagination=pagination,
+                                    endpoint=request.endpoint)
