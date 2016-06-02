@@ -9,7 +9,7 @@ class PostView(FlaskView):
 
     @route('/posts/<user_login>/<int:post_id>')
     def get(self, user_login, post_id):
-        post = PostView.query.filter(PostModel.post_id == post_id).first_or_404()
+        post = PostModel.query.filter(PostModel.post_id == post_id).first_or_404()
 
         if post.user.user_login != user_login:
             return redirect(url_for('PostView', user_login=post.user.user_login, post_id=post_id))

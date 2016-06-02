@@ -1,7 +1,5 @@
 from urllib import parse as urlparse
 
-from sqlalchemy.orm import backref
-
 from ..database import db
 
 class LinkModel(db.Model):

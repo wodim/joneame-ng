@@ -9,7 +9,9 @@
                 </a>
             <li>
                 <i class="fa fa-clock-o"></i>
-                {{ post.post_date }}
+                <a href="{{ url_for('PostView:get', user_login=post.user.user_login, post_id=post.post_id) }}">
+                    {{ post.post_date }}
+                </a>
         </ul>
         <ul class="right">
             <li>

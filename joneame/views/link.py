@@ -34,7 +34,8 @@ class LinkListView(FlaskView):
             query = query.filter(LinkModel.link_status == 'published')
         elif request.endpoint == 'LinkListView:queue':
             query = query.filter(LinkModel.link_status == 'queued')
-            query = query.filter(LinkModel.link_sent_date > (datetime.utcnow() - timedelta(weeks=4)))
+            query = query.filter(LinkModel.link_sent_date
+                                 > (datetime.utcnow() - timedelta(weeks=4)))
 
         query = query.order_by('link_date desc')
         page = request.args.get('page', 1, type=int)
