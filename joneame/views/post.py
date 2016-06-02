@@ -14,7 +14,7 @@ class PostView(FlaskView):
         if post.user.user_login != user_login:
             return redirect(url_for('PostView', user_login=post.user.user_login, post_id=post_id))
 
-        return render_template('postview.html', post=post)
+        return render_template('post/postview.html', post=post)
 
 class PostListView(FlaskView):
     route_base = '/'
@@ -29,4 +29,6 @@ class PostListView(FlaskView):
         if not posts:
             abort(404)
 
-        return render_template('postlist.html', posts=posts, pagination=pagination, endpoint=request.endpoint)
+        return render_template('post/postlist.html', posts=posts,
+                                                     pagination=pagination,
+                                                     endpoint=request.endpoint)

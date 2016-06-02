@@ -15,7 +15,9 @@ class Sidebox():
 
         links = [x for (x, y) in query.all()]
 
-        return render_template('sidebox/link.html', sidebox_name='hot links', links=links)
+        return render_template('sidebox/link.html',
+                               sidebox_name='hot links',
+                               links=links)
 
     @classmethod
     def top_links_nsfw(self):
@@ -33,7 +35,9 @@ class Sidebox():
     def last_comments(self):
         comments = db.session.query(CommentModel).order_by('comment_id desc').limit(10).all()
 
-        return render_template('sidebox/comment.html', sidebox_name='last comments', comments=comments)
+        return render_template('sidebox/comment.html',
+                               sidebox_name='last comments',
+                               comments=comments)
 
     @classmethod
     def top_posts(self):

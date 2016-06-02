@@ -1,9 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-<dl>
-    <dt>ID:</dt>
-    <dd>{{ user.user_id }}</dd>
-    <dt>Nick:</dt>
-    <dd>{{ user.user_login }}</dd>
-</dl>
+<div class="user">
+    <table>
+        <tr>
+            <th>user:</th>
+            <td>{{ user.user_login }} (id: {{ user.user_id }})
+                (level: {{ user.user_level }})</td>
+        </tr>
+        <tr>
+            <th>since:</th>
+            <td>{{ user.user_date }}</td>
+        </tr>
+        <tr>
+            <th>charisma:</th>
+            <td>{{ user.user_karma }}</td>
+        </tr>
+        <tr>
+            <th>links sent:</th>
+            <td>{{ user.links.count() }}</td>
+        </tr>
+        <tr>
+            <th>links published:</th>
+            <td>{{ user.links_published_count }}</td>
+        </tr>
+        <tr>
+            <th>comments:</th>
+            <td>{{ user.comments_count }}</td>
+        </tr>
+        <tr>
+            <th>posts:</th>
+            <td>{{ user.posts_count }}</td>
+        </tr>
+        <tr>
+            <th>votes cast:</th>
+            <td>{{ user.user_login }}</td>
+        </tr>
+        <tr>
+            <th>quotes sent:</th>
+            <td>{{ user.quotes.count() }}</td>
+        </tr>
+    </table>
+</div>
 {% endblock %}

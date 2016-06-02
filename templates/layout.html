@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.min.css') }}" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic" />
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic" />
         <title>Jonéame</title>
     </head>
     <body>
@@ -36,11 +36,16 @@
         </div>
         <div class="canvas">
             <div class="grid">
-                <div class="sidebar">
-                    {% for sidebox in g.sidebar %}
-                        {{ sidebox|safe }}
-                    {% endfor %}
-                </div>
+                {% if g.sidebar %}
+                    <div class="sidebar">
+                        {% for sidebox in g.sidebar %}
+                            {{ sidebox|safe }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if sidemenu %}
+                    {# sidemenu #}
+                {% endif %}
                 <div class="content">
                     {% block content %}{% endblock %}
                 </div>

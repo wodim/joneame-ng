@@ -142,7 +142,7 @@ strong {
     width: 300px;
 }
 .sidebar .sidebox {
-
+    background: #eee;
 }
 .sidebar .sidebox h3 {
     background: #5a8cbe;
@@ -354,6 +354,26 @@ strong {
 .posts ul.children li  {
     margin-left: 50px;
     margin-bottom: 20px;
+}
+
+/* user profiles */
+.user {
+    background: #eee;
+    padding: 20px;
+    font-size: 11pt;
+}
+
+.user th, .user td {
+    padding: 5px 3px ;
+}
+
+.user th {
+    font-weight: bold;
+    width: 12em;
+    text-align: right;
+}
+
+.user td {
 }
 
 /* parches de responsividad */

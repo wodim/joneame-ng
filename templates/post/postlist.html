@@ -3,11 +3,11 @@
     <div class="posts">
         <ul class="parents">
             {% for post in posts %}
-                {% include 'post.html' %}
+                {% include 'post/post.html' %}
                 {% if post.children %}
                     <ul class="children">
                         {% for post in post.children %}
-                            {% include "postchild.html" %}
+                            {% include "post/postchild.html" %}
                         {% endfor %}
                     </ul>
                 {% endif %}

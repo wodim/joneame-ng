@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-{% include 'link.html' %}
+{% include 'link/link.html' %}
 <ul class="comments">
     {% for comment in comments %}
-        {% include 'comment.html' %}
+        {% include 'link/comment.html' %}
     {% endfor %}
     {% if pagination %}
         {% import "utils.html" as utils %}

@@ -1,6 +1,10 @@
+import base64
 from hashlib import md5
 
+from .comment import CommentModel
 from ..database import db
+from .link import LinkModel
+from .post import PostModel
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -23,18 +27,53 @@ class UserModel(db.Model):
     user_url = db.Column(db.String(128))
     user_thumb = db.Column(db.Boolean)
 
-    links = db.relationship('LinkModel', backref='user', lazy="dynamic")
-    comments = db.relationship('CommentModel', backref='user', lazy="dynamic")
-    posts = db.relationship('PostModel', backref='user', lazy="dynamic")
-    quotes = db.relationship('QuoteModel', backref='user', lazy="dynamic")
+    avatar = db.relationship('AvatarModel', backref='user', uselist=False)
 
-    def avatar_hash(self):
-        m = md5(bytearray(self.user_email.lower(), encoding="utf8"))
-        return m.hexdigest()
+    links = db.relationship('LinkModel', backref='user', lazy='dynamic')
+    comments = db.relationship('CommentModel', backref='user', lazy='dynamic')
+    posts = db.relationship('PostModel', backref='user', lazy='dynamic')
+    quotes = db.relationship('QuoteModel', backref='user', lazy='dynamic')
 
-    def get_avatar_url(self, size=80):
-        tpl = "http://www.gravatar.com/avatar/{hash}?s={size}&d=retro"
-        return tpl.format(hash=self.avatar_hash, size=size)
+    @property
+    def avatar_url(self, size=80):
+        tpl = 'data:image/jpeg;base64,{data}'
+        return tpl.format(data=base64.b64encode(self.avatar.avatar_image)
+                                               .decode('utf-8'))
+
+    @property
+    def links_published_count(self):
+        query = LinkModel.query
+        query = query.filter(LinkModel.link_author == self.user_id)
+        query = query.filter(LinkModel.link_status == 'published')
+        return query.count()
+
+    # next functions are necessary to hide admin contents from counts
+    @property
+    def comments_count(self):
+        query = CommentModel.query
+        query = query.filter(CommentModel.comment_user_id == self.user_id)
+        query = query.filter(CommentModel.comment_type == 'normal')
+        return query.count()
+
+    @property
+    def posts_count(self):
+        query = PostModel.query
+        query = query.filter(PostModel.post_user_id == self.user_id)
+        query = query.filter(PostModel.post_type == 'normal')
+        return query.count()
 
     def __repr__(self):
         return '<User %r, nick %r>' % (self.user_id, self.user_login)
+
+class AvatarModel(db.Model):
+    __tablename__ = 'avatars'
+
+    avatar_id = db.Column(db.Integer, db.ForeignKey('users.user_id'),
+                          primary_key=True)
+    avatar_image = db.Column(db.LargeBinary)
+    avatar_modified = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<Avatar %r, modified %r>' % (self.avatar_id,
+                                             self.avatar_modified)
+    #user = db.relationship('UserModel', uselist=False, back_populates='avatar')

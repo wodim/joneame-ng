@@ -1,5 +1,5 @@
 <li>
-    <img class="avatar" src="http://joneame.net/img/v2/admin-avatar-40.png" alt="avatar de {{ post.user.user_login }}" />
+    <img class="avatar" src="{{ post.user.avatar_url|safe }}" alt="avatar de {{ post.user.user_login }}" />
     <div class="post-text">
         <a href="{{ url_for('UserView:get', user_login=post.user.user_login) }}">
             <strong>{{ post.user.user_login }}</strong>

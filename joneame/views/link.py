@@ -19,7 +19,7 @@ class LinkView(FlaskView):
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         comments = pagination.items
 
-        return render_template('linkview.html', link=link, comments=comments,
+        return render_template('link/linkview.html', link=link, comments=comments,
                                     pagination=pagination,
                                     endpoint=request.endpoint)
 
@@ -46,6 +46,6 @@ class LinkListView(FlaskView):
 
         g.sidebar = [Sidebox.top_links(), Sidebox.last_comments()]
 
-        return render_template('linklist.html', links=links,
+        return render_template('link/linklist.html', links=links,
                                     pagination=pagination,
                                     endpoint=request.endpoint)
