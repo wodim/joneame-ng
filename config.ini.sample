@@ -3,3 +3,4 @@ uri = mysql+pymysql://joneame:joneame@localhost/joneame
 
 [misc]
 page_size = 24
+no_avatar_image = no-avatar.png

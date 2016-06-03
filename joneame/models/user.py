@@ -1,7 +1,10 @@
 import base64
 from hashlib import md5
 
+from flask import url_for
+
 from .comment import CommentModel
+from ..config import _cfg
 from ..database import db
 from .link import LinkModel
 from .post import PostModel
@@ -36,9 +39,11 @@ class UserModel(db.Model):
 
     @property
     def avatar_url(self, size=80):
-        tpl = 'data:image/jpeg;base64,{data}'
-        return tpl.format(data=base64.b64encode(self.avatar.avatar_image)
-                                               .decode('utf-8'))
+        if self.avatar:
+            return ('data:image/jpeg;base64,' +
+                    base64.b64encode(self.avatar.avatar_image).decode('utf-8'))
+        else:
+            return url_for('static', filename=_cfg('misc', 'no_avatar_image'))
 
     @property
     def links_published_count(self):

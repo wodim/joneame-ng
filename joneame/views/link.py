@@ -37,7 +37,7 @@ class LinkListView(FlaskView):
             query = query.filter(LinkModel.link_sent_date
                                  > (datetime.utcnow() - timedelta(weeks=4)))
 
-        query = query.order_by('link_date desc')
+        query = query.order_by(LinkModel.link_sent_date.desc())
         page = request.args.get('page', 1, type=int)
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         links = pagination.items

@@ -21,7 +21,8 @@ class PostListView(FlaskView):
 
     @route('/posts/')
     def get(self, page=1):
-        query = PostModel.query.filter(PostModel.post_parent == 0).order_by('post_date desc')
+        query = PostModel.query.filter(PostModel.post_parent == 0)
+        query = query.order_by(PostModel.post_date.desc())
         page = request.args.get('page', 1, type=int)
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         posts = pagination.items

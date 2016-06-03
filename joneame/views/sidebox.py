@@ -42,7 +42,8 @@ class Sidebox():
 
     @classmethod
     def last_comments(self):
-        comments = db.session.query(CommentModel).order_by('comment_id desc').limit(10).all()
+        comments = db.session.query(CommentModel).order_by('comment_id desc') \
+                                                 .limit(10).all()
 
         return render_template('sidebox/comment.html',
                                sidebox_name='last comments',

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="user">
+    <ul class="quotes">
+        {% for quote in quotes %}
+            <li>{{ quote.quote_text }}</li>
+        {% endfor %}
+    </ul>
+    {% if pagination %}
+        {% import "utils.html" as utils %}
+        {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}
+    {% endif %}
+</div>
+{% endblock %}

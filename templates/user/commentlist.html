@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-{% include 'link/link.html' %}
 <ul class="comments">
     {% for comment in comments %}
+        <a href="{{ url_for('LinkView:get', link_uri=comment.link.link_uri) }}">
+            {{ comment.link.link_title }}
+        </a>
         {% include 'link/comment.html' %}
     {% endfor %}
 </ul>
 {% if pagination %}
     {% import "utils.html" as utils %}
-    {{ utils.render_pagination(pagination, endpoint, link_uri=link.link_uri) }}
+    {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}
 {% endif %}
 {% endblock %}
