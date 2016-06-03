@@ -1,5 +1,3 @@
-from urllib import parse as urlparse
-
 from ..database import db
 
 class LinkModel(db.Model):

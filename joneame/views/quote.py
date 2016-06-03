@@ -1,8 +1,7 @@
-from flask import abort, render_template, request, redirect
+from flask import render_template
 from flask_classy import FlaskView, route
 
-from ..models import QuoteModel, UserModel
-from ..config import _cfgi
+from ..models import QuoteModel
 from ..database import db
 
 from random import randint

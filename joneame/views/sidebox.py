@@ -1,8 +1,6 @@
-from flask import abort, render_template, request, redirect
-from flask_classy import FlaskView, route
+from flask import render_template
 
-from ..models import PostModel, LinkModel, UserModel, CommentModel
-from ..config import _cfgi
+from ..models import LinkModel, CommentModel
 from ..database import db
 
 class Sidebox():

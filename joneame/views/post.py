@@ -1,7 +1,7 @@
-from flask import abort, render_template, request, redirect
+from flask import abort, render_template, request, redirect, url_for
 from flask_classy import FlaskView, route
 
-from ..models import PostModel, UserModel
+from ..models import PostModel
 from ..config import _cfgi
 
 class PostView(FlaskView):
@@ -12,7 +12,9 @@ class PostView(FlaskView):
         post = PostModel.query.filter(PostModel.post_id == post_id).first_or_404()
 
         if post.user.user_login != user_login:
-            return redirect(url_for('PostView', user_login=post.user.user_login, post_id=post_id))
+            return redirect(url_for('PostView:get',
+                                        user_login=post.user.user_login,
+                                        post_id=post_id))
 
         return render_template('post/postview.html', post=post)
 

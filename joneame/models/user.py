@@ -1,5 +1,4 @@
 import base64
-from hashlib import md5
 
 from flask import url_for
 
@@ -40,6 +39,7 @@ class UserModel(db.Model):
     @property
     def avatar_url(self, size=80):
         if self.avatar:
+            # TODO
             return ('data:image/jpeg;base64,' +
                     base64.b64encode(self.avatar.avatar_image).decode('utf-8'))
         else:

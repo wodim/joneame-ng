@@ -1,11 +1,12 @@
 from flask import Flask
-from werkzeug.contrib.profiler import ProfilerMiddleware
-from sqltap.wsgi import SQLTapMiddleware
+#from werkzeug.contrib.profiler import ProfilerMiddleware
+#from sqltap.wsgi import SQLTapMiddleware
 
 from joneame.config import _cfg
 from joneame.database import db
 
-from joneame.views import *
+from joneame.views import (UserView, LinkView, LinkListView, PostView,
+                           PostListView, QuoteView, random_quote)
 
 app = Flask(__name__)
 app.debug = True

@@ -2,7 +2,7 @@ from flask import abort, render_template, request, g
 from flask_classy import FlaskView, route
 
 from .sidebox import Sidebox
-from ..models import LinkModel, UserModel, CommentModel
+from ..models import LinkModel, CommentModel
 from ..config import _cfgi
 
 from datetime import datetime, timedelta
