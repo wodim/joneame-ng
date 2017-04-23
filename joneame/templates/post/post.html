@@ -3,7 +3,7 @@
     <div class="post-meta">
         <ul class="left">
             <li>
-                <a href="{{ url_for('UserView:get', user_login=post.user.user_login) }}">
+                <a href="{{ url_for('User:get', user_login=post.user.user_login) }}">
                     <i class="fa fa-user"></i>
                     <strong>{{ post.user.user_login }}</strong>
                 </a>

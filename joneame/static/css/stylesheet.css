@@ -135,6 +135,9 @@ strong {
     text-overflow: ellipsis;
     font-size: 9.5pt;
 }
+.subcover .header .quote a {
+    color: white;
+}
 
 /* sidebar */
 .sidebar {

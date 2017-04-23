@@ -1,3 +1,4 @@
 *.pyc
 config.ini
 NOTES
+__pycache__

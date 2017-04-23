@@ -8,12 +8,14 @@ from ..database import db
 from .link import LinkModel
 from .post import PostModel
 
+
 class UserModel(db.Model):
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer, primary_key=True)
     user_login = db.Column(db.String(32))
-    user_level = db.Column(db.Enum(['disabled', 'devel', 'normal', 'special', 'admin', 'god']))
+    user_level = db.Column(db.Enum('disabled', 'devel', 'normal', 'special',
+                                   'admin', 'god'))
     user_avatar = db.Column(db.Integer)
     user_modification = db.Column(db.DateTime)
     user_date = db.Column(db.DateTime)
@@ -70,6 +72,7 @@ class UserModel(db.Model):
     def __repr__(self):
         return '<User %r, nick %r>' % (self.user_id, self.user_login)
 
+
 class AvatarModel(db.Model):
     __tablename__ = 'avatars'
 
@@ -81,4 +84,5 @@ class AvatarModel(db.Model):
     def __repr__(self):
         return '<Avatar %r, modified %r>' % (self.avatar_id,
                                              self.avatar_modified)
-    #user = db.relationship('UserModel', uselist=False, back_populates='avatar')
+    """user = db.relationship('UserModel', uselist=False,
+                            back_populates='avatar')"""

@@ -1,7 +1,7 @@
 <article class="status_{{ link.link_status }}">
     <div class="shakebox">
         <div class="votes">
-            <a href="{{ url_for('LinkView:get', link_uri=link.link_uri) }}">
+            <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
                 {{ link.link_votes }}
             </a>
         </div>
@@ -15,7 +15,7 @@
         </div>
         <ul class="submitted">
             <li>
-                <a href="{{ url_for('UserView:get', user_login=link.user.user_login) }}">
+                <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
                     <i class="fa fa-user"></i>
                     <strong>{{ link.user.user_login }}</strong>
                 </a>
@@ -30,7 +30,7 @@
         {% endif %}
         <ul class="meta">
             <li class="comments">
-                <a href="{{ url_for('LinkView:get', link_uri=link.link_uri) }}">
+                <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
                     <i class="fa fa-comments"></i>
                     {% if link.link_comments == 1 %}
                         {{ link.link_comments }} comment

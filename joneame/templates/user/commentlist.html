@@ -2,7 +2,7 @@
 {% block content %}
 <ul class="comments">
     {% for comment in comments %}
-        <a href="{{ url_for('LinkView:get', link_uri=comment.link.link_uri) }}">
+        <a href="{{ url_for('Link:get', link_uri=comment.link.link_uri) }}">
             {{ comment.link.link_title }}
         </a>
         {% include 'link/comment.html' %}

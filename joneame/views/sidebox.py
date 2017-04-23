@@ -3,50 +3,38 @@ from flask import render_template
 from ..models import LinkModel, CommentModel
 from ..database import db
 
-class Sidebox():
-    @classmethod
-    def top_links(self):
-        query = db.session.query(LinkModel,
-                ((LinkModel.link_votes + LinkModel.link_anonymous
-                    - LinkModel.link_negatives) *
-                (1 - (db.func.unix_timestamp(db.func.now())
-                    - db.func.unix_timestamp(LinkModel.link_date))
-                        * 0.8 / 129600)).label('value')) \
-                .filter(LinkModel.link_status == 'published',
-                    LinkModel.link_date
-                        > db.func.from_unixtime(
-                            (db.func.unix_timestamp(db.func.now())
-                                                    - 129600 * 50))) \
-                .order_by('value desc') \
-                .limit(10)
 
-        links = [x for (x, y) in query.all()]
+def sidebox_top_links():
+    links = (
+        db.session.query(
+            LinkModel,
+            (LinkModel.link_votes + LinkModel.link_anonymous
+             - LinkModel.link_negatives) *
+            (1 - (db.func.unix_timestamp(db.func.now())
+                  - db.func.unix_timestamp(LinkModel.link_date))
+             * 0.8 / 129600)
+            .label('value')
+        )
+        .filter(LinkModel.link_status == 'published')
+        .filter(LinkModel.link_date > db.func.from_unixtime(
+                (db.func.unix_timestamp(db.func.now()) - 129600 * 50)))
+        .order_by('value desc')
+        .limit(10)
+        )
 
-        return render_template('sidebox/link.html',
-                               sidebox_name='hot links',
-                               links=links)
+    links = [x for (x, y) in links.all()]
 
-    @classmethod
-    def top_links_nsfw(self):
-        pass
+    return render_template('sidebox/link.html', sidebox_name='hot links',
+                           links=links)
 
-    @classmethod
-    def top_queued_links(self):
-        pass
 
-    @classmethod
-    def top_comments(self):
-        pass
+def sidebox_last_comments():
+    comments = (
+        db.session.query(CommentModel)
+        .order_by('comment_id desc')
+        .limit(10).all()
+    )
 
-    @classmethod
-    def last_comments(self):
-        comments = db.session.query(CommentModel).order_by('comment_id desc') \
-                                                 .limit(10).all()
-
-        return render_template('sidebox/comment.html',
-                               sidebox_name='last comments',
-                               comments=comments)
-
-    @classmethod
-    def top_posts(self):
-        pass
+    return render_template('sidebox/comment.html',
+                           sidebox_name='last comments',
+                           comments=comments)

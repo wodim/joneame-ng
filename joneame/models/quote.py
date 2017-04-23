@@ -1,5 +1,6 @@
 from ..database import db
 
+
 class QuoteModel(db.Model):
     __tablename__ = 'cortos'
 
@@ -12,4 +13,5 @@ class QuoteModel(db.Model):
     quote_edits = db.Column('ediciones', db.Integer)
 
     def __repr__(self):
-        return '<Quote %r, user %r, text %r>' % (self.quote_id, self.user.user_login, self.quote_text[:300])
+        return ('<Quote %r, user %r, text %r>' %
+                (self.quote_id, self.user.user_login, self.quote_text[:300]))

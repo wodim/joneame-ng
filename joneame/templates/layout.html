@@ -9,28 +9,29 @@
     <body>
         <div class="cover">
             <div class="header">
-                <div class="logo"><a href="{{ url_for('LinkListView:home') }}">Jonéame</a></div>
+                <div class="logo"><a href="{{ url_for('Link:list_home') }}">Jonéame</a></div>
                 <ul class="sections">
                     <li><a href="#">submit</a>
-                    <li><a href="{{ url_for('LinkListView:queue') }}">queue</a>
+                    <li><a href="{{ url_for('Link:list_queue') }}">queue</a>
                     <li><a href="#">sneak</a>
-                    <li><a href="{{ url_for('PostListView:get') }}">posts</a>
+                    <li><a href="{{ url_for('Post:list') }}">posts</a>
                     {# <li><a href="#">polls</a> #}
                 </ul>
             </div>
         </div>
         <div class="subcover">
             <div class="header">
-                <div class="quote">
-                    {% set quote = random_quote() %}
-                    <a href="{{ url_for('QuoteView:get', quote_id=quote.quote_id) }}">
-                        <i class="fa fa-quote-left"></i>
-                    </a>
-                    <a href="{{ url_for('UserView:get', user_login=quote.user.user_login) }}">
-                        <strong>{{ quote.user.user_login }}:</strong>
-                    </a>
-                    {{ quote.quote_text }}
-                </div>
+                {% if random_quote %}
+                    <div class="quote">
+                        <a href="{{ url_for('Quote:get', quote_id=random_quote.quote_id) }}">
+                            <i class="fa fa-quote-left"></i>
+                        </a>
+                        <a href="{{ url_for('User:get', user_login=random_quote.user.user_login) }}">
+                            <strong>{{ random_quote.user.user_login }}:</strong>
+                        </a>
+                        {{ random_quote.quote_text }}
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="canvas">
@@ -41,9 +42,6 @@
                             {{ sidebox|safe }}
                         {% endfor %}
                     </div>
-                {% endif %}
-                {% if sidemenu %}
-                    {# sidemenu #}
                 {% endif %}
                 <div class="content">
                     {% block content %}{% endblock %}

@@ -1,10 +1,11 @@
 from ..database import db
 
+
 class CommentModel(db.Model):
     __tablename__ = 'comments'
-    
+
     comment_id = db.Column(db.Integer, primary_key=True)
-    comment_type = db.Column(db.Enum(['normal', 'especial', 'admin']))
+    comment_type = db.Column(db.Enum('normal', 'especial', 'admin'))
     comment_randkey = db.Column(db.Integer)
     comment_link_id = db.Column(db.Integer, db.ForeignKey('links.link_id'))
     comment_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
