@@ -16,7 +16,10 @@ def get_quote(quote_id):
     )
 
     buttons = [
-        MenuButton(endpoint='Quote:random_redir', text=_('random quote')),
+        MenuButton(endpoint='Quote:random_redir', text=_('random quote'),
+                   icon='refresh'),
+        MenuButton(endpoint='Quote:random_redir', text=_('new quote'),
+                   icon='plus-square'),
     ]
     toolbox = Menu(buttons=buttons)
 

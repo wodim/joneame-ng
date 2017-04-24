@@ -4,28 +4,12 @@
             {{ comment.link.link_title }}
         </a>
     {% endif %}
-    {% if comment.comment_type == 'admin' %}
-        <img class="avatar" src="{{ url_for('static', filename='images/admin-avatar.png') }}" alt="{{ _('admin') }}" />
-    {% else %}
-        <img class="avatar" src="{{ comment.user.avatar_url }}" alt="{{ _("%(user)s's avatar", user=comment.user.user_login) }}">
-    {% endif %}
+    {{ utils.render_avatar(comment.user, comment.comment_type == 'admin') }}
     <div class="inner">
         <div class="comment-meta">
             <ul class="left">
                 <li>
-                    {% if comment.comment_type == 'admin' %}
-                            <i class="fa fa-user"></i>
-                            <strong>admin</strong>
-                    {% else %}
-                        <a href="{{ url_for('User:get', user_login=comment.user.user_login) }}">
-                            <i class="fa fa-user"></i>
-                            <strong>{{ comment.user.user_login }}</strong>
-                        </a>
-                        {% if comment.comment_type == 'especial' %}
-                            <span title="{{ _('this comment was written on behalf of the jonéame administration') }}">({{ _('admin') }})</
-                            span>
-                        {% endif %}
-                    {% endif %}
+                    {{ utils.render_user(comment.user, comment.comment_type == 'admin' or comment.comment_type == 'especial', comment.comment_type == 'especial') }}
                 <li>
                     <i class="fa fa-clock-o"></i>
                     {{ comment.comment_date }}

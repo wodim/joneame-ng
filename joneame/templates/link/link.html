@@ -11,12 +11,12 @@
     </div>
     <div class="entry">
         <div class="title">
-            <h3><a href="{{ link.link_url }}">{{ link.link_title|safe }}</a></h3>
+            <h3><a href="{{ url_for('Link:go', link_id=link.link_id) }}">{{ link.link_title|safe }}</a></h3>
         </div>
         <ul class="submitted">
             <li>
                 <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
-                    <img class="avatar" src="{{ link.user.avatar_url }}" alt="{{ _("%(user)s's avatar", user=link.user.user_login) }}" />
+                    {{ utils.render_avatar(link.user) }}
                     <i class="fa fa-user"></i>
                     <strong>{{ link.user.user_login }}</strong>
                 </a>

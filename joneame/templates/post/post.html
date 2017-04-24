@@ -1,13 +1,10 @@
 <li {% if post.post_parent != 0 %}class="child"{% endif %}>
-    <img class="avatar" src="{{ post.user.avatar_url|safe }}" alt="{{ _("%(user)s's avatar", user=post.user.user_login) }}" />
+    {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
     <div class="inner">
         <div class="post-meta">
             <ul class="left">
                 <li>
-                    <a href="{{ url_for('User:get', user_login=post.user.user_login) }}">
-                        <i class="fa fa-user"></i>
-                        <strong>{{ post.user.user_login }}</strong>
-                    </a>
+                    {{ utils.render_user(post.user, post.post_type == 'admin') }}
                 <li class="timestamp">
                     <i class="fa fa-clock-o"></i>
                     <a href="{{ url_for('Post:get', user_login=post.user.user_login, post_id=post.post_id) }}">

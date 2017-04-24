@@ -1,9 +1,11 @@
 from flask import abort, request, redirect, url_for
+from flask_babel import gettext as _
 
 from joneame import app
 from joneame.config import _cfgi
 from joneame.models import PostModel, UserModel
 from joneame.views.base import render_page
+from joneame.views.menus import Menu, MenuButton
 
 
 @app.route('/posts/<user_login>/<int:post_id>', endpoint='Post:get')
@@ -44,5 +46,12 @@ def get_post_list(user_login=None):
     if not posts:
         abort(404)
 
+    buttons = [
+        MenuButton(endpoint='Quote:random_redir', text=_('new post'),
+                   icon='plus-square'),
+    ]
+    toolbox = Menu(buttons=buttons)
+
     return render_page('post/postlist.html', posts=posts,
-                       pagination=pagination, user_login=user_login)
+                       pagination=pagination, user_login=user_login,
+                       toolbox=toolbox)

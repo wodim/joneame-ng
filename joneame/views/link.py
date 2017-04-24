@@ -1,4 +1,4 @@
-from flask import abort, request
+from flask import abort, redirect, request
 from flask_babel import gettext as _
 
 from joneame import app
@@ -34,6 +34,18 @@ def get_link(link_uri):
                        endpoint=request.endpoint)
 
 
+@app.route('/go/<int:link_id>', endpoint='Link:go')
+def link_go(link_id):
+    # TODO track clicks
+    link = (
+        LinkModel.query
+        .filter(LinkModel.link_id == link_id)
+        .first_or_404()
+    )  # TODO revisar fecha de activacion
+
+    return redirect(link.link_url)
+
+
 @app.route('/', endpoint='Link:list_home')
 @app.route('/queue', endpoint='Link:list_queue')
 @app.route('/category/<int:category_id>', endpoint='Link:list_category')
@@ -43,7 +55,7 @@ def get_link_list(category_id=None):
     query = LinkModel.query
     if request.endpoint == 'Link:list_home':
         query = query.filter(LinkModel.link_status == 'published')
-        query = query.order_by(LinkModel.link_sent_date.desc())
+        query = query.order_by(LinkModel.link_date.desc())
 
         sidebar = [sidebox_categories, sidebox_top_links,
                    sidebox_last_comments]
@@ -53,11 +65,18 @@ def get_link_list(category_id=None):
                              > (datetime.utcnow() - timedelta(weeks=4)))
         query = query.order_by(LinkModel.link_sent_date.desc())
 
+        buttons = [
+            MenuButton(endpoint='Link:list_queue', text=_('all')),
+            MenuButton(endpoint='Link:list_queue', text=_('discarded'),
+                       icon='trash', kwargs={'meta': 'discarded'}),
+        ]
+        toolbox = Menu(buttons=buttons, required_key='meta')
+
         sidebar = [sidebox_top_queued]
     elif request.endpoint == 'Link:list_category':
         query = query.filter(LinkModel.link_status == 'published',
                              LinkModel.link_category == category_id)
-        query = query.order_by(LinkModel.link_sent_date.desc())
+        query = query.order_by(LinkModel.link_date.desc())
     elif request.endpoint == 'Link:list_top':
         query = query.filter(LinkModel.link_status == 'published')
         query = query.order_by((LinkModel.link_votes +

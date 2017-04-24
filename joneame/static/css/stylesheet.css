@@ -206,6 +206,9 @@ strong {
     display: inline-block;
     border-radius: 3px;
 }
+.toolbox ul li .fa {
+    color: #333;
+}
 .toolbox ul li a {
     display: inline-block;
     line-height: 30px;
@@ -216,6 +219,9 @@ strong {
 }
 .toolbox ul li.current {
     background: #5a8cbe;
+}
+.toolbox ul li.current .fa {
+    color: white;
 }
 .toolbox ul li.current a {
     color: white;
@@ -426,7 +432,7 @@ strong {
 .comments li .inner {
     margin-left: 38px;
     background: #eee;
-    padding: 7px;
+    padding: 10px;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
@@ -483,7 +489,7 @@ strong {
 .posts ul li .inner {
     margin-left: 38px;
     background: #eee;
-    padding: 7px;
+    padding: 10px;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }

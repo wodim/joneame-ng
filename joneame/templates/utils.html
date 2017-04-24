@@ -26,11 +26,40 @@
 
 {% macro render_menu(menu) %}
     <ul>
-        {% for endpoint, text, title, current, kwargs in menu %}
+        {% for endpoint, text, title, current, icon, kwargs in menu %}
             <li {% if current %}class="current"{% endif %}>
                 <a href="{{ url_for(endpoint, **kwargs) }}">
+                    {% if icon %}<i class="fa fa-{{icon}}"></i>{% endif %}
                     {{ text }}
                 </a>
         {% endfor %}
     </ul>
+{% endmacro %}
+
+{% macro render_avatar(user, is_admin=False) %}
+    {% if is_admin %}
+        <img class="avatar" src="{{ url_for('static', filename='images/admin-avatar.png') }}" alt="{{ _('admin') }}" />
+    {% else %}
+        <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _("%(user)s's avatar", user=user.user_login) }}">
+    {% endif %}
+{% endmacro %}
+
+{% macro render_user(user, is_admin=False, reveal_user=False) %}
+    {% if is_admin %}
+        {% if reveal_user %} {# admin revealing his nick #}
+            <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+                <i class="fa fa-user"></i>
+                <strong>{{ user.user_login }}</strong>
+            </a>
+            <span title="{{ _('this comment was written on behalf of the jonéame administration') }}">({{ _('admin') }})</span>
+        {% else %} {# admin hiding his nick #}
+            <i class="fa fa-user"></i>
+            <strong>admin</strong>
+        {% endif %}
+    {% else %} {# normal user #}
+        <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+            <i class="fa fa-user"></i>
+            <strong>{{ user.user_login }}</strong>
+        </a>
+    {% endif %}
 {% endmacro %}

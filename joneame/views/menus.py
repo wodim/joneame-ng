@@ -24,15 +24,24 @@ class Menu(object):
                     if (request.args[self.required_key] ==
                         button.kwargs[self.required_key]):
                         current = True
-                except NameError:
+                except KeyError:
                     pass
+            # if we are in the same endpoint, this button has no kwargs
+            # and the current request has no kwargs, assume this is the
+            # "home" subview and highlight this button
+            if (not self.required_key in request.args and
+                    not self.required_key in button.kwargs and
+                    request.endpoint == button.endpoint):
+                current = True
+            print("yielding: " + button.text)
             yield (button.endpoint, button.text, button.title, current,
-                   button.kwargs)
+                   button.icon, button.kwargs)
 
 
 class MenuButton(object):
-    def __init__(self, endpoint='#', text='', title='', kwargs=''):
+    def __init__(self, endpoint='#', text='', title='', icon=None, kwargs=''):
         self.endpoint = endpoint
         self.text = text
         self.title = title
+        self.icon = icon
         self.kwargs = kwargs if isinstance(kwargs, dict) else {}
