@@ -16,6 +16,8 @@ class Comment(db.Model):
     comment_karma = db.Column(db.Integer)
     comment_content = db.Column(db.Text)
 
+    link = db.relationship('Link', back_populates='comments', lazy='joined')
+
     def __repr__(self):
         return ('<Comment %r, user %r, content %r>' %
                 (self.comment_id, self.user.user_login,

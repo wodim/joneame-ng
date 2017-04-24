@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>{{ _('links sent') }}:</th>
-            <td>{{ user.links.count }}</td>
+            <td>{{ user.links.count() }}</td>
         </tr>
         <tr>
             <th>{{ _('links published') }}:</th>
@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <th>{{ _('quotes sent') }}:</th>
-            <td>{{ user.quotes.count }}</td>
+            <td>{{ user.quotes.count() }}</td>
         </tr>
     </table>
 </div>

@@ -39,7 +39,8 @@ class Link(db.Model):
     link_votos_permitidos = db.Column(db.Boolean)
     link_broken_link = db.Column(db.Boolean)
 
-    comments = db.relationship('Comment', backref='link', lazy="dynamic")
+    comments = db.relationship('Comment', back_populates='link',
+                               lazy='dynamic')
     user = db.relationship('User', back_populates='links', lazy='joined')
     category = db.relationship('Category', back_populates='links',
                                lazy='joined')
