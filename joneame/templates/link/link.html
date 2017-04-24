@@ -2,11 +2,11 @@
     <div class="shakebox">
         <div class="votes">
             <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
-                {{ link.link_votes }}
+                {{ link.link_total_votes }}
             </a>
         </div>
         <a class="shakeit" href="#">
-            vote
+            {{ _('vote') }}
         </a>
     </div>
     <div class="entry">
@@ -16,6 +16,7 @@
         <ul class="submitted">
             <li>
                 <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
+                    <img class="avatar" src="{{ link.user.avatar_url }}" alt="{{ _("%(user)s's avatar", user=link.user.user_login) }}" />
                     <i class="fa fa-user"></i>
                     <strong>{{ link.user.user_login }}</strong>
                 </a>
@@ -23,7 +24,7 @@
                 <i class="fa fa-clock-o"></i>
                 {{ link.link_sent_date }}
         </ul>
-        {% if link.link_content %}
+        {% if link.link_content and not link_brief %}
             <div class="text">
                 {{ link.link_content }}
             </div>
@@ -32,23 +33,20 @@
             <li class="comments">
                 <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
                     <i class="fa fa-comments"></i>
-                    {% if link.link_comments == 1 %}
-                        {{ link.link_comments }} comment
-                    {% else %}
-                        {{ link.link_comments }} comments
-                    {% endif %}
+                    {{ ngettext('%(num)s comment', '%(num)s comments', link.link_comments) }}
                 </a>
             <li>
-                <strong>charisma:</strong> {{ link.link_karma }}
+                <strong>{{ _('karma') }}:</strong> {{ link.link_karma }}
             <li>
                 <i class="fa fa-external-link-square"></i>
-                xx clicks
+                {{ ngettext('%(num)s click', '%(num)s clicks', 1488) }}
         </ul>
         <ul class="meta">
             <li>
-                <strong>users:</strong> {{ link.link_votes }}
-                <strong>anonymous:</strong> {{ link.link_anonymous }}
-                <strong>downvotes:</strong> {{ link.link_negatives }}
+                <strong>{{ _('category') }}:</strong>
+                <a href="{{ url_for('Link:list_category', category_id=link.category.category_id) }}">
+                    {{ link.category.category_name }}
+                </a>
             <li>
                 <i class="fa fa-twitter"></i>
             <li>

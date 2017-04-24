@@ -3,40 +3,40 @@
 <div class="user">
     <table>
         <tr>
-            <th>user:</th>
+            <th>{{ _('user') }}:</th>
             <td>{{ user.user_login }} (id: {{ user.user_id }})
                 (level: {{ user.user_level }})</td>
         </tr>
         <tr>
-            <th>since:</th>
+            <th>{{ _('since') }}:</th>
             <td>{{ user.user_date }}</td>
         </tr>
         <tr>
-            <th>charisma:</th>
+            <th>{{ _('karma') }}:</th>
             <td>{{ user.user_karma }}</td>
         </tr>
         <tr>
-            <th>links sent:</th>
+            <th>{{ _('links sent') }}:</th>
             <td>{{ user.links.count() }}</td>
         </tr>
         <tr>
-            <th>links published:</th>
+            <th>{{ _('links published') }}:</th>
             <td>{{ user.links_published_count }}</td>
         </tr>
         <tr>
-            <th>comments:</th>
+            <th>{{ _('comments') }}:</th>
             <td>{{ user.comments_count }}</td>
         </tr>
         <tr>
-            <th>posts:</th>
+            <th>{{ _('posts') }}:</th>
             <td>{{ user.posts_count }}</td>
         </tr>
         <tr>
-            <th>votes cast:</th>
-            <td>{{ user.user_login }}</td>
+            <th>{{ _('votes cast') }}:</th>
+            <td>{{ user.votes_count }}</td>
         </tr>
         <tr>
-            <th>quotes sent:</th>
+            <th>{{ _('quotes sent') }}:</th>
             <td>{{ user.quotes.count() }}</td>
         </tr>
     </table>

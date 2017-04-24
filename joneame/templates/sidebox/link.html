@@ -1,5 +1,5 @@
-<div class="sidebox">
-    <h3>{{ sidebox_name }}</h3>
+{% extends 'sidebox/layout.html' %}
+{% block content %}
     <ul class="links">
     {% for link in links %}
         <li>
@@ -10,4 +10,4 @@
         </li>
     {% endfor %}
     </ul>
-</div>
+{% endblock %}

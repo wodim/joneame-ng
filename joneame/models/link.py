@@ -1,4 +1,4 @@
-from ..database import db
+from joneame.database import db
 
 
 class LinkModel(db.Model):
@@ -20,7 +20,8 @@ class LinkModel(db.Model):
     link_date = db.Column(db.DateTime)
     link_sent_date = db.Column(db.DateTime)
     link_sent = db.Column(db.Boolean)
-    link_category = db.Column(db.Integer)  # falta relacion
+    link_category = db.Column(db.Integer,
+                              db.ForeignKey('categories.category_id'))
     link_ip = db.Column(db.String(24))
     link_content_type = db.Column(db.Enum('text', 'video', 'image'))
     link_uri = db.Column(db.String(100))
@@ -42,3 +43,7 @@ class LinkModel(db.Model):
 
     def __repr__(self):
         return '<Link %r, author %r>' % (self.link_id, self.link_author)
+
+    @property
+    def link_total_votes(self):
+        return self.link_votes + self.link_anonymous

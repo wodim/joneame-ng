@@ -1,6 +1,6 @@
 from random import randint
 
-from flask import render_template
+from flask import render_template, request
 
 from joneame.database import db
 from joneame.models import QuoteModel
@@ -17,8 +17,12 @@ def get_random_quote():
     return quote
 
 
-def render_page(template, sideboxes=None, show_quote=True, **kwargs):
-    if show_quote:
-        kwargs['random_quote'] = get_random_quote()
+def render_page(template, sidebar=None, submenu=None, show_quote=True,
+                endpoint=None, toolbox=None, **kwargs):
+    kwargs['random_quote'] = get_random_quote() if show_quote else None
+    kwargs['sidebar'] = sidebar
+    kwargs['submenu'] = submenu
+    kwargs['toolbox'] = toolbox
+    kwargs['endpoint'] = endpoint if endpoint else request.endpoint
 
     return render_template(template, **kwargs)

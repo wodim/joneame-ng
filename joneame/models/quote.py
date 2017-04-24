@@ -1,4 +1,4 @@
-from ..database import db
+from joneame.database import db
 
 
 class QuoteModel(db.Model):

@@ -1,0 +1,12 @@
+{% extends 'sidebox/layout.html' %}
+{% block content %}
+    <ul class="categories">
+    {% for category in categories %}
+        <li>
+        <a href="{{ url_for('Link:list_category', category_id=category.category_id) }}">
+            <i class="fa fa-folder-open-o"></i>
+            {{ category.category_name }}
+        </a>
+    {% endfor %}
+    </ul>
+{% endblock %}

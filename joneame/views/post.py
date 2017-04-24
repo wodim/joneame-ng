@@ -2,11 +2,11 @@ from flask import abort, request, redirect, url_for
 
 from joneame import app
 from joneame.config import _cfgi
-from joneame.models import PostModel
+from joneame.models import PostModel, UserModel
 from joneame.views.base import render_page
 
 
-@app.route('/posts/<user_login>/<int:post_id>')
+@app.route('/posts/<user_login>/<int:post_id>', endpoint='Post:get')
 def get_post(user_login, post_id):
     post = (
         PostModel.query
@@ -22,12 +22,20 @@ def get_post(user_login, post_id):
 
 
 @app.route('/posts/', endpoint='Post:list')
-def get_post_list(page=1):
+@app.route('/posts/<user_login>', endpoint='Post:list_user')
+def get_post_list(user_login=None):
     posts = (
         PostModel.query
         .filter(PostModel.post_parent == 0)
         .order_by(PostModel.post_date.desc())
     )
+    if user_login:
+        user = (
+            UserModel.query
+            .filter(UserModel.user_login == user_login)
+            .first_or_404()
+        )
+        posts = posts.filter(PostModel.post_user_id == user.user_id)
 
     page = request.args.get('page', 1, type=int)
     pagination = posts.paginate(page, _cfgi('misc', 'page_size'))
@@ -37,4 +45,4 @@ def get_post_list(page=1):
         abort(404)
 
     return render_page('post/postlist.html', posts=posts,
-                       pagination=pagination, endpoint=request.endpoint)
+                       pagination=pagination, user_login=user_login)

@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
+{% set full_width = true %}
 {% block content %}
-<div class="user">
-    <ul class="quotes">
-        {% for quote in quotes %}
-            <li>{{ quote.quote_text }}</li>
+<div class="quotes">
+    <table>
+        {% for quote in items %}
+            <tr>
+                <th>#{{ quote.quote_id }}</th>
+                <td>{{ quote.quote_text }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     {% if pagination %}
         {% import "utils.html" as utils %}
         {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}

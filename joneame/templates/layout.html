@@ -1,49 +1,57 @@
+{% import "utils.html" as utils %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
         <title>Jonéame</title>
     </head>
     <body>
-        <div class="cover">
-            <div class="header">
-                <div class="logo"><a href="{{ url_for('Link:list_home') }}">Jonéame</a></div>
-                <ul class="sections">
-                    <li><a href="#">submit</a>
-                    <li><a href="{{ url_for('Link:list_queue') }}">queue</a>
-                    <li><a href="#">sneak</a>
-                    <li><a href="{{ url_for('Post:list') }}">posts</a>
-                    {# <li><a href="#">polls</a> #}
-                </ul>
-            </div>
-        </div>
-        <div class="subcover">
-            <div class="header">
-                {% if random_quote %}
-                    <div class="quote">
-                        <a href="{{ url_for('Quote:get', quote_id=random_quote.quote_id) }}">
-                            <i class="fa fa-quote-left"></i>
-                        </a>
-                        <a href="{{ url_for('User:get', user_login=random_quote.user.user_login) }}">
-                            <strong>{{ random_quote.user.user_login }}:</strong>
-                        </a>
-                        {{ random_quote.quote_text }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+        <div class="cover"><div class="header">
+            <a class="logo" href="{{ url_for('Link:list_home') }}">Jonéame</a>
+            <ul class="sections">
+                <li><a href="#">{{ _('submit') }}</a>
+                <li><a href="{{ url_for('Link:list_queue') }}">{{ _('queue') }}</a>
+                <li><a href="#">{{ _('sneak') }}</a>
+                <li><a href="{{ url_for('Quote:random_redir') }}">{{ _('quotes') }}</a>
+                <li><a href="{{ url_for('Post:list') }}">{{ _('posts') }}</a>
+            </ul>
+        </div></div>
+        <div class="subcover"><div class="header">
+            {% if random_quote %}
+                <div class="quote">
+                    <a href="{{ url_for('Quote:get', quote_id=random_quote.quote_id) }}">
+                        <i class="fa fa-quote-left"></i>
+                    </a>
+                    <a href="{{ url_for('User:get', user_login=random_quote.user.user_login) }}">
+                        <strong>{{ random_quote.user.user_login }}:</strong>
+                    </a>
+                    {{ random_quote.quote_text }}
+                </div>
+            {% endif %}
+        </div></div>
+        {% if submenu %}
+            <div class="submenu"><div class="header">
+                {{ utils.render_menu(submenu) }}
+            </div></div>
+        {% endif %}
         <div class="canvas">
             <div class="grid">
-                {% if g.sidebar %}
+                {% if sidebar %}
                     <div class="sidebar">
-                        {% for sidebox in g.sidebar %}
-                            {{ sidebox|safe }}
+                        {% for sidebox in sidebar %}
+                            {{ sidebox()|safe }}
                         {% endfor %}
                     </div>
                 {% endif %}
-                <div class="content">
+                <div class="content {% if full_width %}full-width{% endif %}">
+                    {% if toolbox %}
+                        <div class="toolbox">
+                            {{ utils.render_menu(toolbox) }}
+                        </div>
+                    {% endif %}
                     {% block content %}{% endblock %}
                 </div>
             </div>

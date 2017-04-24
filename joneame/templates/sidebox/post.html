@@ -1,6 +1,6 @@
-<div class="sidebox">
-    <h3>{{ sidebox_name }}</h3>
+{% extends 'sidebox/layout.html' %}
+{% block content %}
     {% for post in posts %}
         {{ post.post_content }}
     {% endfor %}
-</div>
+{% endblock %}

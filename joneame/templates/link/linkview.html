@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% include 'link/link.html' %}
-<ul class="comments">
-    {% for comment in comments %}
-        {% include 'link/comment.html' %}
-    {% endfor %}
-</ul>
-{% if pagination %}
-    {% import 'utils.html' as utils %}
-    {{ utils.render_pagination(pagination, endpoint, link_uri=link.link_uri) }}
-{% endif %}
+    {% include 'link/link.html' %}
+    <ul class="comments">
+        {% for comment in comments %}
+            {% include 'link/comment.html' %}
+        {% endfor %}
+    </ul>
+    {% if pagination %}
+        {% import 'utils.html' as utils %}
+        {{ utils.render_pagination(pagination, endpoint, link_uri=link.link_uri) }}
+    {% endif %}
 {% endblock %}

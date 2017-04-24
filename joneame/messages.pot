@@ -1,0 +1,163 @@
+# Translations template for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-04-24 11:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: templates/layout.html:14
+msgid "submit"
+msgstr ""
+
+#: templates/layout.html:15
+msgid "queue"
+msgstr ""
+
+#: templates/layout.html:16
+msgid "sneak"
+msgstr ""
+
+#: templates/layout.html:17 templates/user/user.html:31 views/user.py:53
+msgid "posts"
+msgstr ""
+
+#: templates/link/comment.html:8 templates/link/comment.html:25
+msgid "admin"
+msgstr ""
+
+#: templates/link/comment.html:10 templates/link/link.html:19
+#: templates/post/post.html:2 templates/user/quoteview.html:9
+#, python-format
+msgid "%(user)s's avatar"
+msgstr ""
+
+#: templates/link/comment.html:25
+msgid "this comment was written on behalf of the jonéame administration"
+msgstr ""
+
+#: templates/link/link.html:9
+msgid "vote"
+msgstr ""
+
+#: templates/link/link.html:36
+#, python-format
+msgid "%(num)s comment"
+msgid_plural "%(num)s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/link/link.html:39 templates/user/user.html:15
+msgid "karma"
+msgstr ""
+
+#: templates/link/link.html:42
+#, python-format
+msgid "%(num)s click"
+msgid_plural "%(num)s clicks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/link/link.html:46
+msgid "category"
+msgstr ""
+
+#: templates/sidebox/comment.html:11
+msgid "in"
+msgstr ""
+
+#: templates/user/user.html:6
+msgid "user"
+msgstr ""
+
+#: templates/user/user.html:11
+msgid "since"
+msgstr ""
+
+#: templates/user/user.html:19
+msgid "links sent"
+msgstr ""
+
+#: templates/user/user.html:23
+msgid "links published"
+msgstr ""
+
+#: templates/user/user.html:27 views/user.py:51
+msgid "comments"
+msgstr ""
+
+#: templates/user/user.html:35
+msgid "votes cast"
+msgstr ""
+
+#: templates/user/user.html:39
+msgid "quotes sent"
+msgstr ""
+
+#: views/link.py:66
+msgid "one day"
+msgstr ""
+
+#: views/link.py:68
+msgid "two days"
+msgstr ""
+
+#: views/link.py:70
+msgid "one week"
+msgstr ""
+
+#: views/link.py:72
+msgid "one month"
+msgstr ""
+
+#: views/link.py:74
+msgid "one year"
+msgstr ""
+
+#: views/link.py:77
+msgid "the beginning of time"
+msgstr ""
+
+#: views/link.py:90
+msgid "home"
+msgstr ""
+
+#: views/link.py:91
+msgid "top links"
+msgstr ""
+
+#: views/link.py:93
+msgid "queued links"
+msgstr ""
+
+#: views/sidebox.py:16
+msgid "categories"
+msgstr ""
+
+#: views/sidebox.py:39 views/sidebox.py:53
+msgid "hot links"
+msgstr ""
+
+#: views/sidebox.py:65
+msgid "last comments"
+msgstr ""
+
+#: views/user.py:47
+msgid "quotes"
+msgstr ""
+
+#: views/user.py:49
+msgid "links"
+msgstr ""
+

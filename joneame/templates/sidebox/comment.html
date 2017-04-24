@@ -1,10 +1,17 @@
-<div class="sidebox">
-    <h3>{{ sidebox_name }}</h3>
+{% extends 'sidebox/layout.html' %}
+{% block content %}
     <ul class="comments">
         {% for comment in comments %}
             <li>
-                <strong>{{ comment.user.user_login }}</strong>
-                in {{ comment.link.link_title }}
+                <strong>
+                    <a href="{{ url_for('User:get', user_login=comment.user.user_login) }}">
+                        {{ comment.user.user_login }}
+                    </a>
+                </strong>
+                {{ _('in') }}
+                <a href="{{ url_for('Link:get', link_uri=comment.link.link_uri) }}">
+                    {{ comment.link.link_title }}
+                </a>
         {% endfor %}
     </ul>
-</div>
+{% endblock %}

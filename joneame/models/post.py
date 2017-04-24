@@ -1,4 +1,4 @@
-from ..database import db
+from joneame.database import db
 
 
 class PostModel(db.Model):
@@ -13,12 +13,10 @@ class PostModel(db.Model):
     post_votes = db.Column(db.Integer)
     post_karma = db.Column(db.Integer)
     post_content = db.Column(db.Text)
-    post_type = db.Column(db.Enum('normal', 'admin', 'poll'))
-    """
+    post_type = db.Column(db.Enum('normal', 'admin', 'encuesta'))
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
     children = db.relationship('PostModel') # , primaryjoin='and_(PostModel.post_id==PostModel.post_parent, PostModel.post_parent==0)')
-    """
 
     def __repr__(self):
         return ('<Post %r, author %r, content %r>' %

@@ -2,11 +2,11 @@ import base64
 
 from flask import url_for
 
-from .comment import CommentModel
-from ..config import _cfg
-from ..database import db
-from .link import LinkModel
-from .post import PostModel
+from joneame.config import _cfg
+from joneame.database import db
+from joneame.models.comment import CommentModel
+from joneame.models.link import LinkModel
+from joneame.models.post import PostModel
 
 
 class UserModel(db.Model):

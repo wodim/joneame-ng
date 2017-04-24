@@ -1,4 +1,4 @@
-from ..database import db
+from joneame.database import db
 
 
 class CommentModel(db.Model):
@@ -17,4 +17,6 @@ class CommentModel(db.Model):
     comment_content = db.Column(db.Text)
 
     def __repr__(self):
-        return '<User %r, nick %r>' % (self.user_id, self.user.user_login)
+        return ('<Comment %r, user %r, content %r>' %
+                (self.comment_id, self.user.user_login,
+                 self.comment_content[:100]))

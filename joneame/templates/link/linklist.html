@@ -5,6 +5,6 @@
     {% endfor %}
     {% if pagination %}
         {% import 'utils.html' as utils %}
-        {{ utils.render_pagination(pagination, endpoint) }}
+        {{ utils.render_pagination(pagination, endpoint, category_id=category_id) }}
     {% endif %}
 {% endblock %}

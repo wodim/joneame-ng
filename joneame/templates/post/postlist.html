@@ -1,21 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
     <div class="posts">
-        <ul class="parents">
+        <ul>
             {% for post in posts %}
                 {% include 'post/post.html' %}
-                {% if post.children %}
-                    <ul class="children">
-                        {% for post in post.children %}
-                            {% include "post/postchild.html" %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
             {% endfor %}
         </ul>
         {% if pagination %}
             {% import "utils.html" as utils %}
-            {{ utils.render_pagination(pagination, endpoint) }}
+            {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}
         {% endif %}
     </div>
 {% endblock %}
