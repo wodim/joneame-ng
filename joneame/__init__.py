@@ -1,7 +1,5 @@
 from flask import Flask
 from flask_babel import Babel
-from werkzeug.contrib.profiler import ProfilerMiddleware
-from sqltap.wsgi import SQLTapMiddleware
 
 from joneame.config import _cfg
 from joneame.database import db
@@ -12,9 +10,13 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = _cfg('database', 'uri')
 
 if app.debug:
-    #app.config['SQLALCHEMY_ECHO'] = True
+    app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    #app.config['PROFILE'] = True
+    app.config['PROFILE'] = True
+
+    from werkzeug.contrib.profiler import ProfilerMiddleware
+    from sqltap.wsgi import SQLTapMiddleware
+
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[10])
     app.wsgi_app = SQLTapMiddleware(app.wsgi_app)
 else:
