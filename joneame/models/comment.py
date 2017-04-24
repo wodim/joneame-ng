@@ -1,7 +1,7 @@
 from joneame.database import db
 
 
-class CommentModel(db.Model):
+class Comment(db.Model):
     __tablename__ = 'comments'
 
     comment_id = db.Column(db.Integer, primary_key=True)

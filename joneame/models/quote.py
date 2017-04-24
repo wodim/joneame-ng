@@ -1,7 +1,7 @@
 from joneame.database import db
 
 
-class QuoteModel(db.Model):
+class Quote(db.Model):
     __tablename__ = 'cortos'
 
     quote_id = db.Column('id', db.Integer, primary_key=True)

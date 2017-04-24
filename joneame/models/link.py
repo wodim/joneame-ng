@@ -1,7 +1,7 @@
 from joneame.database import db
 
 
-class LinkModel(db.Model):
+class Link(db.Model):
     __tablename__ = 'links'
 
     link_id = db.Column(db.Integer, primary_key=True)
@@ -39,7 +39,10 @@ class LinkModel(db.Model):
     link_votos_permitidos = db.Column(db.Boolean)
     link_broken_link = db.Column(db.Boolean)
 
-    comments = db.relationship('CommentModel', backref='link', lazy="dynamic")
+    comments = db.relationship('Comment', backref='link', lazy="dynamic")
+    user = db.relationship('User', back_populates='links', lazy='joined')
+    category = db.relationship('Category', back_populates='links',
+                               lazy='joined')
 
     def __repr__(self):
         return '<Link %r, author %r>' % (self.link_id, self.link_author)

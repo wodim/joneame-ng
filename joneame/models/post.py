@@ -1,7 +1,7 @@
 from joneame.database import db
 
 
-class PostModel(db.Model):
+class Post(db.Model):
     __tablename__ = 'posts'
 
     post_id = db.Column(db.Integer, primary_key=True)
@@ -16,7 +16,9 @@ class PostModel(db.Model):
     post_type = db.Column(db.Enum('normal', 'admin', 'encuesta'))
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
-    children = db.relationship('PostModel') # , primaryjoin='and_(PostModel.post_id==PostModel.post_parent, PostModel.post_parent==0)')
+    children = db.relationship('Post') # , primaryjoin='and_(Post.post_id==Post.post_parent, Post.post_parent==0)')
+    user = db.relationship('User', back_populates='posts', uselist=False,
+                           lazy='joined')
 
     def __repr__(self):
         return ('<Post %r, author %r, content %r>' %

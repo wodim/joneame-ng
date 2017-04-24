@@ -3,16 +3,17 @@ from flask_babel import gettext as _
 
 from joneame import app
 from joneame.config import _cfgi
-from joneame.models import PostModel, UserModel
+from joneame.models import Post, User
 from joneame.views.base import render_page
 from joneame.views.menus import Menu, MenuButton
+from joneame.utils import flatten
 
 
 @app.route('/posts/<user_login>/<int:post_id>', endpoint='Post:get')
 def get_post(user_login, post_id):
     post = (
-        PostModel.query
-        .filter(PostModel.post_id == post_id)
+        Post.query
+        .filter(Post.post_id == post_id)
         .first_or_404()
     )
 
@@ -27,21 +28,29 @@ def get_post(user_login, post_id):
 @app.route('/posts/<user_login>', endpoint='Post:list_user')
 def get_post_list(user_login=None):
     posts = (
-        PostModel.query
-        .filter(PostModel.post_parent == 0)
-        .order_by(PostModel.post_date.desc())
+        Post.query
+        .filter(Post.post_parent == 0)
+        .order_by(Post.post_date.desc())
     )
     if user_login:
         user = (
-            UserModel.query
-            .filter(UserModel.user_login == user_login)
+            User.query
+            .filter(User.user_login == user_login)
             .first_or_404()
         )
-        posts = posts.filter(PostModel.post_user_id == user.user_id)
+        posts = posts.filter(Post.post_user_id == user.user_id)
 
     page = request.args.get('page', 1, type=int)
     pagination = posts.paginate(page, _cfgi('misc', 'page_size'))
     posts = pagination.items
+
+    parent_ids = [post.post_id for post in posts]
+    children = (
+        Post.query
+        .filter(Post.post_parent.in_(parent_ids))
+        .all()
+    )
+    children = flatten(children, 'post_parent')
 
     if not posts:
         abort(404)
@@ -52,6 +61,6 @@ def get_post_list(user_login=None):
     ]
     toolbox = Menu(buttons=buttons)
 
-    return render_page('post/postlist.html', posts=posts,
+    return render_page('post/postlist.html', posts=posts, children=children,
                        pagination=pagination, user_login=user_login,
                        toolbox=toolbox)

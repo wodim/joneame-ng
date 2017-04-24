@@ -3,7 +3,7 @@ from flask_babel import gettext as _
 
 from joneame import app
 from joneame.config import _cfgi
-from joneame.models import CommentModel, LinkModel, QuoteModel, UserModel
+from joneame.models import Comment, Link, Quote, User
 from joneame.views.base import render_page
 from joneame.views.menus import Menu, MenuButton
 
@@ -14,8 +14,8 @@ from joneame.views.menus import Menu, MenuButton
 @app.route('/mafioso/<user_login>/comentarios', endpoint='User:get_comments')
 def get_user(user_login):
     user = (
-        UserModel.query
-        .filter(UserModel.user_login == user_login)
+        User.query
+        .filter(User.user_login == user_login)
         .first_or_404()
     )  # revisar fecha de activacion
 
@@ -25,18 +25,18 @@ def get_user(user_login):
     else:
         if request.endpoint == 'User:get_quotes':
             template = 'user/quotelist.html'
-            query = QuoteModel.query
-            query = query.filter(QuoteModel.quote_author == user.user_id)
+            query = Quote.query
+            query = query.filter(Quote.quote_author == user.user_id)
         elif request.endpoint == 'User:get_links':
             template = 'user/linklist.html'
-            query = LinkModel.query
-            query = query.filter(LinkModel.link_author == user.user_id)
-            query = query.order_by(LinkModel.link_date.desc())
+            query = Link.query
+            query = query.filter(Link.link_author == user.user_id)
+            query = query.order_by(Link.link_date.desc())
         elif request.endpoint == 'User:get_comments':
             template = 'user/commentlist.html'
-            query = CommentModel.query
-            query = query.filter(CommentModel.comment_user_id == user.user_id)
-            query = query.order_by(CommentModel.comment_date.desc())
+            query = Comment.query
+            query = query.filter(Comment.comment_user_id == user.user_id)
+            query = query.order_by(Comment.comment_date.desc())
         page = request.args.get('page', 1, type=int)
         pagination = query.paginate(page, _cfgi('misc', 'page_size'))
         items = pagination.items

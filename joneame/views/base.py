@@ -3,14 +3,14 @@ from random import randint
 from flask import render_template, request
 
 from joneame.database import db
-from joneame.models import QuoteModel
+from joneame.models import Quote
 
 
 def get_random_quote():
-    quote_max = (db.session.query(db.func.max(QuoteModel.quote_id)).first()[0])
+    quote_max = (db.session.query(db.func.max(Quote.quote_id)).first()[0])
     quote = (
-        QuoteModel.query
-        .filter(QuoteModel.quote_id > randint(0, quote_max))
+        Quote.query
+        .filter(Quote.quote_id > randint(0, quote_max))
         .first()
     )
 

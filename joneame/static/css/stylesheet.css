@@ -100,11 +100,11 @@ strong {
     color: white;
 }
 .cover .header .logo {
-    margin: 0 0 0 10px;
+    padding-left: 10px;
     background-image: url('../images/logo.png');
     background-size: 94px 29px;
     background-repeat: no-repeat;
-    background-position: 0 6px;
+    background-position: 10px 6px;
     height: 40px;
     width: 102px;
     text-indent: -14880px;

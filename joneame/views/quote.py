@@ -2,7 +2,7 @@ from flask import redirect, url_for
 from flask_babel import gettext as _
 
 from joneame import app
-from joneame.models import QuoteModel
+from joneame.models import Quote
 from joneame.views.base import get_random_quote, render_page
 from joneame.views.menus import Menu, MenuButton
 
@@ -10,8 +10,8 @@ from joneame.views.menus import Menu, MenuButton
 @app.route('/corto/<int:quote_id>', endpoint='Quote:get')
 def get_quote(quote_id):
     quote = (
-        QuoteModel.query
-        .filter(QuoteModel.quote_id == quote_id)
+        Quote.query
+        .filter(Quote.quote_id == quote_id)
         .first_or_404()
     )
 
@@ -25,6 +25,7 @@ def get_quote(quote_id):
 
     return render_page('user/quoteview.html', quote=quote,
                        quote_toolbox=toolbox)
+
 
 @app.route('/corto', endpoint='Quote:random_redir')
 def random_quote_redir():

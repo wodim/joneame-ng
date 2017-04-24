@@ -22,15 +22,15 @@ class Menu(object):
             if self.required_key:
                 try:
                     if (request.args[self.required_key] ==
-                        button.kwargs[self.required_key]):
+                            button.kwargs[self.required_key]):
                         current = True
                 except KeyError:
                     pass
             # if we are in the same endpoint, this button has no kwargs
             # and the current request has no kwargs, assume this is the
             # "home" subview and highlight this button
-            if (not self.required_key in request.args and
-                    not self.required_key in button.kwargs and
+            if (self.required_key not in request.args and
+                    self.required_key not in button.kwargs and
                     request.endpoint == button.endpoint):
                 current = True
             print("yielding: " + button.text)
