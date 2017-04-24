@@ -1,3 +1,4 @@
+{% import 'utils.html' as utils %}
 <li {% if post.post_parent != 0 %}class="child"{% endif %}>
     {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
     <div class="inner">
@@ -7,7 +8,7 @@
                     {{ utils.render_user(post.user, post.post_type == 'admin') }}
                 <li class="timestamp">
                     <i class="fa fa-clock-o"></i>
-                    <a href="{{ url_for('Post:get', user_login=post.user.user_login, post_id=post.post_id) }}">
+                    <a href="{{ url_for('Post:get', user_login=post.post_public_user, post_id=post.post_id) }}">
                         {{ post.post_date }}
                     </a>
             </ul>
@@ -20,7 +21,7 @@
             {{ post.post_content }}
         </div>
     </div>
-    {% if post.post_parent == 0 %}
+    {% if post.post_parent == 0 and children %}
         {% for post in children[post.post_id] %}
             {% include "post/post.html" %}
         {% endfor %}

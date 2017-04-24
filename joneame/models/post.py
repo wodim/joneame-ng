@@ -20,6 +20,13 @@ class Post(db.Model):
     user = db.relationship('User', back_populates='posts', uselist=False,
                            lazy='joined')
 
+    @property
+    def post_public_user(self):
+        if self.post_type == 'admin':
+            return 'admin'
+        else:
+            return self.user.user_login
+
     def __repr__(self):
         return ('<Post %r, author %r, content %r>' %
                 (self.post_id, self.user.user_login, self.post_content[:100]))

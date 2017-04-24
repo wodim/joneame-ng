@@ -17,8 +17,8 @@ def get_post(user_login, post_id):
         .first_or_404()
     )
 
-    if post.user.user_login != user_login:
-        return redirect(url_for('Post:get', user_login=post.user.user_login,
+    if user_login != post.post_public_user:
+        return redirect(url_for('Post:get', user_login=post.post_public_user,
                                 post_id=post_id))
 
     return render_page('post/postview.html', post=post)
