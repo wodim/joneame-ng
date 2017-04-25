@@ -129,6 +129,9 @@ strong {
 .cover .header .sections li a:hover {
     background: rgba(0,0,0,0.05);
 }
+.cover .header .hamburger {
+    display: none;
+}
 /* second */
 .subcover {
     background: #5a8cbe;
@@ -395,6 +398,7 @@ strong {
     font-weight: bold;
     color: #444;
     letter-spacing: -1px;
+    line-height: 24px;
 }
 .content article .entry .title a:hover { /* cambiar luego por :visited. sólo como demostración TODO */
     color: #777;
@@ -632,14 +636,63 @@ img.avatar, .avatar > img {
 }
 
 /* parches de responsividad */
-@media (max-width: 950px) {
+@media (max-width: 750px) {
     .canvas, .content,
     .cover .header, .subcover .header,
     .subcover .header .quote,
     .content article {
         width: auto;
     }
+    .nomobile {
+        display: none !important;
+    }
     .canvas .grid .sidebar {
         display: none;
+    }
+    .canvas {
+        padding: 0 10px;
+    }
+    .posts ul li.child {
+        margin-left: 20px;
+    }
+
+    .cover {
+        background: #5a8cbe;
+    }
+    .cover .header {
+        padding: 0 5px;
+    }
+    .cover .header .logo {
+        padding-left: 0;
+    }
+    .cover .header .hamburger {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        border-radius: 2px;
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        background-color: white;
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMAQMAAABoTh6ZAAAABlBMVEX///88Pj+PEPnKAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCBEBCyjrtrfCAAAAEUlEQVQI12P4/4cBiOAAGxcA1hEL428Cg6gAAAAASUVORK5CYII=");
+        background-position: 7px 8px;
+        background-repeat: no-repeat;
+    }
+    .cover .header .hamburger:focus {
+        box-shadow: 0 2px 1px #4d73a7;
+    }
+
+    .cover .header .sections {
+        display: block;
+        position: absolute;
+        top: 40px;
+        right: 0px;
+        width: 100px;
+       background: #5a8cbe;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .cover .header .sections li {
+        display: block;
     }
 }
