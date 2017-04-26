@@ -27,7 +27,7 @@ def get_quote(quote_id):
                        quote_toolbox=toolbox)
 
 
-@app.route('/corto', endpoint='Quote:random_redir')
+@app.route('/cortos', endpoint='Quote:random_redir')
 def random_quote_redir():
     random_quote_id = get_random_quote().quote_id
     return redirect(url_for('Quote:get', quote_id=random_quote_id))
