@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-24 11:47+0200\n"
+"POT-Creation-Date: 2017-04-26 17:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,33 +17,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 
-#: templates/layout.html:14
-msgid "submit"
-msgstr ""
-
-#: templates/layout.html:15
-msgid "queue"
+#: utils.py:63
+#, python-format
+msgid "%(ret)s ago"
 msgstr ""
 
 #: templates/layout.html:16
+msgid "submit"
+msgstr ""
+
+#: templates/layout.html:17
+msgid "queue"
+msgstr ""
+
+#: templates/layout.html:18
 msgid "sneak"
 msgstr ""
 
-#: templates/layout.html:17 templates/user/user.html:31 views/user.py:53
+#: templates/layout.html:19 views/user.py:47
+msgid "quotes"
+msgstr ""
+
+#: templates/layout.html:20 templates/user/user.html:31 views/user.py:53
 msgid "posts"
 msgstr ""
 
-#: templates/link/comment.html:8 templates/link/comment.html:25
+#: templates/utils.html:41 templates/utils.html:54
 msgid "admin"
 msgstr ""
 
-#: templates/link/comment.html:10 templates/link/link.html:19
-#: templates/post/post.html:2 templates/user/quoteview.html:9
+#: templates/user/quoteview.html:9 templates/utils.html:43
 #, python-format
 msgid "%(user)s's avatar"
 msgstr ""
 
-#: templates/link/comment.html:25
+#: templates/utils.html:54
 msgid "this comment was written on behalf of the jonéame administration"
 msgstr ""
 
@@ -51,25 +59,25 @@ msgstr ""
 msgid "vote"
 msgstr ""
 
-#: templates/link/link.html:36
+#: templates/link/link.html:41
 #, python-format
 msgid "%(num)s comment"
 msgid_plural "%(num)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/link/link.html:39 templates/user/user.html:15
+#: templates/link/link.html:44 templates/user/user.html:15
 msgid "karma"
 msgstr ""
 
-#: templates/link/link.html:42
+#: templates/link/link.html:47
 #, python-format
 msgid "%(num)s click"
 msgid_plural "%(num)s clicks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/link/link.html:46
+#: templates/link/link.html:51
 msgid "category"
 msgstr ""
 
@@ -105,40 +113,60 @@ msgstr ""
 msgid "quotes sent"
 msgstr ""
 
-#: views/link.py:66
+#: views/link.py:80
+msgid "all"
+msgstr ""
+
+#: views/link.py:81
+msgid "discarded"
+msgstr ""
+
+#: views/link.py:105
 msgid "one day"
 msgstr ""
 
-#: views/link.py:68
+#: views/link.py:107
 msgid "two days"
 msgstr ""
 
-#: views/link.py:70
+#: views/link.py:109
 msgid "one week"
 msgstr ""
 
-#: views/link.py:72
+#: views/link.py:111
 msgid "one month"
 msgstr ""
 
-#: views/link.py:74
+#: views/link.py:113
 msgid "one year"
 msgstr ""
 
-#: views/link.py:77
+#: views/link.py:116
 msgid "the beginning of time"
 msgstr ""
 
-#: views/link.py:90
+#: views/link.py:138
 msgid "home"
 msgstr ""
 
-#: views/link.py:91
+#: views/link.py:139
 msgid "top links"
 msgstr ""
 
-#: views/link.py:93
+#: views/link.py:141
 msgid "queued links"
+msgstr ""
+
+#: views/post.py:67
+msgid "new post"
+msgstr ""
+
+#: views/quote.py:21
+msgid "new quote"
+msgstr ""
+
+#: views/quote.py:23
+msgid "random quote"
 msgstr ""
 
 #: views/sidebox.py:16
@@ -149,12 +177,8 @@ msgstr ""
 msgid "hot links"
 msgstr ""
 
-#: views/sidebox.py:65
+#: views/sidebox.py:67
 msgid "last comments"
-msgstr ""
-
-#: views/user.py:47
-msgid "quotes"
 msgstr ""
 
 #: views/user.py:49

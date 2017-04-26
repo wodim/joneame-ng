@@ -296,7 +296,8 @@ strong {
     background-image: url('../images/shakebox-published.png');
     background-color: #37699b;
 }
-.sidebar .sidebox ul.links li a div.votes.status_discarded {
+.sidebar .sidebox ul.links li a div.votes.status_discarded,
+.sidebar .sidebox ul.links li a div.votes.status_autodiscard {
     background-image: url('../images/shakebox-discarded.png');
     color: white;
     background-color: #d09a83;
@@ -354,11 +355,13 @@ strong {
 .content article.status_queued .shakebox .votes a {
     color: #333;
 }
-.content article.status_discarded .shakebox .votes {
+.content article.status_discarded .shakebox .votes,
+.content article.status_autodiscard .shakebox .votes {
     background-color: #d09a83;
     background-image: url('../images/shakebox-discarded.png');
 }
-.content article.status_discarded .shakebox .votes a {
+.content article.status_discarded .shakebox .votes a,
+.content article.status_autodiscard .shakebox .votes a {
     color: #333;
 }
 .content article.status_abuse .shakebox .votes {

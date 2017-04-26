@@ -30,12 +30,11 @@ class User(db.Model):
     user_url = db.Column(db.String(128))
     user_thumb = db.Column(db.Boolean)
 
-    avatar = db.relationship('Avatar', back_populates='user', uselist=False,
-                             lazy='select')
-    links = db.relationship('Link', back_populates='user', lazy='dynamic')
-    comments = db.relationship('Comment', backref='user', lazy='dynamic')
-    posts = db.relationship('Post', back_populates='user', lazy='dynamic')
-    quotes = db.relationship('Quote', backref='user', lazy='dynamic')
+    avatar = db.relationship('Avatar', back_populates='user', uselist=False)
+    links = db.relationship('Link', back_populates='user')
+    comments = db.relationship('Comment', backref='user')
+    posts = db.relationship('Post', back_populates='user')
+    quotes = db.relationship('Quote', backref='user')
 
     @property
     def avatar_url(self, size=80):

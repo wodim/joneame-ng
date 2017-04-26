@@ -19,7 +19,7 @@
                 <li><a href="{{ url_for('Quote:random_redir') }}">{{ _('quotes') }}</a>
                 <li><a href="{{ url_for('Post:list') }}">{{ _('posts') }}</a>
             </ul>
-            <a class="hamburger" href="#" id="hamburger"></a>
+            <a class="hamburger" href="#" id="hamburger" onclick="jnm.ui.hamburger_click()"></a>
         </div></div>
         <div class="subcover nomobile"><div class="header">
             {% if random_quote %}

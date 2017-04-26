@@ -11,7 +11,12 @@
     </div>
     <div class="entry">
         <div class="title">
-            <h3><a href="{{ url_for('Link:go', link_id=link.link_id) }}">{{ link.link_title|safe }}</a></h3>
+            <h3>
+                <a href="{{ link.link_url|escape }}"
+                     onmousedown="jnm.ui.link_click(this, {{ link.link_id }})">
+                     {{ link.link_title }}
+                </a>
+            </h3>
         </div>
         <ul class="submitted">
             <li>
@@ -22,7 +27,7 @@
                 </a>
             <li>
                 <i class="fa fa-clock-o"></i>
-                {{ link.link_sent_date }}
+                {{ link.link_sent_date|format_dt }}
         </ul>
         {% if link.link_content and not link_brief %}
             <div class="text">
@@ -39,7 +44,7 @@
                 <strong>{{ _('karma') }}:</strong> {{ link.link_karma }}
             <li>
                 <i class="fa fa-external-link-square"></i>
-                {{ ngettext('%(num)s click', '%(num)s clicks', 1488) }}
+                {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.clickcounter_counter) }}
         </ul>
         <ul class="meta">
             <li>

@@ -39,11 +39,12 @@ class Link(db.Model):
     link_votos_permitidos = db.Column(db.Boolean)
     link_broken_link = db.Column(db.Boolean)
 
-    comments = db.relationship('Comment', back_populates='link',
-                               lazy='select')
-    user = db.relationship('User', back_populates='links', lazy='select')
-    category = db.relationship('Category', back_populates='links',
-                               lazy='select')
+    comments = db.relationship('Comment', back_populates='link')
+    user = db.relationship('User', back_populates='links')
+    category = db.relationship('Category', back_populates='links')
+
+    clickcounter = db.relationship('ClickCounter', back_populates='link',
+                                   uselist=False)
 
     def __repr__(self):
         return '<Link %r, author %r>' % (self.link_id, self.link_author)
@@ -51,3 +52,32 @@ class Link(db.Model):
     @property
     def link_total_votes(self):
         return self.link_votes + self.link_anonymous
+
+    def click(self):
+        self.clickcounter.clickcounter_counter += 1
+        db.session.commit()
+
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    category_id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.Text)
+    category_lang = db.Column(db.Text)
+
+    links = db.relationship('Link', back_populates='category')
+
+    def __repr__(self):
+        return ('<Category %r, name %r>' %
+                (self.category_id, self.category_name))
+
+
+class ClickCounter(db.Model):
+    __tablename__ = 'link_clicks'
+
+    clickcounter_link_id = db.Column('id', db.Integer,
+                                     db.ForeignKey('links.link_id'),
+                                     primary_key=True)
+    clickcounter_counter = db.Column('counter', db.Integer)
+
+    link = db.relationship('Link', back_populates='clickcounter')

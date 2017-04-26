@@ -3,6 +3,7 @@ from flask_babel import Babel
 
 from joneame.config import _cfg
 from joneame.database import db
+from joneame.utils import format_dt
 
 
 # initialise the app
@@ -17,6 +18,8 @@ db.init_app(app)
 # trim and strip the resulting html
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+
+app.jinja_env.filters['format_dt'] = format_dt
 
 # initialise i18n
 babel = Babel(app)

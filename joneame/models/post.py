@@ -17,8 +17,7 @@ class Post(db.Model):
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
     children = db.relationship('Post')
-    user = db.relationship('User', back_populates='posts', uselist=False,
-                           lazy='select')
+    user = db.relationship('User', back_populates='posts', uselist=False)
 
     @property
     def post_public_user(self):

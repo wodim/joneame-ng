@@ -17,12 +17,14 @@ from joneame.config import _cfgi
 def get_link(link_uri):
     link = (
         Link.query
+        .options(db.joinedload(Link.clickcounter))
         .filter(Link.link_uri == link_uri)
         .first_or_404()
     )  # TODO revisar fecha de activacion
 
     comments = (
         Comment.query
+        .options(db.joinedload(Comment.user).joinedload(User.avatar))
         .filter(Comment.comment_link_id == link.link_id)
     )
     page = request.args.get('page', 1, type=int)
@@ -36,12 +38,13 @@ def get_link(link_uri):
 
 @app.route('/go/<int:link_id>', endpoint='Link:go')
 def link_go(link_id):
-    # TODO track clicks
     link = (
         Link.query
         .filter(Link.link_id == link_id)
         .first_or_404()
-    )  # TODO revisar fecha de activacion
+    )
+
+    link.click()
 
     return redirect(link.link_url)
 
@@ -50,11 +53,13 @@ def link_go(link_id):
 @app.route('/jonealas', endpoint='Link:list_queue')
 @app.route('/cat/<int:category_id>', endpoint='Link:list_category')
 @app.route('/las_mejores', endpoint='Link:list_top')
+@app.route('/mas_visitadas', endpoint='Link:list_top_clicks')
 def get_link_list(category_id=None):
     toolbox = sidebar = None
     query = Link.query
     query = query.options(db.joinedload(Link.user).joinedload(User.avatar))
     query = query.options(db.joinedload(Link.category))
+    query = query.options(db.joinedload(Link.clickcounter))
 
     # home page. just load all published links cronologically
     if request.endpoint == 'Link:list_home':
@@ -66,10 +71,16 @@ def get_link_list(category_id=None):
 
     # queued links. load links from last month that are still in queue
     elif request.endpoint == 'Link:list_queue':
-        query = query.filter(Link.link_status == 'queued',
-                             Link.link_sent_date
-                             > (datetime.utcnow() - timedelta(weeks=4)))
+        query = query.filter(Link.link_sent_date
+                             > (datetime.utcnow() - timedelta(weeks=8)))
         query = query.order_by(Link.link_sent_date.desc())
+
+        meta = request.args.get('meta')
+        if meta == 'discarded':
+            my_filter = ~(Link.link_status.in_(('published', 'queued')))
+            query = query.filter(my_filter)
+        else:
+            query = query.filter(Link.link_status == 'queued')
 
         buttons = [
             MenuButton(endpoint='Link:list_queue', text=_('all')),
@@ -87,10 +98,15 @@ def get_link_list(category_id=None):
         query = query.order_by(Link.link_date.desc())
 
     # top of all time according to different time ranges
-    elif request.endpoint == 'Link:list_top':
-        query = query.filter(Link.link_status == 'published')
-        query = query.order_by((Link.link_votes +
-                                Link.link_anonymous).desc())
+    elif (request.endpoint == 'Link:list_top' or
+          request.endpoint == 'Link:list_top_clicks'):
+        query = query.filter(Link.link_status.in_(('published', 'queued')))
+        if request.endpoint == 'Link:list_top':
+            query = query.order_by((Link.link_votes +
+                                    Link.link_anonymous).desc())
+        elif request.endpoint == 'Link:list_top_clicks':
+            query = query.order_by((Link.link_votes +
+                                    Link.link_anonymous).desc())
         buttons = [
             MenuButton(endpoint='Link:list_top', text=_('one day'),
                        kwargs={'range': '24h'}),
