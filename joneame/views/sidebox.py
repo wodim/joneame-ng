@@ -57,6 +57,8 @@ def sidebox_top_queued():
 def sidebox_last_comments():
     comments = (
         db.session.query(Comment)
+        .options(db.joinedload(Comment.link))
+        .options(db.joinedload(Comment.user))
         .order_by('comment_id desc')
         .limit(10).all()
     )

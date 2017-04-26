@@ -2,6 +2,7 @@ from flask import abort, request, redirect, url_for
 from flask_babel import gettext as _
 
 from joneame import app
+from joneame.database import db
 from joneame.config import _cfgi
 from joneame.models import Post, User
 from joneame.views.base import render_page
@@ -9,26 +10,32 @@ from joneame.views.menus import Menu, MenuButton
 from joneame.utils import flatten
 
 
-@app.route('/posts/<user_login>/<int:post_id>', endpoint='Post:get')
+@app.route('/notitas/<user_login>/<int:post_id>', endpoint='Post:get')
 def get_post(user_login, post_id):
-    post = (
+    thread = (
         Post.query
-        .filter(Post.post_id == post_id)
-        .first_or_404()
+        .options(db.joinedload(Post.user).joinedload(User.avatar))
+        .filter((Post.post_id == post_id) | (Post.post_parent == post_id))
+        .all()
     )
 
-    if user_login != post.post_public_user:
-        return redirect(url_for('Post:get', user_login=post.post_public_user,
+    if user_login != thread[0].post_public_user:
+        return redirect(url_for('Post:get',
+                                user_login=thread[0].post_public_user,
                                 post_id=post_id))
 
-    return render_page('post/postview.html', post=post)
+    parents = thread[:1]
+    children = {post_id: [post for post in thread if post.post_parent]}
+
+    return render_page('post/postlist.html', posts=parents, children=children)
 
 
-@app.route('/posts/', endpoint='Post:list')
-@app.route('/posts/<user_login>', endpoint='Post:list_user')
+@app.route('/notitas/', endpoint='Post:list')
+@app.route('/notitas/<user_login>', endpoint='Post:list_user')
 def get_post_list(user_login=None):
     posts = (
         Post.query
+        .options(db.joinedload(Post.user).joinedload(User.avatar))
         .filter(Post.post_parent == 0)
         .order_by(Post.post_date.desc())
     )
@@ -47,6 +54,7 @@ def get_post_list(user_login=None):
     parent_ids = [post.post_id for post in posts]
     children = (
         Post.query
+        .options(db.joinedload(Post.user).joinedload(User.avatar))
         .filter(Post.post_parent.in_(parent_ids))
         .all()
     )

@@ -40,10 +40,10 @@ class Link(db.Model):
     link_broken_link = db.Column(db.Boolean)
 
     comments = db.relationship('Comment', back_populates='link',
-                               lazy='dynamic')
-    user = db.relationship('User', back_populates='links', lazy='joined')
+                               lazy='select')
+    user = db.relationship('User', back_populates='links', lazy='select')
     category = db.relationship('Category', back_populates='links',
-                               lazy='joined')
+                               lazy='select')
 
     def __repr__(self):
         return '<Link %r, author %r>' % (self.link_id, self.link_author)

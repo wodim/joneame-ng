@@ -4,9 +4,14 @@ from flask import request
 class Menu(object):
     """so this works like this:
         if auto_endpoint is true and target is the same as request.endpoint,
-        that button earns the "current" css style.
-        if not, and required_kv is a tuple, we check in request.args if
-        the required_kv is there."""
+        that button earns the "current" css style. that's it.
+        if not, and required_key is present, if required_key is present in
+        request.args and equals the value of a certain button, that button
+        is marked as current.
+        if not, and required_key is present, but it is not present in
+        request.args, and the current button has no required_key,
+        that button is marked as current. that means that no more than one
+        button can have no required_key."""
     def __init__(self, kind='', buttons=None, auto_endpoint=False,
                  required_key=None):
         self.kind = kind

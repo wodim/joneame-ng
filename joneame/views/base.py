@@ -7,10 +7,11 @@ from joneame.models import Quote
 
 
 def get_random_quote():
-    quote_max = (db.session.query(db.func.max(Quote.quote_id)).first()[0])
+    quote_max = db.session.query(db.func.max(Quote.quote_id)).first()[0]
     quote = (
         Quote.query
         .filter(Quote.quote_id > randint(0, quote_max))
+        .options(db.joinedload(Quote.user))
         .first()
     )
 

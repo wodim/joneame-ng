@@ -16,9 +16,9 @@ class Post(db.Model):
     post_type = db.Column(db.Enum('normal', 'admin', 'encuesta'))
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
-    children = db.relationship('Post') # , primaryjoin='and_(Post.post_id==Post.post_parent, Post.post_parent==0)')
+    children = db.relationship('Post')
     user = db.relationship('User', back_populates='posts', uselist=False,
-                           lazy='joined')
+                           lazy='select')
 
     @property
     def post_public_user(self):

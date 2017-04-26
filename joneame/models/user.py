@@ -31,7 +31,7 @@ class User(db.Model):
     user_thumb = db.Column(db.Boolean)
 
     avatar = db.relationship('Avatar', back_populates='user', uselist=False,
-                             lazy='joined')
+                             lazy='select')
     links = db.relationship('Link', back_populates='user', lazy='dynamic')
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
     posts = db.relationship('Post', back_populates='user', lazy='dynamic')
@@ -81,7 +81,7 @@ class Avatar(db.Model):
     avatar_modified = db.Column(db.DateTime)
 
     user = db.relationship('User', back_populates='avatar', uselist=False,
-                           lazy='joined')
+                           lazy='select')
 
     def __repr__(self):
         return '<Avatar %r, modified %r>' % (self.avatar_id,
