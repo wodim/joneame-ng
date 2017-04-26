@@ -724,6 +724,7 @@ img.avatar, .avatar > img {
 
     .quote-viewer {
         position: relative;
+        padding-bottom: 70px;
     }
     .quote-viewer .avatar {
         width: 32px;
@@ -738,7 +739,6 @@ img.avatar, .avatar > img {
         font-size: 16pt;
         line-height: 24px;
         padding: 14px;
-        margin-top: 50px;
     }
     .quote-viewer .meta {
         margin-left: 55px;
@@ -748,8 +748,8 @@ img.avatar, .avatar > img {
         font-size: 16pt;
     }
     .quote-viewer .toolbox {
-        position: absolute;
+        position: fixed;
         right: 0;
-        top: -40px;
+        bottom: 0;
     }
 }
