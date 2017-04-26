@@ -2,7 +2,6 @@ import base64
 
 from flask import url_for
 
-from joneame.config import _cfg
 from joneame.database import db
 from joneame.models.comment import Comment
 from joneame.models.link import Link
@@ -45,7 +44,7 @@ class User(db.Model):
             return ('data:image/jpeg;base64,' +
                     base64.b64encode(self.avatar.avatar_image).decode('utf-8'))
         else:
-            return url_for('static', filename=_cfg('misc', 'no_avatar_image'))
+            return url_for('static', filename='images/no-avatar.png')
 
     @property
     def links_published_count(self):

@@ -40,7 +40,7 @@
     {% if is_admin %}
         <img class="avatar" src="{{ url_for('static', filename='images/admin-avatar.png') }}" alt="{{ _('admin') }}" />
     {% else %}
-        <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _("%(user)s's avatar", user=user.user_login) }}">
+        <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _('%(user)s\'s avatar', user=user.user_login) }}">
     {% endif %}
 {% endmacro %}
 
