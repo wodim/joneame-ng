@@ -383,15 +383,20 @@ strong {
     margin-left: 70px;
     margin-top: 0px;
 }
+.content article .entry .title,
 .content article .entry .submitted,
 .content article .entry .text,
 .content article .entry .meta {
-    margin-top: 6px;
+    margin-bottom: 4px;
 }
 .content article .entry .title .hostname,
 .content article .entry .submitted,
 .content article .entry .meta a {
     color: #666;
+}
+.content article .entry .submitted,
+.content article .entry .meta {
+    line-height: 20px;
 }
 .content article .entry .title a {
     font-size: 15pt;
@@ -537,28 +542,24 @@ strong {
 }
 .content > .user th {
     font-weight: bold;
-    width: 12em;
+    width: 15em;
     text-align: right;
-}
-.content > .user td {
 }
 
 /* quotes in profiles */
-.quotes {
+.content > .quotes {
     background: #fafafa;
     padding: 20px;
     font-size: 10pt;
     line-height: 20px;
 }
-.quotes th, .quotes td {
+.content > .quotes th, .quotes td {
     padding: 5px;
 }
-.quotes th {
+.content > .quotes th {
     font-weight: bold;
     width: 6em;
     text-align: right;
-}
-.quotes td {
 }
 
 /* quote viewer */
@@ -572,6 +573,7 @@ strong {
     background: #eee;
     padding: 20px;
     line-height: 40px;
+    word-wrap: break-word;
 }
 .quote-viewer .corner {
     background-color: #eee;
@@ -664,6 +666,7 @@ img.avatar, .avatar > img {
     }
     .cover .header .logo {
         padding-left: 0;
+        padding-right: 10px;
     }
     .cover .header .hamburger {
         position: absolute;
@@ -674,7 +677,7 @@ img.avatar, .avatar > img {
         width: 28px;
         height: 28px;
         background-color: white;
-        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMAQMAAABoTh6ZAAAABlBMVEX///88Pj+PEPnKAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCBEBCyjrtrfCAAAAEUlEQVQI12P4/4cBiOAAGxcA1hEL428Cg6gAAAAASUVORK5CYII=");
+        background-image: url('../images/hamburger.png');
         background-position: 7px 8px;
         background-repeat: no-repeat;
     }
@@ -694,5 +697,59 @@ img.avatar, .avatar > img {
     }
     .cover .header .sections li {
         display: block;
+    }
+
+    .content > .user {
+        font-size: 10pt;
+    }
+    .content > .user th {
+        width: 8em;
+    }
+    .content > .quotes th {
+        width: 2em;
+    }
+
+    .content article .shakebox,
+    .content article .shakebox .shakeit {
+        width: 50px;
+    }
+    .content article .entry {
+        margin-left: 60px;
+    }
+
+    .toolbox {
+        margin: 0 10px 20px;
+        height: auto;
+    }
+
+    .quote-viewer {
+        position: relative;
+    }
+    .quote-viewer .avatar {
+        width: 32px;
+    }
+    .quote-viewer .corner {
+        margin-left: 25px;
+        width: 15px;
+        height: 15px;
+        background-size: 15px;
+    }
+    .quote-viewer .text {
+        font-size: 16pt;
+        line-height: 24px;
+        padding: 14px;
+        margin-top: 50px;
+    }
+    .quote-viewer .meta {
+        margin-left: 55px;
+        margin-top: 16px;
+    }
+    .quote-viewer .meta .user {
+        font-size: 16pt;
+    }
+    .quote-viewer .toolbox {
+        position: absolute;
+        right: 0;
+        top: -40px;
     }
 }

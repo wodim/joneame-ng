@@ -33,7 +33,6 @@ class Menu(object):
                     self.required_key not in button.kwargs and
                     request.endpoint == button.endpoint):
                 current = True
-            print("yielding: " + button.text)
             yield (button.endpoint, button.text, button.title, current,
                    button.icon, button.kwargs)
 
