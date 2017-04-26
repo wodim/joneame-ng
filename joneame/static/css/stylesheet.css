@@ -723,7 +723,6 @@ img.avatar, .avatar > img {
     }
 
     .quote-viewer {
-        position: relative;
         padding-bottom: 70px;
     }
     .quote-viewer .avatar {
