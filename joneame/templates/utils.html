@@ -29,7 +29,7 @@
         {% for endpoint, text, title, current, icon, kwargs in menu %}
             <li {% if current %}class="current"{% endif %}>
                 <a href="{{ url_for(endpoint, **kwargs) }}">
-                    {% if icon %}<i class="fa fa-{{icon}}"></i>{% endif %}
+                    {% if icon %}{{ render_icon(icon) }}{% endif %}
                     {{ text }}
                 </a>
         {% endfor %}
@@ -62,4 +62,8 @@
             <strong>{{ user.user_login }}</strong>
         </a>
     {% endif %}
+{% endmacro %}
+
+{% macro render_icon(icon) %}
+    <i class="fa fa-{{ icon }}"></i>
 {% endmacro %}

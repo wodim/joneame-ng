@@ -4,25 +4,27 @@
             {{ comment.link.link_title }}
         </a>
     {% endif %}
-    {{ utils.render_avatar(comment.user, comment.comment_type == 'admin') }}
-    <div class="inner">
-        <div class="comment-meta">
-            <ul class="left">
-                <li>
-                    {{ utils.render_user(comment.user, comment.comment_type == 'admin' or comment.comment_type == 'especial', comment.comment_type == 'especial') }}
-                <li>
-                    <i class="fa fa-clock-o"></i>
-                    {{ comment.comment_date }}
-            </ul>
-            <ul class="right">
-                <li>
-                    <i class="fa fa-star-o"></i>
-            </ul>
-        </div>
-        <div class="comment-text">
-            <a class="order" href="#">#{{ comment.comment_order }}</a>
-            {{ comment.comment_id }}
-            {{ comment.comment_content }}
+    <div class="comment">
+        {{ utils.render_avatar(comment.user, comment.comment_type == 'admin') }}
+        <div class="inner">
+            <div class="comment-meta">
+                <ul class="left">
+                    <li>
+                        {{ utils.render_user(comment.user, comment.comment_type == 'admin' or comment.comment_type == 'especial', comment.comment_type == 'especial') }}
+                    <li>
+                        <i class="fa fa-clock-o"></i>
+                        {{ comment.comment_date }}
+                </ul>
+                <ul class="right">
+                    <li>
+                        <i class="fa fa-star-o"></i>
+                </ul>
+            </div>
+            <div class="comment-text">
+                <a class="order" href="#">#{{ comment.comment_order }}</a>
+                {{ comment.comment_id }}
+                {{ comment.comment_content }}
+            </div>
         </div>
     </div>
 </li>

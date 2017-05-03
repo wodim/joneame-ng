@@ -3,7 +3,7 @@
 <html lang="es">
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css', v=3) }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css', v=4) }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,16 +23,31 @@
         </div></div>
         <div class="subcover nomobile"><div class="header">
             {% if random_quote %}
+            <div class="left">
                 <div class="quote">
                     <a href="{{ url_for('Quote:get', quote_id=random_quote.quote_id) }}">
-                        <i class="fa fa-quote-left"></i>
+                        {{ utils.render_icon('quote-left') }}
                     </a>
                     <a href="{{ url_for('User:get', user_login=random_quote.user.user_login) }}">
                         <strong>{{ random_quote.user.user_login }}:</strong>
                     </a>
                     {{ random_quote.quote_text }}
+                    —
+                    <span title="{{ _('votes') }}">
+                        {{ utils.render_icon('hand-pointer-o') }} {{ random_quote.quote_votes }}
+                    </span>
+                    <span title="{{ _('karma') }}">
+                        {{ utils.render_icon('line-chart') }} {{ random_quote.quote_karma }}
+                    </span>
+                    <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
                 </div>
+            </div>
             {% endif %}
+            <div class="right">
+                <div class="search">
+                    <input type="search" name="search"><input type="submit" value="{{ _('search') }}">
+                </div>
+            </div>
         </div></div>
         {% if submenu %}
             <div class="submenu"><div class="header">

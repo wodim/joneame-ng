@@ -29,6 +29,7 @@ def get_user(user_login):
             template = 'user/quotelist.html'
             query = Quote.query
             query = query.filter(Quote.quote_author == user.user_id)
+            query = query.order_by(Quote.quote_id.asc())
             page_size *= 2
         elif request.endpoint == 'User:get_links':
             template = 'user/linklist.html'

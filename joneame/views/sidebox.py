@@ -8,7 +8,7 @@ from joneame.database import db
 def sidebox_categories():
     categories = (
         db.session.query(Category)
-        .order_by('category_name asc')
+        .order_by(Category.category_name.asc())
         .all()
     )
 
@@ -30,7 +30,7 @@ def sidebox_top_links():
         .filter(Link.link_status == 'published')
         .filter(Link.link_date > db.func.from_unixtime(
                 (db.func.unix_timestamp(db.func.now()) - 129600 * 50)))
-        .order_by('value desc')
+        .order_by(db.text('value desc'))
         .limit(10)
     )
 
@@ -65,7 +65,7 @@ def sidebox_last_comments():
         db.session.query(Comment)
         .options(db.joinedload(Comment.link))
         .options(db.joinedload(Comment.user))
-        .order_by('comment_id desc')
+        .order_by(Comment.comment_id.desc())
         .limit(10).all()
     )
 

@@ -14,10 +14,10 @@ def paginate(items, page_size=None):
     return items.paginate(page, page_size)
 
 
-def build_pagination_args(pagination, submenu):
+def build_pagination_args(pagination, toolbox):
     args = {}
-    if submenu and submenu.default_hint in request.args:
-        args.update({submenu.default_hint: request.args[submenu.default_hint]})
+    if toolbox and toolbox.default_hint in request.args:
+        args.update({toolbox.default_hint: request.args[toolbox.default_hint]})
     args.update(dict(request.view_args))
     return args
 
@@ -43,6 +43,6 @@ def render_page(template, sidebar=None, submenu=None, show_quote=True,
     })
     if pagination:
         kwargs['pagination'] = pagination
-        kwargs['pagination'].args = build_pagination_args(pagination, submenu)
+        kwargs['pagination'].args = build_pagination_args(pagination, toolbox)
 
     return render_template(template, **kwargs)

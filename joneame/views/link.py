@@ -52,6 +52,7 @@ def link_go(link_id):
 @app.route('/cat/<int:category_id>', endpoint='Link:list_category')
 @app.route('/las_mejores', endpoint='Link:list_top')
 @app.route('/mas_visitadas', endpoint='Link:list_top_clicks')
+@app.route('/aleatorias', endpoint='Link:list_random')
 def get_link_list(category_id=None):
     toolbox = sidebar = None
     query = Link.query
@@ -64,7 +65,7 @@ def get_link_list(category_id=None):
         query = query.filter(Link.link_status == 'published')
         query = query.order_by(Link.link_date.desc())
 
-        sidebar = [sidebox_categories, sidebox_top_links,
+        sidebar = [sidebox_top_links, sidebox_categories,
                    sidebox_last_comments]
 
     # queued links. load links from last month that are still in queue
@@ -87,7 +88,7 @@ def get_link_list(category_id=None):
         ]
         toolbox = Menu(buttons=buttons, default_hint='meta')
 
-        sidebar = [sidebox_top_queued]
+        sidebar = [sidebox_top_queued, sidebox_categories]
 
     # all published links from a category (from a sidebox)
     elif request.endpoint == 'Link:list_category':
@@ -134,6 +135,11 @@ def get_link_list(category_id=None):
             query = query.filter((Link.link_date >
                                   datetime.now() - v_to_r[timerange]))
 
+    # published and queued links, randomised
+    elif request.endpoint == 'Link:list_random':
+        query = query.filter(Link.link_status.in_(('published', 'queued')))
+        query = query.order_by(db.func.rand())
+
     # paginate them...
     pagination = paginate(query)
     links = pagination.items
@@ -142,6 +148,7 @@ def get_link_list(category_id=None):
         MenuButton(endpoint='Link:list_home', text=_('home'),),
         MenuButton(endpoint='Link:list_top', text=_('top links'),
                    kwargs={'range': '24h'}),
+        MenuButton(endpoint='Link:list_random', text=_('random')),
         MenuButton(endpoint='Link:list_queue', text=_('queued links')),
     ]
     submenu = Menu(buttons=buttons)
