@@ -15,11 +15,10 @@ def paginate(items, page_size=None):
 
 
 def build_pagination_args(pagination, submenu):
-    args = dict(request.args)
+    args = {}
+    if submenu and submenu.default_hint in request.args:
+        args.update({submenu.default_hint: request.args[submenu.default_hint]})
     args.update(dict(request.view_args))
-    print(args)
-    if 'page' in args:
-        del args['page']
     return args
 
 

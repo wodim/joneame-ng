@@ -2,7 +2,7 @@
 <li {% if post.post_parent != 0 %}class="child"{% endif %}>
     {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
     <div class="inner">
-        <div class="post-meta">
+        <div class="comment-meta">
             <ul class="left">
                 <li>
                     {{ utils.render_user(post.user, post.post_type == 'admin') }}
@@ -17,7 +17,7 @@
                     <i class="fa fa-star-o"></i>
             </ul>
         </div>
-        <div class="post-text">
+        <div class="comment-text">
             {{ post.post_content }}
         </div>
     </div>

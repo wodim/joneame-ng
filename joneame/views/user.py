@@ -55,7 +55,7 @@ def get_user(user_login):
         MenuButton(endpoint='Post:list_user', text=_('posts'),
                    kwargs=dict(user_login=user_login)),
     ]
-    submenu = Menu(buttons=buttons, auto_endpoint=True)
+    submenu = Menu(buttons=buttons)
 
     return render_page(template, user=user, items=items, submenu=submenu,
                        pagination=pagination, user_login=user_login)

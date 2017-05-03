@@ -23,7 +23,7 @@ def get_quote(quote_id):
         MenuButton(endpoint='Quote:random_redir', text=_('random quote'),
                    icon='refresh'),
     ]
-    toolbox = Menu(buttons=buttons)
+    toolbox = Menu(buttons=buttons, no_default=True)
 
     return render_page('user/quoteview.html', quote=quote,
                        quote_toolbox=toolbox, show_quote=False)

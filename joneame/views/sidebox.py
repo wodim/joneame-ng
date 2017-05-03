@@ -36,6 +36,9 @@ def sidebox_top_links():
 
     links = [link for (link, score) in links.all()]
 
+    if not links:
+        return ''
+
     return render_template('sidebox/link.html', sidebox_name=_('hot links'),
                            links=links)
 
@@ -47,8 +50,11 @@ def sidebox_top_queued():
         .filter(Link.link_date > db.func.from_unixtime(
                 (db.func.unix_timestamp(db.func.now()) - 86400 * 7)))
         .order_by(Link.link_karma.desc())
-        .limit(10)
+        .limit(10).all()
     )
+
+    if not links:
+        return ''
 
     return render_template('sidebox/link.html', sidebox_name=_('hot links'),
                            links=links)
@@ -62,6 +68,9 @@ def sidebox_last_comments():
         .order_by('comment_id desc')
         .limit(10).all()
     )
+
+    if not comments:
+        return ''
 
     return render_template('sidebox/comment.html',
                            sidebox_name=_('last comments'),

@@ -81,8 +81,7 @@ def get_link_list(category_id=None):
             query = query.filter(Link.link_status == 'queued')
 
         buttons = [
-            MenuButton(endpoint='Link:list_queue', text=_('all'),
-                       default=True),
+            MenuButton(endpoint='Link:list_queue', text=_('all')),
             MenuButton(endpoint='Link:list_queue', text=_('discarded'),
                        icon='trash', kwargs={'meta': 'discarded'}),
         ]
@@ -145,7 +144,7 @@ def get_link_list(category_id=None):
                    kwargs={'range': '24h'}),
         MenuButton(endpoint='Link:list_queue', text=_('queued links')),
     ]
-    submenu = Menu(buttons=buttons, auto_endpoint=True)
+    submenu = Menu(buttons=buttons)
 
     return render_page('link/linklist.html', sidebar=sidebar, links=links,
                        pagination=pagination, endpoint=request.endpoint,

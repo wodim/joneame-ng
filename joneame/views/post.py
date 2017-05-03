@@ -44,8 +44,8 @@ def get_post_list(user_login=None):
             .filter(User.user_login == user_login)
             .first_or_404()
         )
-        posts = posts.filter(Post.post_user_id == user.user_id)
-        posts = posts.filter(Post.post_type != 'admin')
+        posts = posts.filter(Post.post_user_id == user.user_id,
+                             Post.post_type.in_(('normal', 'encuesta')))
 
     pagination = paginate(posts)
     posts = pagination.items
