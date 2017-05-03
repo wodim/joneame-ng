@@ -9,7 +9,7 @@ from joneame import app
 
 
 if __name__ == '__main__':
-    app.config['SQLALCHEMY_ECHO'] = True
+    # app.config['SQLALCHEMY_ECHO'] = True
     app.config['PROFILE'] = True
 
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[10])

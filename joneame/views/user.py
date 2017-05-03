@@ -4,7 +4,7 @@ from flask_babel import gettext as _
 from joneame import app
 from joneame.config import _cfgi
 from joneame.models import Comment, Link, Quote, User
-from joneame.views.base import render_page
+from joneame.views.base import paginate, render_page
 from joneame.views.menus import Menu, MenuButton
 
 
@@ -19,6 +19,8 @@ def get_user(user_login):
         .first_or_404()
     )  # revisar fecha de activacion
 
+    page_size = _cfgi('misc', 'page_size')
+
     if request.endpoint == 'User:get':
         template = 'user/user.html'
         items = pagination = None
@@ -27,6 +29,7 @@ def get_user(user_login):
             template = 'user/quotelist.html'
             query = Quote.query
             query = query.filter(Quote.quote_author == user.user_id)
+            page_size *= 2
         elif request.endpoint == 'User:get_links':
             template = 'user/linklist.html'
             query = Link.query
@@ -37,8 +40,7 @@ def get_user(user_login):
             query = Comment.query
             query = query.filter(Comment.comment_user_id == user.user_id)
             query = query.order_by(Comment.comment_date.desc())
-        page = request.args.get('page', 1, type=int)
-        pagination = query.paginate(page, _cfgi('misc', 'page_size'))
+        pagination = paginate(query, page_size)
         items = pagination.items
 
     buttons = [

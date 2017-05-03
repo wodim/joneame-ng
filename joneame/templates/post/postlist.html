@@ -7,7 +7,7 @@
             {% endfor %}
         </ul>
         {% if pagination %}
-            {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}
+            {{ utils.render_pagination(pagination) }}
         {% endif %}
     </div>
 {% endblock %}

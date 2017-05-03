@@ -8,6 +8,6 @@
     </ul>
     {% if pagination %}
         {% import 'utils.html' as utils %}
-        {{ utils.render_pagination(pagination, endpoint, link_uri=link.link_uri) }}
+        {{ utils.render_pagination(pagination) }}
     {% endif %}
 {% endblock %}

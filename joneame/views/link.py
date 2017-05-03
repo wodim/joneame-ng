@@ -5,12 +5,11 @@ from flask_babel import gettext as _
 
 from joneame import app
 from joneame.database import db
-from joneame.views.base import render_page
+from joneame.views.base import paginate, render_page
 from joneame.views.sidebox import (sidebox_categories, sidebox_top_links,
                                    sidebox_last_comments, sidebox_top_queued)
 from joneame.views.menus import Menu, MenuButton
 from joneame.models import Link, Comment, User
-from joneame.config import _cfgi
 
 
 @app.route('/historia/<link_uri>', endpoint='Link:get')
@@ -27,8 +26,7 @@ def get_link(link_uri):
         .options(db.joinedload(Comment.user).joinedload(User.avatar))
         .filter(Comment.comment_link_id == link.link_id)
     )
-    page = request.args.get('page', 1, type=int)
-    pagination = comments.paginate(page, _cfgi('misc', 'page_size'))
+    pagination = paginate(comments)
     comments = pagination.items
 
     return render_page('link/linkview.html', link=link, comments=comments,
@@ -83,11 +81,12 @@ def get_link_list(category_id=None):
             query = query.filter(Link.link_status == 'queued')
 
         buttons = [
-            MenuButton(endpoint='Link:list_queue', text=_('all')),
+            MenuButton(endpoint='Link:list_queue', text=_('all'),
+                       default=True),
             MenuButton(endpoint='Link:list_queue', text=_('discarded'),
                        icon='trash', kwargs={'meta': 'discarded'}),
         ]
-        toolbox = Menu(buttons=buttons, required_key='meta')
+        toolbox = Menu(buttons=buttons, default_hint='meta')
 
         sidebar = [sidebox_top_queued]
 
@@ -120,9 +119,10 @@ def get_link_list(category_id=None):
                        kwargs={'range': '1y'}),
             MenuButton(endpoint='Link:list_top',
                        text=_('the beginning of time'),
-                       kwargs={'range': 'all'}),
+                       kwargs={'range': 'all'},
+                       default=True),
         ]
-        toolbox = Menu(buttons=buttons, required_key='range')
+        toolbox = Menu(buttons=buttons, default_hint='range')
 
         v_to_r = {'24h': timedelta(hours=24),
                   '48h': timedelta(hours=48),
@@ -136,8 +136,7 @@ def get_link_list(category_id=None):
                                   datetime.now() - v_to_r[timerange]))
 
     # paginate them...
-    page = request.args.get('page', 1, type=int)
-    pagination = query.paginate(page, _cfgi('misc', 'page_size'))
+    pagination = paginate(query)
     links = pagination.items
 
     buttons = [

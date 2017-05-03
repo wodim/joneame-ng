@@ -8,6 +8,6 @@
 </ul>
 {% if pagination %}
     {% import "utils.html" as utils %}
-    {{ utils.render_pagination(pagination, endpoint, user_login=user_login) }}
+    {{ utils.render_pagination(pagination) }}
 {% endif %}
 {% endblock %}

@@ -1,11 +1,10 @@
-from flask import abort, request, redirect, url_for
+from flask import abort, redirect, url_for
 from flask_babel import gettext as _
 
 from joneame import app
 from joneame.database import db
-from joneame.config import _cfgi
 from joneame.models import Post, User
-from joneame.views.base import render_page
+from joneame.views.base import paginate, render_page
 from joneame.views.menus import Menu, MenuButton
 from joneame.utils import flatten
 
@@ -46,9 +45,9 @@ def get_post_list(user_login=None):
             .first_or_404()
         )
         posts = posts.filter(Post.post_user_id == user.user_id)
+        posts = posts.filter(Post.post_type != 'admin')
 
-    page = request.args.get('page', 1, type=int)
-    pagination = posts.paginate(page, _cfgi('misc', 'page_size'))
+    pagination = paginate(posts)
     posts = pagination.items
 
     parent_ids = [post.post_id for post in posts]

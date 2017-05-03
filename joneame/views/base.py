@@ -2,8 +2,25 @@ from random import randint
 
 from flask import render_template, request
 
+from joneame.config import _cfgi
 from joneame.database import db
 from joneame.models import Quote
+
+
+def paginate(items, page_size=None):
+    page = request.args.get('page', 1, type=int)
+    page_size = page_size or _cfgi('misc', 'page_size')
+
+    return items.paginate(page, page_size)
+
+
+def build_pagination_args(pagination, submenu):
+    args = dict(request.args)
+    args.update(dict(request.view_args))
+    print(args)
+    if 'page' in args:
+        del args['page']
+    return args
 
 
 def get_random_quote():
@@ -19,11 +36,14 @@ def get_random_quote():
 
 
 def render_page(template, sidebar=None, submenu=None, show_quote=True,
-                endpoint=None, toolbox=None, **kwargs):
-    kwargs['random_quote'] = get_random_quote() if show_quote else None
-    kwargs['sidebar'] = sidebar
-    kwargs['submenu'] = submenu
-    kwargs['toolbox'] = toolbox
-    kwargs['endpoint'] = endpoint if endpoint else request.endpoint
+                endpoint=None, toolbox=None, pagination=None, **kwargs):
+    kwargs.update({
+        'random_quote': get_random_quote() if show_quote else None,
+        'sidebar': sidebar, 'submenu': submenu, 'toolbox': toolbox,
+        'endpoint': endpoint or request.endpoint, 'pagination': pagination
+    })
+    if pagination:
+        kwargs['pagination'] = pagination
+        kwargs['pagination'].args = build_pagination_args(pagination, submenu)
 
     return render_template(template, **kwargs)
