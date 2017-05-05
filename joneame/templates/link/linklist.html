@@ -4,7 +4,6 @@
         {% include 'link/link.html' %}
     {% endfor %}
     {% if pagination %}
-        {% import 'utils.html' as utils %}
         {{ utils.render_pagination(pagination) }}
     {% endif %}
 {% endblock %}

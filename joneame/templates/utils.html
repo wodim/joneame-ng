@@ -8,8 +8,6 @@
                 {% if page %}
                     {% if page == pagination.page %}
                         <span class="current">{{ page }}</span>
-                    {% elif page == pagination.pages and pagination.page < pagination.pages - 3 %} {# 3 must equal right_current #}
-                        {# skip last page #}
                     {% else %}
                         <a href="{{ url_for(request.endpoint, page=page, **pagination.args) }}">{{ page }}</a>
                     {% endif %}
@@ -48,17 +46,17 @@
     {% if is_admin %}
         {% if reveal_user %} {# admin revealing his nick #}
             <a href="{{ url_for('User:get', user_login=user.user_login) }}">
-                <i class="fa fa-user"></i>
+                {{ render_icon('user') }}
                 <strong>{{ user.user_login }}</strong>
             </a>
             <span title="{{ _('this comment was written on behalf of the jonéame administration') }}">({{ _('admin') }})</span>
         {% else %} {# admin hiding his nick #}
-            <i class="fa fa-user"></i>
+            {{ render_icon('user') }}
             <strong>admin</strong>
         {% endif %}
     {% else %} {# normal user #}
         <a href="{{ url_for('User:get', user_login=user.user_login) }}">
-            <i class="fa fa-user"></i>
+            {{ render_icon('user') }}
             <strong>{{ user.user_login }}</strong>
         </a>
     {% endif %}
@@ -66,4 +64,41 @@
 
 {% macro render_icon(icon) %}
     <i class="fa fa-{{ icon }}"></i>
+{% endmacro %}
+
+{# from http://flask.pocoo.org/docs/0.11/patterns/wtforms/ #}
+{% macro render_field(field) %}
+    {% if field.widget.input_type == "hidden" %}
+        {# form.hidden_tag() will print these, so do nothing #}
+    {% elif field.widget.input_type == "submit" %}
+        <div class="row">
+            {{ field(**kwargs)|safe }}
+        </div>
+    {% else %}
+        <div class="row">
+            {{ field.label }}
+            {{ field(**kwargs)|safe }}
+            {% if field.errors %}
+                <ul class=errors>
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_form(form, action) %}
+    <div id="form" class="form">
+        <form action="{{ action }}" method="post">
+            {% for error in form.hidden_errors %}
+                <div class="errors">{{ error }}</div>
+            {% endfor %}
+            {{ form.hidden_tag() }}
+            {% for field in form %}
+                {{ render_field(field) }}
+            {% endfor %}
+        </form>
+    </div>
 {% endmacro %}

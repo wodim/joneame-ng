@@ -1,13 +1,15 @@
 from flask import Flask
 from flask_babel import Babel
+from flask_login import LoginManager
 
-from joneame.config import _cfg
+from joneame.config import _cfg, _cfgb64
 from joneame.database import db
 from joneame.utils import format_dt
 
 
 # initialise the app
 app = Flask(__name__)
+app.config['SECRET_KEY'] = _cfgb64('misc', 'secret_key')
 
 # initialise the db
 app.config['SQLALCHEMY_DATABASE_URI'] = _cfg('database', 'uri')
@@ -23,6 +25,9 @@ app.jinja_env.filters['format_dt'] = format_dt
 
 # initialise i18n
 babel = Babel(app)
+
+# initialise the login manager
+login_manager = LoginManager(app)
 
 # load all views
 import joneame.views

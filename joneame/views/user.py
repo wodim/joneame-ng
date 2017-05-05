@@ -3,7 +3,7 @@ from flask_babel import gettext as _
 
 from joneame import app
 from joneame.config import _cfgi
-from joneame.models import Comment, Link, Quote, User
+from joneame.models import Comment, Link, Post, Quote, User
 from joneame.views.base import paginate, render_page
 from joneame.views.menus import Menu, MenuButton
 
@@ -23,26 +23,30 @@ def get_user(user_login):
 
     if request.endpoint == 'User:get':
         template = 'user/user.html'
-        items = pagination = None
-    else:
-        if request.endpoint == 'User:get_quotes':
-            template = 'user/quotelist.html'
-            query = Quote.query
-            query = query.filter(Quote.quote_author == user.user_id)
-            query = query.order_by(Quote.quote_id.asc())
-            page_size *= 2
-        elif request.endpoint == 'User:get_links':
-            template = 'user/linklist.html'
-            query = Link.query
-            query = query.filter(Link.link_author == user.user_id)
-            query = query.order_by(Link.link_date.desc())
-        elif request.endpoint == 'User:get_comments':
-            template = 'user/commentlist.html'
-            query = Comment.query
-            query = query.filter(Comment.comment_user_id == user.user_id)
-            query = query.order_by(Comment.comment_date.desc())
-        pagination = paginate(query, page_size)
-        items = pagination.items
+        query = (
+            Post.query
+            .filter(Post.post_user_id == user.user_id)
+            .order_by(Post.post_id.desc())
+        )
+        page_size = 1
+    elif request.endpoint == 'User:get_quotes':
+        template = 'user/quotelist.html'
+        query = Quote.query
+        query = query.filter(Quote.quote_author == user.user_id)
+        query = query.order_by(Quote.quote_id.asc())
+        page_size *= 2.5
+    elif request.endpoint == 'User:get_links':
+        template = 'user/linklist.html'
+        query = Link.query
+        query = query.filter(Link.link_author == user.user_id)
+        query = query.order_by(Link.link_date.desc())
+    elif request.endpoint == 'User:get_comments':
+        template = 'user/commentlist.html'
+        query = Comment.query
+        query = query.filter(Comment.comment_user_id == user.user_id)
+        query = query.order_by(Comment.comment_date.desc())
+    pagination = paginate(query, page_size)
+    items = pagination.items
 
     buttons = [
         MenuButton(endpoint='User:get', text='usuario',

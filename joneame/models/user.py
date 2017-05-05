@@ -1,14 +1,17 @@
 import base64
+import hashlib
 
 from flask import url_for
+from flask_login import UserMixin
 
+from joneame import login_manager
 from joneame.database import db
 from joneame.models.comment import Comment
 from joneame.models.link import Link
 from joneame.models.post import Post
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +38,7 @@ class User(db.Model):
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
     posts = db.relationship('Post', back_populates='user', lazy='dynamic')
     quotes = db.relationship('Quote', backref='user', lazy='dynamic')
+    votes = db.relationship('Vote', back_populates='user', lazy='dynamic')
 
     @property
     def avatar_url(self, size=80):
@@ -42,8 +46,13 @@ class User(db.Model):
             # TODO
             return ('data:image/jpeg;base64,' +
                     base64.b64encode(self.avatar.avatar_image).decode('utf-8'))
-        else:
-            return url_for('static', filename='images/no-avatar.png')
+        return url_for('static', filename='images/no-avatar.png')
+
+    @property
+    def votes_count(self):
+        # this is useless, because the votes table is purged regularly.
+        # it's the way it's done currently even in menéame, so...
+        return self.votes.count()
 
     @property
     def links_published_count(self):
@@ -67,8 +76,22 @@ class User(db.Model):
         query = query.filter(Post.post_type == 'normal')
         return query.count()
 
+    def check_password(self, password):
+        h = hashlib.new('md5')
+        h.update(password.encode('utf8'))
+        password = h.hexdigest()
+        return self.user_pass == password
+
+    def get_id(self):
+        return self.user_id
+
     def __repr__(self):
         return '<User %r, nick %r>' % (self.user_id, self.user_login)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class Avatar(db.Model):
@@ -85,5 +108,24 @@ class Avatar(db.Model):
     def __repr__(self):
         return '<Avatar %r, modified %r>' % (self.avatar_id,
                                              self.avatar_modified)
-    """user = db.relationship('User', uselist=False,
-                            back_populates='avatar')"""
+
+
+class Vote(db.Model):
+    __tablename__ = 'votes'
+
+    vote_id = db.Column(db.Integer, primary_key=True)
+    vote_type = db.Column(db.Enum('links', 'comments', 'posts', 'cortos',
+                                  'poll_comment'))
+    vote_date = db.Column(db.DateTime)
+    vote_link_id = db.Column(db.Integer)
+    vote_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    vote_value = db.Column(db.Integer)
+    vote_ip_int = db.Column(db.Integer)  # !!!
+    vote_aleatorio = db.Column(db.Enum('normal', 'aleatorio'))
+
+    user = db.relationship('User', back_populates='votes', uselist=False)
+
+    def __repr__(self):
+        return ('<Vote %r, type %r, user %r, thing %r, value %r>' %
+                self.vote_id, self.vote_type, self.vote_user_id, self.link_id,
+                self.value)

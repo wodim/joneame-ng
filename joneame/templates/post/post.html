@@ -1,4 +1,3 @@
-{% import 'utils.html' as utils %}
 <li {% if post.post_parent != 0 %}class="child"{% elif children %}class="with-children"{% endif %}>
     <div class="comment">
         {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
@@ -8,25 +7,28 @@
                     <li>
                         {{ utils.render_user(post.user, post.post_type == 'admin') }}
                     <li class="timestamp">
-                        <i class="fa fa-clock-o"></i>
+                        {{ utils.render_icon('clock-o') }}
                         <a href="{{ url_for('Post:get', user_login=post.post_public_user, post_id=post.post_id) }}">
                             {{ post.post_date }}
                         </a>
                 </ul>
-                <ul class="right">
-                    <li>
-                        <span title="{{ _('votes') }}">
-                            {{ utils.render_icon('hand-pointer-o') }} {{ post.post_votes }}
-                        </span>
-                    </li>
-                    <li>
-                        <span title="{{ _('karma') }}">
-                            {{ utils.render_icon('line-chart') }} {{ post.post_karma }}
-                        </span>
-                    </li>
-                    <li>
-                        <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
-                </ul>
+                {% if post_type != 'admin' %}
+                    <ul class="right">
+                        <li>
+                            <span title="{{ _('votes') }}">
+                                {{ utils.render_icon('hand-pointer-o') }} {{ post.post_votes }}
+                            </span>
+                        </li>
+                        <li>
+                            <span title="{{ _('karma') }}">
+                                {{ utils.render_icon('line-chart') }} {{ post.post_karma }}
+                            </span>
+                        </li>
+                        <li>
+                            <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
             <div class="comment-text">
                 {{ post.post_content }}

@@ -1,13 +1,13 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
+{% set title = _('Comments written by %(user)s', user=user.user_login) %}
 {% block content %}
-{% set article_labels = true %}
-<ul class="comments">
-    {% for comment in items %}
-        {% include 'link/comment.html' %}
-    {% endfor %}
-</ul>
-{% if pagination %}
-    {% import "utils.html" as utils %}
-    {{ utils.render_pagination(pagination) }}
-{% endif %}
+    {% set article_labels = true %}
+    <ul class="comments">
+        {% for comment in items %}
+            {% include 'link/comment.html' %}
+        {% endfor %}
+    </ul>
+    {% if pagination %}
+        {{ utils.render_pagination(pagination) }}
+    {% endif %}
 {% endblock %}

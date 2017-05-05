@@ -4,7 +4,7 @@
     {% for category in categories %}
         <li>
         <a href="{{ url_for('Link:list_category', category_id=category.category_id) }}">
-            <i class="fa fa-folder-open-o"></i>
+            {{ utils.render_icon('folder-open-o') }}
             {{ category.category_name }}
         </a>
     {% endfor %}

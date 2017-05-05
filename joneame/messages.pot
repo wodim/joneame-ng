@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-26 17:30+0200\n"
+"POT-Creation-Date: 2017-05-04 13:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 
-#: utils.py:63
+#: utils.py:65
 #, python-format
 msgid "%(ret)s ago"
 msgstr ""
 
-#: templates/layout.html:16
+#: templates/layout.html:17
 msgid "submit"
 msgstr ""
 
-#: templates/layout.html:17
+#: templates/layout.html:18
 msgid "queue"
 msgstr ""
 
-#: templates/layout.html:18
+#: templates/layout.html:19
 msgid "sneak"
 msgstr ""
 
-#: templates/layout.html:19 views/user.py:47
+#: templates/layout.html:20 views/user.py:50
 msgid "quotes"
 msgstr ""
 
-#: templates/layout.html:20 templates/user/user.html:31 views/user.py:53
+#: templates/layout.html:21 templates/user/user.html:32 views/user.py:56
 msgid "posts"
+msgstr ""
+
+#: templates/layout.html:28
+msgid "log out"
+msgstr ""
+
+#: templates/layout.html:34
+msgid "log in"
+msgstr ""
+
+#: templates/layout.html:51 templates/link/comment.html:20
+#: templates/post/post.html:17
+msgid "votes"
+msgstr ""
+
+#: templates/layout.html:54 templates/link/comment.html:25
+#: templates/link/link.html:57 templates/post/post.html:22
+#: templates/user/user.html:16
+msgid "karma"
+msgstr ""
+
+#: templates/layout.html:57 templates/link/comment.html:30
+#: templates/post/post.html:27
+msgid "who voted?"
+msgstr ""
+
+#: templates/layout.html:63
+msgid "search"
 msgstr ""
 
 #: templates/utils.html:41 templates/utils.html:54
 msgid "admin"
 msgstr ""
 
-#: templates/user/quoteview.html:9 templates/utils.html:43
+#: templates/user/quoteview.html:10 templates/utils.html:43
 #, python-format
 msgid "%(user)s's avatar"
 msgstr ""
@@ -55,29 +83,42 @@ msgstr ""
 msgid "this comment was written on behalf of the jonéame administration"
 msgstr ""
 
-#: templates/link/link.html:9
+#: templates/link/link.html:4
+#, python-format
+msgid "Warning: %(text)s"
+msgstr ""
+
+#: templates/link/link.html:15
 msgid "vote"
 msgstr ""
 
-#: templates/link/link.html:41
+#: templates/link/link.html:20
+msgid "This link has been discarded for violating our terms of use."
+msgstr ""
+
+#: templates/link/link.html:22
+msgid "This link has been discarded for having been submitted before."
+msgstr ""
+
+#: templates/link/link.html:24
+msgid "Controversial link. Check the comments."
+msgstr ""
+
+#: templates/link/link.html:54
 #, python-format
 msgid "%(num)s comment"
 msgid_plural "%(num)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/link/link.html:44 templates/user/user.html:15
-msgid "karma"
-msgstr ""
-
-#: templates/link/link.html:47
+#: templates/link/link.html:60
 #, python-format
 msgid "%(num)s click"
 msgid_plural "%(num)s clicks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/link/link.html:51
+#: templates/link/link.html:64
 msgid "category"
 msgstr ""
 
@@ -85,79 +126,136 @@ msgstr ""
 msgid "in"
 msgstr ""
 
-#: templates/user/user.html:6
+#: templates/user/commentlist.html:2
+#, python-format
+msgid "Comments written by %(user)s"
+msgstr ""
+
+#: templates/user/linklist.html:2
+#, python-format
+msgid "Links submitted by %(user)s"
+msgstr ""
+
+#: templates/user/quotelist.html:3
+#, python-format
+msgid "Quotes by %(user)s"
+msgstr ""
+
+#: templates/user/quoteview.html:3
+#, python-format
+msgid "Quote by %(user)s"
+msgstr ""
+
+#: templates/user/user.html:7
 msgid "user"
 msgstr ""
 
-#: templates/user/user.html:11
+#: templates/user/user.html:12
 msgid "since"
 msgstr ""
 
-#: templates/user/user.html:19
+#: templates/user/user.html:20
 msgid "links sent"
 msgstr ""
 
-#: templates/user/user.html:23
+#: templates/user/user.html:24
 msgid "links published"
 msgstr ""
 
-#: templates/user/user.html:27 views/user.py:51
+#: templates/user/user.html:28 views/user.py:54
 msgid "comments"
 msgstr ""
 
-#: templates/user/user.html:35
+#: templates/user/user.html:36
 msgid "votes cast"
 msgstr ""
 
-#: templates/user/user.html:39
+#: templates/user/user.html:40
 msgid "quotes sent"
 msgstr ""
 
-#: views/link.py:80
+#: views/forms.py:8
+msgid "User:"
+msgstr ""
+
+#: views/forms.py:9
+msgid "Password:"
+msgstr ""
+
+#: views/link.py:79
+msgid "Discarded"
+msgstr ""
+
+#: views/link.py:84
+msgid "Queued"
+msgstr ""
+
+#: views/link.py:87
 msgid "all"
 msgstr ""
 
-#: views/link.py:81
+#: views/link.py:88
 msgid "discarded"
 msgstr ""
 
 #: views/link.py:105
+#, python-format
+msgid "Category: %(cat_name)s"
+msgstr ""
+
+#: views/link.py:114
+msgid "Top links"
+msgstr ""
+
+#: views/link.py:118
+msgid "Most clicked"
+msgstr ""
+
+#: views/link.py:120
 msgid "one day"
 msgstr ""
 
-#: views/link.py:107
+#: views/link.py:122
 msgid "two days"
 msgstr ""
 
-#: views/link.py:109
+#: views/link.py:124
 msgid "one week"
 msgstr ""
 
-#: views/link.py:111
+#: views/link.py:126
 msgid "one month"
 msgstr ""
 
-#: views/link.py:113
+#: views/link.py:128
 msgid "one year"
 msgstr ""
 
-#: views/link.py:116
+#: views/link.py:131
 msgid "the beginning of time"
 msgstr ""
 
-#: views/link.py:138
+#: views/link.py:152
+msgid "Random links"
+msgstr ""
+
+#: views/link.py:159
 msgid "home"
 msgstr ""
 
-#: views/link.py:139
+#: views/link.py:160
 msgid "top links"
 msgstr ""
 
-#: views/link.py:141
+#: views/link.py:162
+msgid "random"
+msgstr ""
+
+#: views/link.py:163
 msgid "queued links"
 msgstr ""
 
-#: views/post.py:67
+#: views/post.py:66
 msgid "new post"
 msgstr ""
 
@@ -169,19 +267,27 @@ msgstr ""
 msgid "random quote"
 msgstr ""
 
+#: views/session.py:27
+msgid "Welcome back!"
+msgstr ""
+
+#: views/session.py:35
+msgid "Invalid user/email or password"
+msgstr ""
+
 #: views/sidebox.py:16
 msgid "categories"
 msgstr ""
 
-#: views/sidebox.py:39 views/sidebox.py:53
+#: views/sidebox.py:42 views/sidebox.py:59
 msgid "hot links"
 msgstr ""
 
-#: views/sidebox.py:67
+#: views/sidebox.py:76
 msgid "last comments"
 msgstr ""
 
-#: views/user.py:49
+#: views/user.py:52
 msgid "links"
 msgstr ""
 

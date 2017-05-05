@@ -23,8 +23,7 @@ class Post(db.Model):
     def post_public_user(self):
         if self.post_type == 'admin':
             return 'admin'
-        else:
-            return self.user.user_login
+        return self.user.user_login
 
     def __repr__(self):
         return ('<Post %r, author %r, content %r>' %

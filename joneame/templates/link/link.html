@@ -1,3 +1,9 @@
+{% macro warning(text) %}
+    <div class="warning">
+        {{ utils.render_icon('warning') }}
+        {{ _('Warning: %(text)s', text=text) }}
+    </div>
+{% endmacro %}
 <article class="status_{{ link.link_status }}">
     <div class="shakebox">
         <div class="votes">
@@ -10,6 +16,13 @@
         </a>
     </div>
     <div class="entry">
+        {% if link.link_status == 'abuse' %}
+            {{ warning(_('This link has been discarded for violating our terms of use.')) }}
+        {% elif link.link_status == 'duplicated' %}
+            {{ warning(_('This link has been discarded for having been submitted before.')) }}
+        {% elif link.link_status == 'published' and link.link_negatives > 2 %}
+            {{ warning(_('Controversial link. Check the comments.')) }}
+        {% endif %}
         <div class="title">
             <h3>
                 <a href="{{ link.link_url|escape }}"
@@ -22,11 +35,11 @@
             <li>
                 <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
                     {{ utils.render_avatar(link.user) }}
-                    <i class="fa fa-user"></i>
+                    {{ utils.render_icon('user') }}
                     <strong>{{ link.user.user_login }}</strong>
                 </a>
             <li>
-                <i class="fa fa-clock-o"></i>
+                {{ utils.render_icon('clock-o') }}
                 {{ link.link_sent_date|format_dt }}
         </ul>
         {% if link.link_content and not link_brief %}
@@ -37,27 +50,31 @@
         <ul class="meta">
             <li class="comments">
                 <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
-                    <i class="fa fa-comments"></i>
+                    {{ utils.render_icon('comments') }}
                     {{ ngettext('%(num)s comment', '%(num)s comments', link.link_comments) }}
                 </a>
             <li>
                 <strong>{{ _('karma') }}:</strong> {{ link.link_karma }}
             <li>
-                <i class="fa fa-external-link-square"></i>
+                {{ utils.render_icon('external-link-square') }}
                 {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.clickcounter_counter) }}
         </ul>
         <ul class="meta">
+            {# TODO: fix links that have no cat in the db #}
+            {% if link.category %}
+                <li>
+                    <strong>{{ _('category') }}:</strong>
+                    <a href="{{ url_for('Link:list_category', category_id=link.category.category_id) }}">
+                        {{ link.category.category_name }}
+                    </a>
+                </li>
+            {% endif %}
             <li>
-                <strong>{{ _('category') }}:</strong>
-                <a href="{{ url_for('Link:list_category', category_id=link.category.category_id) }}">
-                    {{ link.category.category_name }}
-                </a>
+                {{ utils.render_icon('twitter') }}
+            </li>
             <li>
-                <i class="fa fa-twitter"></i>
-            <li>
-                <i class="fa fa-facebook"></i>
-            <li>
-                <i class="fa fa-star"></i>
+                {{ utils.render_icon('facebook') }}
+            </li>
         </ul>
     </div>
 </article>

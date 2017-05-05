@@ -47,7 +47,7 @@ class Link(db.Model):
                                    uselist=False)
 
     def __repr__(self):
-        return '<Link %r, author %r>' % (self.link_id, self.link_author)
+        return '<Link %r, title %r>' % (self.link_id, self.link_title[:50])
 
     @property
     def link_total_votes(self):

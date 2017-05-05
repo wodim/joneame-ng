@@ -1,44 +1,52 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
+{% set full_width = true %}
+{% set title = user.user_login %}
 {% block content %}
-<div class="user">
-    <table>
-        <tr>
-            <th>{{ _('user') }}:</th>
-            <td>{{ user.user_login }} (id: {{ user.user_id }})
-                (level: {{ user.user_level }})</td>
-        </tr>
-        <tr>
-            <th>{{ _('since') }}:</th>
-            <td>{{ user.user_date }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('karma') }}:</th>
-            <td>{{ user.user_karma }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('links sent') }}:</th>
-            <td>{{ user.links.count() }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('links published') }}:</th>
-            <td>{{ user.links_published_count }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('comments') }}:</th>
-            <td>{{ user.comments_count }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('posts') }}:</th>
-            <td>{{ user.posts_count }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('votes cast') }}:</th>
-            <td>{{ user.votes_count }}</td>
-        </tr>
-        <tr>
-            <th>{{ _('quotes sent') }}:</th>
-            <td>{{ user.quotes.count() }}</td>
-        </tr>
-    </table>
-</div>
+    <ul class="comments">
+        {% for post in items %}
+            {% include 'post/post.html' %}
+        {% endfor %}
+    </ul>
+    <div class="user">
+        {{ utils.render_avatar(user) }}
+        <table>
+            <tr>
+                <th>{{ _('user') }}:</th>
+                <td>{{ user.user_login }} (id: {{ user.user_id }})
+                    (level: {{ user.user_level }})</td>
+            </tr>
+            <tr>
+                <th>{{ _('since') }}:</th>
+                <td>{{ user.user_date }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('karma') }}:</th>
+                <td>{{ user.user_karma }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('links sent') }}:</th>
+                <td>{{ user.links.count() }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('links published') }}:</th>
+                <td>{{ user.links_published_count }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('comments') }}:</th>
+                <td>{{ user.comments_count }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('posts') }}:</th>
+                <td>{{ user.posts_count }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('votes cast') }}:</th>
+                <td>{{ user.votes_count }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('quotes sent') }}:</th>
+                <td>{{ user.quotes.count() }}</td>
+            </tr>
+        </table>
+    </div>
 {% endblock %}

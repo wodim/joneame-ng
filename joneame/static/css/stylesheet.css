@@ -68,7 +68,7 @@ a {
     margin-top: 20px;
 }
 .content {
-    max-width: 750px;
+    max-width: 720px;
 }
 .content.full-width {
     max-width: 100%;
@@ -132,6 +132,32 @@ strong {
 .cover .header .hamburger {
     display: none;
 }
+.cover .header .right {
+    float: right;
+    margin: 0 5px 0 0;
+    font-size: 10pt;
+}
+.cover .header .right .session {
+    line-height: 40px;
+}
+.cover .header .right .session li {
+    display: inline-block;
+    margin-left: 12px;
+}
+.cover .header .right .session li a {
+    opacity: .9;
+}
+.cover .header .right .session li a:hover {
+    opacity: 1;
+}
+.cover .header .right .session li.user {
+    font-weight: bold;
+}
+.cover .header .right .session li.user img {
+    width: 20px;
+    vertical-align: middle;
+    margin: -2px 2px 0 0;
+}
 /* second */
 .subcover {
     background: #5a8cbe;
@@ -163,7 +189,7 @@ strong {
     float: right;
 }
 .subcover .header .right .search {
-    margin: 5px;
+    margin: 5px 0;
 }
 .subcover .header .right .search input {
     border: 0 none;
@@ -344,11 +370,24 @@ strong {
     font-size: 8pt;
 }
 
+/* content */
+.content .flashed-message,
+.content article .entry .warning {
+    background-color: #f5d562;
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin-bottom: 3px;
+}
+.content .flashed-message {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+}
+
 /* link view */
 .content article {
-    width: 700px;
+    width: 720px;
     display: inline-block;
-    margin-bottom: 25px;
+    margin-bottom: 16px;
 }
 .content article .shakebox {
     width: 60px;
@@ -530,6 +569,9 @@ strong {
     font-weight: bold;
     width: 15em;
     text-align: right;
+}
+.content > .user img.avatar {
+    float: right;
 }
 
 /* quotes in profiles */

@@ -12,17 +12,26 @@
                     <li>
                         {{ utils.render_user(comment.user, comment.comment_type == 'admin' or comment.comment_type == 'especial', comment.comment_type == 'especial') }}
                     <li>
-                        <i class="fa fa-clock-o"></i>
+                        {{ utils.render_icon('clock-o') }}
                         {{ comment.comment_date }}
                 </ul>
                 <ul class="right">
                     <li>
-                        <i class="fa fa-star-o"></i>
+                        <span title="{{ _('votes') }}">
+                            {{ utils.render_icon('hand-pointer-o') }} {{ comment.comment_votes }}
+                        </span>
+                    </li>
+                    <li>
+                        <span title="{{ _('karma') }}">
+                            {{ utils.render_icon('line-chart') }} {{ comment.comment_karma }}
+                        </span>
+                    </li>
+                    <li>
+                        <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
                 </ul>
             </div>
             <div class="comment-text">
                 <a class="order" href="#">#{{ comment.comment_order }}</a>
-                {{ comment.comment_id }}
                 {{ comment.comment_content }}
             </div>
         </div>

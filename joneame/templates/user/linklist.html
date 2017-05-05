@@ -1,13 +1,13 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
+{% set title = _('Links submitted by %(user)s', user=user.user_login) %}
 {% block content %}
-<ul class="links">
     {% set link_brief = true %}
-    {% for link in items %}
-        {% include 'link/link.html' %}
-    {% endfor %}
-</ul>
-{% if pagination %}
-    {% import "utils.html" as utils %}
-    {{ utils.render_pagination(pagination) }}
-{% endif %}
+    <ul class="links">
+        {% for link in items %}
+            {% include 'link/link.html' %}
+        {% endfor %}
+    </ul>
+    {% if pagination %}
+        {{ utils.render_pagination(pagination) }}
+    {% endif %}
 {% endblock %}

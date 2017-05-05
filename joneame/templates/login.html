@@ -1,0 +1,4 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {{ utils.render_form(form, url_for('Session:login_form')) }}
+{% endblock %}

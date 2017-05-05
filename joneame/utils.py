@@ -1,5 +1,7 @@
 import datetime
+from urllib.parse import urlparse, urljoin
 
+from flask import request
 from flask_babel import _, format_datetime
 
 
@@ -61,3 +63,11 @@ def format_dt(dt, sep=' '):
         return '0s'
 
     return ('-' if neg else '') + _('%(ret)s ago', ret=sep.join(ret))
+
+
+# http://flask.pocoo.org/snippets/62/
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return (test_url.scheme in ('http', 'https') and
+            ref_url.netloc == test_url.netloc)

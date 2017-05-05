@@ -17,5 +17,6 @@ if __name__ == '__main__':
 
     app.jinja_env.trim_blocks = False
     app.jinja_env.lstrip_blocks = False
+    app.jinja_env.auto_reload = True
 
     app.run(host='0.0.0.0', port=55500, debug=True)

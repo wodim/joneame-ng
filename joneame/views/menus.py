@@ -18,7 +18,7 @@ class Menu(object):
                 if self.default_hint in request.args:
                     if (self.default_hint in button.kwargs and
                             (button.kwargs[self.default_hint] ==
-                                request.args[self.default_hint])):
+                             request.args[self.default_hint])):
                         current = True
                 else:
                     if self.default_hint not in button.kwargs:
@@ -33,9 +33,9 @@ class Menu(object):
 
 
 class MenuButton(object):
-    def __init__(self, endpoint='#', text='', title='', icon=None,
+    def __init__(self, endpoint=None, text='', title='', icon=None,
                  default=False, kwargs=''):
-        self.endpoint = endpoint
+        self.endpoint = endpoint or request.endpoint
         self.text = text
         self.title = title
         self.icon = icon
