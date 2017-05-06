@@ -14,6 +14,7 @@ class Post(db.Model):
     post_karma = db.Column(db.Integer)
     post_content = db.Column(db.Text)
     post_type = db.Column(db.Enum('normal', 'admin', 'encuesta'))
+    post_last_answer = db.Column(db.DateTime)
     post_parent = db.Column(db.Integer, db.ForeignKey('posts.post_id'))
 
     children = db.relationship('Post')

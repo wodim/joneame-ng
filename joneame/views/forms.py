@@ -6,5 +6,5 @@ from wtforms.validators import InputRequired, Length
 
 class LoginForm(FlaskForm):
     login = TextField(_('User:'), [InputRequired(), Length(max=32)])
-    password = PasswordField(_('Password:'))
+    password = PasswordField(_('Password:'), [InputRequired()])
     submit = SubmitField('Log in')

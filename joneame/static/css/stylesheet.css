@@ -210,7 +210,6 @@ strong {
 /* third */
 .submenu {
     width: 100%;
-    height: 30px;
 }
 .submenu .header {
     padding: 0 10px;
@@ -231,7 +230,7 @@ strong {
 }
 .submenu .header ul li a {
     display: inline-block;
-    line-height: 30px;
+    line-height: 26px;
     padding: 0 10px;
 }
 .submenu .header ul li:hover {
@@ -249,7 +248,7 @@ strong {
 /* fourth */
 .toolbox {
     background: #eee;
-    height: 30px;
+    height: 26px;
     border-radius: 3px;
     margin-bottom: 20px;
     display: inline-block;
@@ -265,7 +264,7 @@ strong {
 }
 .toolbox ul li a {
     display: inline-block;
-    line-height: 30px;
+    line-height: 26px;
     padding: 0 10px;
 }
 .toolbox ul li:hover {
@@ -314,6 +313,10 @@ strong {
 }
 .sidebar .sidebox ul.comments li {
     line-height: 16px;
+    margin-bottom: 10px;
+}
+.sidebar .sidebox ul.comments li:last-child {
+    margin-bottom: 0;
 }
 .sidebar .sidebox ul.links {
     width: 300px;
@@ -347,7 +350,7 @@ strong {
     background-image: url('../images/shakebox-published.png');
     background-color: #37699b;
 }
-.sidebar .sidebox ul.links li a div.votes.status_discarded,
+.sidebar .sidebox ul.links li a div.votes.status_discard,
 .sidebar .sidebox ul.links li a div.votes.status_autodiscard {
     background-image: url('../images/shakebox-discarded.png');
     color: white;
@@ -372,7 +375,7 @@ strong {
 
 /* content */
 .content .flashed-message,
-.content article .entry .warning {
+.content > article .entry .warning {
     background-color: #f5d562;
     border-radius: 3px;
     padding: 6px 10px;
@@ -384,173 +387,189 @@ strong {
 }
 
 /* link view */
-.content article {
+.content > article {
     width: 720px;
     display: inline-block;
     margin-bottom: 16px;
 }
-.content article .shakebox {
+.content > article .shakebox {
     width: 60px;
     float: left;
     margin-right: 10px;
     text-align: center;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
-.content article .shakebox .votes {
-    font-size: 20pt;
-    font-weight: bold;
-    line-height: 45px;
+.content > article .shakebox .square {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border: 1px solid #4f7ba7;
     border-bottom: 0 none;
+    display: block;
 }
-.content article.status_published .shakebox .votes {
+.content > article .shakebox .square,
+.content > article .shakebox .shakeit {
+    text-shadow: 0 0 2px rgba(0,0,0,.5);
+}
+.content > article .shakebox .square .votes {
+    font-size: 20pt;
+    font-weight: bold;
+    padding: 4px 0 0;
+}
+.content > article .shakebox .square .votes_under {
+    padding: 0 0 3px;
+}
+.content > article.status_published .shakebox .square {
     background-color: #37699b;
     background-image: url('../images/shakebox-published.png');
-}
-.content article.status_published .shakebox .votes a {
     color: white;
 }
-.content article.status_queued .shakebox .votes {
+.content > article.status_queued .shakebox .square {
     background-color: #eee;
     background-image: url('../images/shakebox-queued.png');
-}
-.content article.status_queued .shakebox .votes a {
     color: #333;
 }
-.content article.status_discarded .shakebox .votes,
-.content article.status_autodiscard .shakebox .votes {
+.content > article.status_discard .shakebox .square,
+.content > article.status_autodiscard .shakebox > .square {
     background-color: #d09a83;
     background-image: url('../images/shakebox-discarded.png');
-}
-.content article.status_discarded .shakebox .votes a,
-.content article.status_autodiscard .shakebox .votes a {
     color: #333;
 }
-.content article.status_abuse .shakebox .votes {
+.content > article.status_abuse .shakebox .square {
     background-color: #d09a83;
     background-image: url('../images/shakebox-abuse.png');
-}
-.content article.status_abuse .shakebox .votes a {
     color: #333;
 }
-.content article .shakebox .shakeit {
+.content > article.status_queued .shakebox .square {
+    text-shadow: 0 0 2px rgba(255,255,255,.5);
+}
+.content > article.status_discard .shakebox .square,
+.content > article.status_autodiscard .shakebox .square,
+.content > article.status_abuse .shakebox .square {
+    border: 1px solid #d09a83;
+    text-shadow: 0 0 2px rgba(0,0,0,.2);
+}
+.content > article .shakebox .shakeit {
     line-height: 25px;
     background: #37699b;
     display: inline-block;
     width: 60px;
     font-size: 9pt;
     color: white;
-    border-top: 1px #4f7ba7 solid;
+    border-top: 1px #689acc solid;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
 }
-.content article .entry {
+.content > article.status_discard .shakebox .shakeit,
+.content > article.status_autodiscard .shakebox .shakeit,
+.content > article.status_abuse .shakebox .shakeit {
+    /* TODO */
+}
+
+.content > article .entry {
     margin-left: 70px;
     margin-top: 0px;
 }
-.content article .entry .title,
-.content article .entry .submitted,
-.content article .entry .text,
-.content article .entry .meta {
-    /* margin-bottom: 4px; */
+.content > article .entry .title,
+.content > article .entry .submitted,
+.content > article .entry .text,
+.content > article .entry .meta {
+    margin-bottom: 2px;
 }
-.content article .entry .title .hostname,
-.content article .entry .submitted,
-.content article .entry .meta a {
+.content > article .entry .title .hostname,
+.content > article .entry .submitted,
+.content > article .entry .meta a {
     color: #666;
 }
-.content article .entry .submitted,
-.content article .entry .meta {
+.content > article .entry .submitted,
+.content > article .entry .meta {
     line-height: 20px;
 }
-.content article .entry .title a {
+.content > article .entry .title a {
     font-size: 15pt;
     font-weight: bold;
-    color: #444;
+    color: #37699b;
     letter-spacing: -1px;
     line-height: 24px;
 }
-.content article .entry .title a:hover { /* cambiar luego por :visited. sólo como demostración TODO */
+.content > article .entry .title a:hover { /* cambiar luego por :visited. sólo como demostración TODO */
     color: #777;
 }
-.content article .entry .submitted li img {
+.content > article .entry .submitted li img {
     vertical-align: middle;
     height: 24px;
     border-radius: 3px;
-    margin-right: 10px;
+    margin-right: 6px;
 }
-.content article .entry .submitted li {
+.content > article .entry .submitted li {
     line-height: 12px;
 }
-.content article .entry ul li {
+.content > article .entry ul li {
     font-weight: bold;
     font-size: 10pt;
     display: inline;
     margin-right: 10px;
 }
-.content article .entry ul li.comments {
+.content > article .entry ul li.comments {
     font-weight: bold;
     font-size: 10pt;
 }
-.content article .entry .submitted {
+.content > article .entry .submitted {
     line-height: 14px;
 }
-.content article .entry .text {
+.content > article .entry .text {
     line-height: 18px;
 }
 
 /* comments */
-.comments > li {
+.content > .comments > li {
     margin-bottom: 20px;
 }
-.comments > li ul.children {
+.content > .comments > li ul.children {
     margin-left: 36px;
 }
-.comments li .comment {
+.content > .comments li .comment {
     background: #eee;
     padding: 10px;
     border-radius: 3px;
     margin-bottom: 6px;
 }
-.comments li .inner {
+.content > .comments li .inner {
     margin-left: 42px;
 }
-.comments li .avatar {
+.content > .comments li .avatar {
     float: left;
     width: 32px;
 }
-.comments li .comment-text {
+.content > .comments li .comment-text {
     line-height: 18px;
 }
-.comments li .comment-text .order {
+.content > .comments li .comment-text .order {
     font-weight: bold;
     font-size: 9pt;
     padding: 2px 5px;
     color: white;
     background: #5a8cbe;
 }
-.comments li .comment-meta {
+.content > .comments li .comment-meta {
     line-height: 16px;
     color: #666;
     font-size: 10pt;
     margin-bottom: 7px;
 }
-.comments li .comment-meta ul li {
+.content > .comments li .comment-meta ul li {
     display: inline;
     margin-right: 10px;
 }
-.comments li .comment-meta ul li:last-child {
+.content > .comments li .comment-meta ul li:last-child {
     margin-right: 0;
 }
-.comments li .comment-meta ul.left {
+.content > .comments li .comment-meta ul.left {
     display: inline;
 }
-.comments li .comment-meta ul.right {
+.content > .comments li .comment-meta ul.right {
     float: right;
 }
-.comments li .article-label {
+.content > .comments li .article-label {
     display: block;
     line-height: 24px;
     font-weight: bold;
@@ -670,7 +689,7 @@ img.avatar, .avatar > img {
     .canvas, .content,
     .cover .header, .subcover .header,
     .subcover .header .quote,
-    .content article {
+    .content > article {
         width: auto;
     }
     .nomobile {
@@ -737,11 +756,11 @@ img.avatar, .avatar > img {
         width: 2em;
     }
 
-    .content article .shakebox,
-    .content article .shakebox .shakeit {
+    .content > article .shakebox,
+    .content > article .shakebox .shakeit {
         width: 50px;
     }
-    .content article .entry {
+    .content > article .entry {
         margin-left: 60px;
     }
 

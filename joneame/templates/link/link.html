@@ -6,11 +6,14 @@
 {% endmacro %}
 <article class="status_{{ link.link_status }}">
     <div class="shakebox">
-        <div class="votes">
-            <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
+        <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}" class="square">
+            <div class="votes">
                 {{ link.link_total_votes }}
-            </a>
-        </div>
+            </div>
+            <div class="votes_under">
+                {{ _('votes') }}
+            </div>
+        </a>
         <a class="shakeit" href="#">
             {{ _('vote') }}
         </a>
@@ -34,13 +37,21 @@
         <ul class="submitted">
             <li>
                 <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
-                    {{ utils.render_avatar(link.user) }}
+                    {{ utils.render_avatar(link.user, link=False) }}
                     {{ utils.render_icon('user') }}
                     <strong>{{ link.user.user_login }}</strong>
                 </a>
+            </li>
+            {% if link.link_url_domain %}
+                <li>
+                    {{ utils.render_icon('globe') }}
+                    {{ link.link_url_domain }}
+                </li>
+            {% endif %}
             <li>
                 {{ utils.render_icon('clock-o') }}
                 {{ link.link_sent_date|format_dt }}
+            </li>
         </ul>
         {% if link.link_content and not link_brief %}
             <div class="text">
@@ -53,11 +64,19 @@
                     {{ utils.render_icon('comments') }}
                     {{ ngettext('%(num)s comment', '%(num)s comments', link.link_comments) }}
                 </a>
+            </li>
             <li>
                 <strong>{{ _('karma') }}:</strong> {{ link.link_karma }}
+                (+{{ link.link_votes }}, {{ link.link_anonymous }}, -{{ link.link_negatives }})
+            </li>
             <li>
                 {{ utils.render_icon('external-link-square') }}
                 {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.clickcounter_counter) }}
+            </li>
+            <li>
+                {{ utils.render_icon('external-link-square') }}
+                {{ ngettext('%(num)s visit', '%(num)s visits', link.visitcounter.visitcounter_counter) }}
+            </li>
         </ul>
         <ul class="meta">
             {# TODO: fix links that have no cat in the db #}

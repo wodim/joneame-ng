@@ -34,11 +34,19 @@
     </ul>
 {% endmacro %}
 
-{% macro render_avatar(user, is_admin=False) %}
+{% macro render_avatar(user, is_admin=False, link=True) %}
+    {% if link %}
+        <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+    {% endif %}
+
     {% if is_admin %}
         <img class="avatar" src="{{ url_for('static', filename='images/admin-avatar.png') }}" alt="{{ _('admin') }}" />
     {% else %}
         <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _('%(user)s\'s avatar', user=user.user_login) }}">
+    {% endif %}
+
+    {% if link %}
+        </a>
     {% endif %}
 {% endmacro %}
 

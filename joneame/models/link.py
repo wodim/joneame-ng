@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from joneame.database import db
 
 
@@ -45,6 +47,8 @@ class Link(db.Model):
 
     clickcounter = db.relationship('ClickCounter', back_populates='link',
                                    uselist=False)
+    visitcounter = db.relationship('VisitCounter', back_populates='link',
+                                   uselist=False)
 
     def __repr__(self):
         return '<Link %r, title %r>' % (self.link_id, self.link_title[:50])
@@ -53,8 +57,19 @@ class Link(db.Model):
     def link_total_votes(self):
         return self.link_votes + self.link_anonymous
 
+    @property
+    def link_url_domain(self):
+        netloc = urlparse(self.link_url).netloc
+        if netloc[:4] == 'www.':
+            netloc = netloc[4:]
+        return netloc
+
     def click(self):
         self.clickcounter.clickcounter_counter += 1
+        db.session.commit()
+
+    def visit(self):
+        self.visitcounter.visitcounter_counter += 1
         db.session.commit()
 
 
@@ -81,3 +96,14 @@ class ClickCounter(db.Model):
     clickcounter_counter = db.Column('counter', db.Integer)
 
     link = db.relationship('Link', back_populates='clickcounter')
+
+
+class VisitCounter(db.Model):
+    __tablename__ = 'link_visits'
+
+    visitcounter_link_id = db.Column('id', db.Integer,
+                                     db.ForeignKey('links.link_id'),
+                                     primary_key=True)
+    visitcounter_counter = db.Column('counter', db.Integer)
+
+    link = db.relationship('Link', back_populates='visitcounter')

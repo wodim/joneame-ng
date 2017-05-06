@@ -10,6 +10,7 @@ from joneame.views.sidebox import (sidebox_categories, sidebox_top_links,
                                    sidebox_last_comments, sidebox_top_queued)
 from joneame.views.menus import Menu, MenuButton
 from joneame.models import Category, Comment, ClickCounter, Link, User
+from joneame.utils import arg_to_timedelta
 
 
 @app.route('/historia/<link_uri>', endpoint='Link:get')
@@ -28,6 +29,9 @@ def get_link(link_uri):
     )
     pagination = paginate(comments)
     comments = pagination.items
+
+    # count this visit
+    link.visit()
 
     return render_page('link/linkview.html', link=link, comments=comments,
                        pagination=pagination,
@@ -59,6 +63,7 @@ def get_link_list(category_id=None):
     query = query.options(db.joinedload(Link.user).joinedload(User.avatar))
     query = query.options(db.joinedload(Link.category))
     query = query.options(db.joinedload(Link.clickcounter))
+    query = query.options(db.joinedload(Link.visitcounter))
 
     ###########################################################################
     # home page. just load all published links cronologically
@@ -136,16 +141,10 @@ def get_link_list(category_id=None):
         ]
         toolbox = Menu(buttons=buttons, default_hint='range')
 
-        v_to_r = {'24h': timedelta(hours=24),
-                  '48h': timedelta(hours=48),
-                  '1w':  timedelta(weeks=1),
-                  '1m':  timedelta(weeks=4),
-                  '1y':  timedelta(days=365)}
-
-        timerange = request.args.get('range')
-        if timerange and timerange in v_to_r:
-            query = query.filter((Link.link_date >
-                                  datetime.now() - v_to_r[timerange]))
+        # apply range
+        td = arg_to_timedelta(request.args.get('range'))
+        if td:
+            query = query.filter((Link.link_date > datetime.now() - td))
 
     ###########################################################################
     # published and queued links, randomised
