@@ -25,7 +25,7 @@ def get_quote(quote_id):
     ]
     toolbox = Menu(buttons=buttons, no_default=True)
 
-    return render_page('user/quoteview.html', quote=quote,
+    return render_page('user/quotesingle.html', quote=quote,
                        quote_toolbox=toolbox, show_quote=False)
 
 

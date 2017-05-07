@@ -4,7 +4,7 @@
     {% for link in links %}
         <li>
             <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
-                <div class="votes status_{{ link.link_status }}">{{ link.link_votes }}</div>
+                <div class="votes status_{{ link.link_status }}">{{ link.link_total_votes }}</div>
                 <div class="title">{{ link.link_title }}</div>
             </a>
         </li>

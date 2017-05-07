@@ -33,7 +33,7 @@ def get_link(link_uri):
     # count this visit
     link.visit()
 
-    return render_page('link/linkview.html', link=link, comments=comments,
+    return render_page('link/linksingle.html', link=link, comments=comments,
                        pagination=pagination,
                        endpoint=request.endpoint)
 
