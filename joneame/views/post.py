@@ -17,6 +17,7 @@ post_buttons = [
                kwargs={'range': '24h'}),
 ]
 
+
 @app.route('/notitas/<user_login>/<int:post_id>', endpoint='Post:get')
 def get_post(user_login, post_id):
     thread = (
@@ -84,6 +85,7 @@ def get_post_list(user_login=None):
     return render_page('post/postlist.html', posts=posts, children=children,
                        pagination=pagination, user_login=user_login,
                        submenu=submenu, toolbox=toolbox)
+
 
 @app.route('/notitas/_mejores', endpoint='Post:list_top')
 def get_post_top_list():

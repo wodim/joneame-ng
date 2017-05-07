@@ -72,14 +72,15 @@ def is_safe_url(target):
     return (test_url.scheme in ('http', 'https') and
             ref_url.netloc == test_url.netloc)
 
+
 v_to_r = {'24h': timedelta(hours=24),
           '48h': timedelta(hours=48),
           '1w':  timedelta(weeks=1),
           '1m':  timedelta(weeks=4),
           '1y':  timedelta(days=365)}
 
+
 def arg_to_timedelta(arg):
     """turns an argument (such as 24h) to a timedelta"""
-    timedelta = request.args.get('range')
     if arg and arg in v_to_r:
         return v_to_r[arg]

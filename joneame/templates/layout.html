@@ -1,4 +1,4 @@
-{% import 'utils.html' as utils %}
+{% import 'utils.html' as utils with context %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% if title %}{{ title }} - Jonéame {% else %}Jonéame{% endif %}</title>
+        <title>{% if title is defined and title %}{{ title }} - Jonéame {% else %}Jonéame{% endif %}</title>
     </head>
     <body>
         <div class="cover"><div class="header">
@@ -78,7 +78,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                <div class="content {% if full_width %}full-width{% endif %}">
+                <div class="content {% if full_width is defined and full_width %}full-width{% endif %}">
                     {% for message in get_flashed_messages() %}
                         <div class="flashed-message">
                             {{ message }}

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_babel import Babel
 from flask_login import LoginManager
-from jinja2 import FileSystemBytecodeCache
+from jinja2 import FileSystemBytecodeCache, StrictUndefined
 
 from joneame.config import _cfg, _cfgb64
 from joneame.database import db
@@ -21,6 +21,8 @@ db.init_app(app)
 # trim and strip the resulting html
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+
+app.jinja_env.undefined = StrictUndefined
 
 app.jinja_env.filters['format_dt'] = format_dt
 

@@ -13,4 +13,5 @@ class Ban(db.Model):
     ban_comment = db.Column(db.Text)
 
     def __repr__(self):
-        return '<Ban %r, type %r, text %r>' % (ban_id, ban_type, ban_text)
+        return '<Ban %r, type %r, text %r>' % (self.ban_id, self.ban_type,
+                                               self.ban_text)

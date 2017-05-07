@@ -1,5 +1,5 @@
 <li>
-    {% if article_labels %}
+    {% if article_labels is defined and article_labels %}
         <a href="{{ url_for('Link:get', link_uri=comment.link.link_uri) }}" class="article-label">
             {{ comment.link.link_title }}
         </a>

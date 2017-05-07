@@ -5,6 +5,10 @@
     </div>
 {% endmacro %}
 <article class="status_{{ link.link_status }}">
+    {% if link.link_thumb_status == 'local' %}
+        {# TODO: remove hardcoded domain #}
+        <img class="thumb" src="http://joneame.net{{ link.link_thumb }}">
+    {% endif %}
     <div class="shakebox">
         <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}" class="square">
             <div class="votes">
@@ -14,9 +18,17 @@
                 {{ _('votes') }}
             </div>
         </a>
-        <a class="shakeit" href="#">
-            {{ _('vote') }}
-        </a>
+        {% if link.current_user_vote %}
+            {% if link.current_user_vote.vote_value >= 0 %} {# TODO: figure out why can it be 0 #}
+                <a class="shakeit disabled" href="#">{{ _('great!') }}</a>
+            {% else %}
+                <a class="shakeit disabled" href="#">{{ _(':(') }}</a>
+            {% endif %}
+        {% elif link.is_votable %}
+            <a class="shakeit" href="#">{{ _('vote') }}</a>
+        {% else %}
+            <a class="shakeit disabled" href="#">{{ _('archived') }}</a>
+        {% endif %}
     </div>
     <div class="entry">
         {% if link.link_status == 'abuse' %}
@@ -53,7 +65,7 @@
                 {{ link.link_sent_date|format_dt }}
             </li>
         </ul>
-        {% if link.link_content and not link_brief %}
+        {% if link.link_content and not (link_brief is defined and link_brief) %}
             <div class="text">
                 {{ link.link_content }}
             </div>

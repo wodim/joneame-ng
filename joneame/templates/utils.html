@@ -35,7 +35,7 @@
 {% endmacro %}
 
 {% macro render_avatar(user, is_admin=False, link=True) %}
-    {% if link %}
+    {% if link and not is_admin %}
         <a href="{{ url_for('User:get', user_login=user.user_login) }}">
     {% endif %}
 
@@ -45,7 +45,7 @@
         <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _('%(user)s\'s avatar', user=user.user_login) }}">
     {% endif %}
 
-    {% if link %}
+    {% if link and not is_admin %}
         </a>
     {% endif %}
 {% endmacro %}
@@ -61,6 +61,9 @@
         {% else %} {# admin hiding his nick #}
             {{ render_icon('user') }}
             <strong>admin</strong>
+            {% if not current_user.is_anonymous and current_user.is_admin %}
+                ({{ user.user_login }})
+            {% endif %}
         {% endif %}
     {% else %} {# normal user #}
         <a href="{{ url_for('User:get', user_login=user.user_login) }}">
@@ -100,9 +103,11 @@
 {% macro render_form(form, action) %}
     <div id="form" class="form">
         <form action="{{ action }}" method="post">
-            {% for error in form.hidden_errors %}
-                <div class="errors">{{ error }}</div>
-            {% endfor %}
+            {% if form.hidden_errors is defined %}
+                {% for error in form.hidden_errors %}
+                    <div class="errors">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
             {{ form.hidden_tag() }}
             {% for field in form %}
                 {{ render_field(field) }}

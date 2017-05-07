@@ -6,9 +6,6 @@ from flask_login import UserMixin
 
 from joneame import login_manager
 from joneame.database import db
-from joneame.models.comment import Comment
-from joneame.models.link import Link
-from joneame.models.post import Post
 
 
 class User(UserMixin, db.Model):
@@ -56,6 +53,8 @@ class User(UserMixin, db.Model):
 
     @property
     def links_published_count(self):
+        from joneame.models import Link
+
         query = Link.query
         query = query.filter(Link.link_author == self.user_id)
         query = query.filter(Link.link_status == 'published')
@@ -64,6 +63,8 @@ class User(UserMixin, db.Model):
     # next functions are necessary to hide admin contents from counts
     @property
     def comments_count(self):
+        from joneame.models.comment import Comment
+
         query = Comment.query
         query = query.filter(Comment.comment_user_id == self.user_id)
         query = query.filter(Comment.comment_type == 'normal')
@@ -71,6 +72,8 @@ class User(UserMixin, db.Model):
 
     @property
     def posts_count(self):
+        from joneame.models.post import Post
+
         query = Post.query
         query = query.filter(Post.post_user_id == self.user_id)
         query = query.filter(Post.post_type == 'normal')
@@ -84,6 +87,10 @@ class User(UserMixin, db.Model):
 
     def get_id(self):
         return self.user_id
+
+    @property
+    def is_admin(self):
+        return self.user_level in ('god', 'admin')
 
     def __repr__(self):
         return '<User %r, nick %r>' % (self.user_id, self.user_login)
@@ -121,11 +128,11 @@ class Vote(db.Model):
     vote_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     vote_value = db.Column(db.Integer)
     vote_ip_int = db.Column(db.Integer)  # !!!
-    vote_aleatorio = db.Column(db.Enum('normal', 'aleatorio'))
+    vote_random = db.Column('vote_aleatorio', db.Enum('normal', 'aleatorio'))
 
     user = db.relationship('User', back_populates='votes', uselist=False)
 
     def __repr__(self):
         return ('<Vote %r, type %r, user %r, thing %r, value %r>' %
-                self.vote_id, self.vote_type, self.vote_user_id, self.link_id,
-                self.value)
+                (self.vote_id, self.vote_type, self.vote_user_id,
+                 self.vote_link_id, self.vote_value))

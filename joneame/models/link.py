@@ -1,5 +1,9 @@
+from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
+from flask_login import current_user
+
+from joneame.config import _cfgi
 from joneame.database import db
 
 
@@ -37,8 +41,9 @@ class Link(db.Model):
     link_thumb_x = db.Column(db.Integer)
     link_thumb_y = db.Column(db.Integer)
     link_thumb = db.Column(db.Text)
-    link_comentarios_permitidos = db.Column(db.Boolean)
-    link_votos_permitidos = db.Column(db.Boolean)
+    link_comments_allowed = db.Column('link_comentarios_permitidos',
+                                      db.Boolean)
+    link_votes_allowed = db.Column('link_votos_permitidos', db.Boolean)
     link_broken_link = db.Column(db.Boolean)
 
     comments = db.relationship('Comment', back_populates='link')
@@ -63,6 +68,98 @@ class Link(db.Model):
         if netloc[:4] == 'www.':
             netloc = netloc[4:]
         return netloc
+
+    @property
+    def is_votable(self):
+        # has the user already voted?
+        if self.current_user_vote:
+            return False
+
+        # can't vote on these kinds of links
+        if self.link_status in ('abuse', 'autodiscard', 'duplicated'):
+            return False
+
+        # can't vote for old links
+        time_enabled_votes = _cfgi('links', 'time_enabled_votes')
+        if (self.link_date + timedelta(seconds=time_enabled_votes)
+                < datetime.now()):
+            return False
+
+        # otherwise, can vote
+        return True
+
+    @property
+    def is_votable_negative(self):
+        if not current_user.is_authenticated:
+            return False
+
+        if current_user.user_id == self.link_author:
+            return False
+
+        if self.link_status in ('abuse', 'autodiscard', 'duplicated'):
+            return False
+
+        if (self.link_status == 'published' and
+                self.link_date + timedelta(hours=2) > datetime.now()):
+            return False
+
+        return True
+
+    @property
+    def is_editable(self):
+        user = current_user
+
+        # admins can always edit
+        if user.is_admin:
+            return True
+
+        # the user who's submitted the link can edit it for the first 15
+        # minutes unless it's been published, marked as abuse, or discarded
+        # by himself
+        if (user.user_id == self.link_author and
+                self.link_status not in ('published',
+                                         'abuse',
+                                         'autodiscard') and
+                self.link_date + timedelta(minutes=15) < datetime.now()):
+            return True
+
+        # special users can edit for an hour after the user who submitted
+        # the link can't anymore, but not if the user discarded it or it was
+        # marked as abuse
+        if (user.user_id != self.link_author and user.is_special and
+                self.link_status not in ('abuse', 'autodiscard') and
+                (self.link_date + timedelta(minutes=15) > datetime.now() and
+                    self.link_date + timedelta(minutes=60) < datetime.now())):
+            return True
+
+        # otherwise, can't
+        return False
+
+    @property
+    def is_map_editable(self):
+        """this will suffice by now"""
+        return self.is_editable
+
+    @property
+    def current_user_vote(self):
+        return self.user_vote(current_user)
+
+    def user_vote(self, user):
+        """returns the Vote object of this link for the specified user (or the
+            currently logged in user if user is not specified) or
+            None if the user has not voted on it yet"""
+        from . import Vote
+
+        if not user.is_authenticated:
+            return None
+
+        return (
+            Vote.query
+            .filter(Vote.vote_type == 'links')
+            .filter(Vote.vote_user_id == user.user_id)
+            .filter(Vote.vote_link_id == self.link_id)
+            .first()
+        )
 
     def click(self):
         self.clickcounter.clickcounter_counter += 1

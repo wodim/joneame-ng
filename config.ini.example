@@ -4,3 +4,7 @@ uri = mysql+pymysql://joneame:joneame@localhost/joneame
 [misc]
 page_size = 12
 secret_key = lalala
+
+[links]
+; 2 months
+time_enabled_votes = 5184000

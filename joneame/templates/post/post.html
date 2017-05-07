@@ -1,4 +1,4 @@
-<li {% if post.post_parent != 0 %}class="child"{% elif children %}class="with-children"{% endif %}>
+<li {% if post.post_parent != 0 %}class="child"{% elif children is defined %}class="with-children"{% endif %}>
     <div class="comment">
         {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
         <div class="inner">
@@ -12,7 +12,7 @@
                             {{ post.post_date }}
                         </a>
                 </ul>
-                {% if post_type != 'admin' %}
+                {% if post.post_type != 'admin' %}
                     <ul class="right">
                         <li>
                             <span title="{{ _('votes') }}">
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    {% if post.post_parent == 0 and children %}
+    {% if post.post_parent == 0 and children is defined and post.post_id in children %}
         <ul class="children">
             {% for post in children[post.post_id] %}
                 {% include "post/post.html" %}

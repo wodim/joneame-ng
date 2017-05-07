@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-    {% for link in links %}
-        {% include 'link/link.html' %}
-    {% endfor %}
+    <div class="links">
+        {% for link in links %}
+            {% include 'link/link.html' %}
+        {% endfor %}
+    </div>
     {% if pagination %}
         {{ utils.render_pagination(pagination) }}
     {% endif %}

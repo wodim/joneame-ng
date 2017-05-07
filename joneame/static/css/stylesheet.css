@@ -375,7 +375,7 @@ strong {
 
 /* content */
 .content .flashed-message,
-.content > article .entry .warning {
+article .entry .warning {
     background-color: #f5d562;
     border-radius: 3px;
     padding: 6px 10px;
@@ -387,69 +387,70 @@ strong {
 }
 
 /* link view */
-.content > article {
+article {
     width: 720px;
     display: inline-block;
     margin-bottom: 16px;
 }
-.content > article .shakebox {
+article .shakebox {
     width: 60px;
     float: left;
     margin-right: 10px;
     text-align: center;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
-.content > article .shakebox .square {
+article .shakebox .square {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border: 1px solid #4f7ba7;
     border-bottom: 0 none;
     display: block;
 }
-.content > article .shakebox .square,
-.content > article .shakebox .shakeit {
+article .shakebox .square,
+article .shakebox .shakeit {
     text-shadow: 0 0 2px rgba(0,0,0,.5);
+    box-sizing: border-box;
 }
-.content > article .shakebox .square .votes {
+article .shakebox .square .votes {
     font-size: 20pt;
     font-weight: bold;
     padding: 4px 0 0;
 }
-.content > article .shakebox .square .votes_under {
+article .shakebox .square .votes_under {
     padding: 0 0 3px;
 }
-.content > article.status_published .shakebox .square {
+article.status_published .shakebox .square {
     background-color: #37699b;
     background-image: url('../images/shakebox-published.png');
     color: white;
 }
-.content > article.status_queued .shakebox .square {
+article.status_queued .shakebox .square {
     background-color: #eee;
     background-image: url('../images/shakebox-queued.png');
     color: #333;
 }
-.content > article.status_discard .shakebox .square,
-.content > article.status_autodiscard .shakebox > .square {
+article.status_discard .shakebox .square,
+article.status_autodiscard .shakebox > .square {
     background-color: #d09a83;
     background-image: url('../images/shakebox-discarded.png');
     color: #333;
 }
-.content > article.status_abuse .shakebox .square {
+article.status_abuse .shakebox .square {
     background-color: #d09a83;
     background-image: url('../images/shakebox-abuse.png');
     color: #333;
 }
-.content > article.status_queued .shakebox .square {
+article.status_queued .shakebox .square {
     text-shadow: 0 0 2px rgba(255,255,255,.5);
 }
-.content > article.status_discard .shakebox .square,
-.content > article.status_autodiscard .shakebox .square,
-.content > article.status_abuse .shakebox .square {
+article.status_discard .shakebox .square,
+article.status_autodiscard .shakebox .square,
+article.status_abuse .shakebox .square {
     border: 1px solid #d09a83;
     text-shadow: 0 0 2px rgba(0,0,0,.2);
 }
-.content > article .shakebox .shakeit {
-    line-height: 25px;
+article .shakebox .shakeit {
+    line-height: 22px;
     background: #37699b;
     display: inline-block;
     width: 60px;
@@ -459,64 +460,74 @@ strong {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
 }
-.content > article.status_discard .shakebox .shakeit,
-.content > article.status_autodiscard .shakebox .shakeit,
-.content > article.status_abuse .shakebox .shakeit {
-    /* TODO */
+article .shakebox .shakeit.disabled {
+    background: white;
+    border: #37699b 1px solid;
+    text-shadow: none;
+    color: #37699b;
+    cursor: default;
 }
 
-.content > article .entry {
+article .thumb {
+    float: right;
+    border-radius: 2px;
+    width: 80px;
+    margin: 0 0 10px 10px;
+    border: 1px solid #aaa;
+}
+
+article .entry {
     margin-left: 70px;
     margin-top: 0px;
 }
-.content > article .entry .title,
-.content > article .entry .submitted,
-.content > article .entry .text,
-.content > article .entry .meta {
+article .entry .title,
+article .entry .submitted,
+article .entry .text,
+article .entry .meta {
     margin-bottom: 2px;
 }
-.content > article .entry .title .hostname,
-.content > article .entry .submitted,
-.content > article .entry .meta a {
+article .entry .title .hostname,
+article .entry .submitted,
+article .entry .meta a {
     color: #666;
 }
-.content > article .entry .submitted,
-.content > article .entry .meta {
+article .entry .submitted,
+article .entry .meta {
     line-height: 20px;
 }
-.content > article .entry .title a {
+article .entry .title a {
     font-size: 15pt;
     font-weight: bold;
     color: #37699b;
     letter-spacing: -1px;
     line-height: 24px;
 }
-.content > article .entry .title a:hover { /* cambiar luego por :visited. sólo como demostración TODO */
+article .entry .title a:hover { /* cambiar luego por :visited. sólo como demostración TODO */
     color: #777;
 }
-.content > article .entry .submitted li img {
+article .entry .submitted li img {
     vertical-align: middle;
     height: 24px;
     border-radius: 3px;
     margin-right: 6px;
 }
-.content > article .entry .submitted li {
+article .entry .submitted li {
     line-height: 12px;
 }
-.content > article .entry ul li {
+article .entry ul li {
     font-weight: bold;
     font-size: 10pt;
     display: inline;
     margin-right: 10px;
 }
-.content > article .entry ul li.comments {
+article .entry ul li.comments {
     font-weight: bold;
     font-size: 10pt;
 }
-.content > article .entry .submitted {
+article .entry .submitted {
     line-height: 14px;
 }
-.content > article .entry .text {
+article .entry .text {
     line-height: 18px;
 }
 
@@ -689,7 +700,7 @@ img.avatar, .avatar > img {
     .canvas, .content,
     .cover .header, .subcover .header,
     .subcover .header .quote,
-    .content > article {
+    article {
         width: auto;
     }
     .nomobile {
@@ -756,11 +767,11 @@ img.avatar, .avatar > img {
         width: 2em;
     }
 
-    .content > article .shakebox,
-    .content > article .shakebox .shakeit {
+    article .shakebox,
+    article .shakebox .shakeit {
         width: 50px;
     }
-    .content > article .entry {
+    article .entry {
         margin-left: 60px;
     }
 

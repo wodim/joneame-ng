@@ -2,11 +2,11 @@
 {% set title = _('Links submitted by %(user)s', user=user.user_login) %}
 {% block content %}
     {% set link_brief = true %}
-    <ul class="links">
+    <div class="links">
         {% for link in items %}
             {% include 'link/link.html' %}
         {% endfor %}
-    </ul>
+    </div>
     {% if pagination %}
         {{ utils.render_pagination(pagination) }}
     {% endif %}
