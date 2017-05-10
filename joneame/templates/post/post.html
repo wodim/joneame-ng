@@ -1,27 +1,27 @@
-<li {% if post.post_parent != 0 %}class="child"{% elif children is defined %}class="with-children"{% endif %}>
+<li {% if post.parent != 0 %}class="child"{% elif children is defined %}class="with-children"{% endif %}>
     <div class="comment">
-        {{ utils.render_avatar(post.user, post.post_type == 'admin') }}
+        {{ utils.render_avatar(post.user, post.type == 'admin') }}
         <div class="inner">
             <div class="comment-meta">
                 <ul class="left">
                     <li>
-                        {{ utils.render_user(post.user, post.post_type == 'admin') }}
+                        {{ utils.render_user(post.user, post.type == 'admin') }}
                     <li class="timestamp">
                         {{ utils.render_icon('clock-o') }}
-                        <a href="{{ url_for('Post:get', user_login=post.post_public_user, post_id=post.post_id) }}">
-                            {{ post.post_date }}
+                        <a href="{{ url_for('Post:get', user_login=post.public_user, post_id=post.id) }}">
+                            {{ post.date }}
                         </a>
                 </ul>
-                {% if post.post_type != 'admin' %}
+                {% if post.type != 'admin' %}
                     <ul class="right">
                         <li>
                             <span title="{{ _('votes') }}">
-                                {{ utils.render_icon('hand-pointer-o') }} {{ post.post_votes }}
+                                {{ utils.render_icon('hand-pointer-o') }} {{ post.votes }}
                             </span>
                         </li>
                         <li>
                             <span title="{{ _('karma') }}">
-                                {{ utils.render_icon('line-chart') }} {{ post.post_karma }}
+                                {{ utils.render_icon('line-chart') }} {{ post.karma }}
                             </span>
                         </li>
                         <li>
@@ -31,13 +31,13 @@
                 {% endif %}
             </div>
             <div class="comment-text">
-                {{ post.post_content }}
+                {{ post.content|user_text|safe }}
             </div>
         </div>
     </div>
-    {% if post.post_parent == 0 and children is defined and post.post_id in children %}
+    {% if post.parent == 0 and children is defined and post.id in children %}
         <ul class="children">
-            {% for post in children[post.post_id] %}
+            {% for post in children[post.id] %}
                 {% include "post/post.html" %}
             {% endfor %}
         </ul>

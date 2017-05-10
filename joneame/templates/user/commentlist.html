@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% set title = _('Comments written by %(user)s', user=user.user_login) %}
+{% set title = _('Comments written by %(user)s', user=user.login) %}
 {% block content %}
     {% set article_labels = true %}
     <ul class="comments">

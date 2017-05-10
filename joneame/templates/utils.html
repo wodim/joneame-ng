@@ -36,13 +36,13 @@
 
 {% macro render_avatar(user, is_admin=False, link=True) %}
     {% if link and not is_admin %}
-        <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+        <a href="{{ url_for('User:get', user_login=user.login) }}">
     {% endif %}
 
     {% if is_admin %}
         <img class="avatar" src="{{ url_for('static', filename='images/admin-avatar.png') }}" alt="{{ _('admin') }}" />
     {% else %}
-        <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _('%(user)s\'s avatar', user=user.user_login) }}">
+        <img class="avatar" src="{{ user.avatar_url }}" alt="{{ _('%(user)s\'s avatar', user=user.login) }}">
     {% endif %}
 
     {% if link and not is_admin %}
@@ -53,22 +53,22 @@
 {% macro render_user(user, is_admin=False, reveal_user=False) %}
     {% if is_admin %}
         {% if reveal_user %} {# admin revealing his nick #}
-            <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+            <a href="{{ url_for('User:get', user_login=user.login) }}">
                 {{ render_icon('user') }}
-                <strong>{{ user.user_login }}</strong>
+                <strong>{{ user.login }}</strong>
             </a>
             <span title="{{ _('this comment was written on behalf of the jonéame administration') }}">({{ _('admin') }})</span>
         {% else %} {# admin hiding his nick #}
             {{ render_icon('user') }}
             <strong>admin</strong>
             {% if not current_user.is_anonymous and current_user.is_admin %}
-                ({{ user.user_login }})
+                ({{ user.login }})
             {% endif %}
         {% endif %}
     {% else %} {# normal user #}
-        <a href="{{ url_for('User:get', user_login=user.user_login) }}">
+        <a href="{{ url_for('User:get', user_login=user.login) }}">
             {{ render_icon('user') }}
-            <strong>{{ user.user_login }}</strong>
+            <strong>{{ user.login }}</strong>
         </a>
     {% endif %}
 {% endmacro %}

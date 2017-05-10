@@ -3,73 +3,76 @@
 <html lang="es">
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css', v=6) }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css', v=8) }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% if title is defined and title %}{{ title }} - Jonéame {% else %}Jonéame{% endif %}</title>
     </head>
     <body>
-        <div class="cover"><div class="header">
-            <div class="left">
-                <a class="logo" href="{{ url_for('Link:list_home') }}">Jonéame</a>
-                <ul class="sections nomobile">
-                    <li><a href="#">{{ _('submit') }}</a>
-                    <li><a href="{{ url_for('Link:list_queue') }}">{{ _('queue') }}</a>
-                    <li><a href="#">{{ _('sneak') }}</a>
-                    <li><a href="{{ url_for('Quote:random_redir') }}">{{ _('quotes') }}</a>
-                    <li><a href="{{ url_for('Post:list') }}">{{ _('posts') }}</a>
-                </ul>
-                <a class="hamburger" href="#" id="hamburger" onclick="jnm.ui.hamburger_click()"></a>
-            </div>
-            <div class="right">
-                <ul class="session">
-                    {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('Session:logout') }}">{{ _('log out') }}</a></li>
-                        <li class="user"><a href="{{ url_for('User:get', user_login=current_user.user_login) }}">
-                            {{ utils.render_avatar(current_user, link=False) }}
-                            {{ current_user.user_login }}
-                        </a></li>
-                    {% else %}
-                        <li><a href="{{ url_for('Session:login_form') }}">{{ _('log in') }}</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div></div>
-        <div class="subcover nomobile"><div class="header">
-            {% if random_quote %}
-            <div class="left">
-                <div class="quote">
-                    <a href="{{ url_for('Quote:get', quote_id=random_quote.quote_id) }}">
-                        {{ utils.render_icon('quote-left') }}
-                    </a>
-                    <a href="{{ url_for('User:get', user_login=random_quote.user.user_login) }}">
-                        <strong>{{ random_quote.user.user_login }}:</strong>
-                    </a>
-                    {{ random_quote.quote_text }}
-                    —
-                    <span title="{{ _('votes') }}">
-                        {{ utils.render_icon('hand-pointer-o') }} {{ random_quote.quote_votes }}
-                    </span>
-                    <span title="{{ _('karma') }}">
-                        {{ utils.render_icon('line-chart') }} {{ random_quote.quote_karma }}
-                    </span>
-                    <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
+        <header>
+            <div class="cover"><div class="header">
+                <div class="left">
+                    <a class="logo" href="{{ url_for('Link:list_home') }}">Jonéame</a>
+                    <ul class="sections nomobile">
+                        <li><a href="#">{{ _('submit') }}</a>
+                        <li><a href="{{ url_for('Link:list_queue') }}">{{ _('queue') }}</a>
+                        <li><a href="#">{{ _('sneak') }}</a>
+                        <li><a href="{{ url_for('Quote:random_redir') }}">{{ _('quotes') }}</a>
+                        <li><a href="{{ url_for('Post:list') }}">{{ _('posts') }}</a>
+                    </ul>
+                    <a class="hamburger" href="#" id="hamburger" onclick="jnm.ui.hamburger_click()"></a>
                 </div>
-            </div>
-            {% endif %}
-            <div class="right">
-                <div class="search">
-                    <input type="search" name="search"><input type="submit" value="{{ _('search') }}">
+                <div class="right">
+                    <ul class="session">
+                        {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('Session:logout') }}">{{ _('log out') }}</a></li>
+                            <li class="user"><a href="{{ url_for('User:get', user_login=current_user.login) }}">
+                                {{ utils.render_avatar(current_user, link=False) }}
+                                {{ current_user.login }}
+                            </a></li>
+                        {% else %}
+                            <li><a href="{{ url_for('Session:login_form') }}">{{ _('log in') }}</a></li>
+                        {% endif %}
+                        ({{ current_user.remote_ip }})
+                    </ul>
                 </div>
-            </div>
-        </div></div>
-        {% if submenu %}
-            <div class="submenu"><div class="header">
-                {{ utils.render_menu(submenu) }}
             </div></div>
-        {% endif %}
-        <div class="canvas">
+            <div class="subcover nomobile"><div class="header">
+                {% if random_quote %}
+                <div class="left">
+                    <div class="quote">
+                        <a href="{{ url_for('Quote:get', quote_id=random_quote.id) }}">
+                            {{ utils.render_icon('quote-left') }}
+                        </a>
+                        <a href="{{ url_for('User:get', user_login=random_quote.user.login) }}">
+                            <strong>{{ random_quote.user.login }}:</strong>
+                        </a>
+                        {{ random_quote.text }}
+                        —
+                        <span title="{{ _('votes') }}">
+                            {{ utils.render_icon('hand-pointer-o') }} {{ random_quote.votes }}
+                        </span>
+                        <span title="{{ _('karma') }}">
+                            {{ utils.render_icon('line-chart') }} {{ random_quote.karma }}
+                        </span>
+                        <a href="#" title="{{ _('who voted?') }}">{{ utils.render_icon('info-circle') }}</a>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="right">
+                    <div class="search">
+                        <input type="search" name="search"><input type="submit" value="{{ _('search') }}">
+                    </div>
+                </div>
+            </div></div>
+            {% if submenu %}
+                <div class="submenu"><div class="header">
+                    {{ utils.render_menu(submenu) }}
+                </div></div>
+            {% endif %}
+        </header>
+        <main>
             <div class="grid">
                 {% if sidebar %}
                     <div class="sidebar">
@@ -92,7 +95,10 @@
                     {% block content %}{% endblock %}
                 </div>
             </div>
-        </div>
+        </main>
+        <footer>
+            joneame-ng version {{ rev }}
+        </footer>
         <script async="async" src="{{ url_for('static', filename='js/script.js') }}"></script>
     </body>
 </html>

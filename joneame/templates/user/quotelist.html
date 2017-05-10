@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% set full_width = true %}
-{% set title = _('Quotes by %(user)s', user=user.user_login) %}
+{% set title = _('Quotes by %(user)s', user=user.login) %}
 {% block content %}
     <div class="quotes">
         <table>
             {% for quote in items %}
                 <tr>
-                    <th><a href="{{ url_for('Quote:get', quote_id=quote.quote_id) }}">#{{ quote.quote_id }}</a></th>
-                    <td>{{ quote.quote_text }}</td>
+                    <th><a href="{{ url_for('Quote:get', quote_id=quote.id) }}">#{{ quote.id }}</a></th>
+                    <td>{{ quote.text }}</td>
                 </tr>
             {% endfor %}
         </table>

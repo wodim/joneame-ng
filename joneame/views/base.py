@@ -1,4 +1,5 @@
 from random import randint
+import subprocess
 
 from flask import render_template, request
 
@@ -23,10 +24,10 @@ def build_pagination_args(toolbox):
 
 
 def get_random_quote():
-    quote_max = db.session.query(db.func.max(Quote.quote_id)).first()[0]
+    quote_max = db.session.query(db.func.max(Quote.id)).first()[0]
     quote = (
         Quote.query
-        .filter(Quote.quote_id > randint(0, quote_max))
+        .filter(Quote.id > randint(0, quote_max))
         .options(db.joinedload(Quote.user))
         .first()
     )
@@ -44,5 +45,11 @@ def render_page(template, sidebar=None, submenu=None, show_quote=True,
     if pagination:
         kwargs['pagination'] = pagination
         kwargs['pagination'].args = build_pagination_args(toolbox)
+
+    rev = subprocess.check_output('git describe --always'.split(' '))
+    try:
+        kwargs['rev'] = rev.decode('utf8').strip()
+    except:
+        kwargs['rev'] = 'unknown'
 
     return render_template(template, **kwargs)

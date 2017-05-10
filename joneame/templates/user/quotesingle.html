@@ -1,19 +1,19 @@
 {% extends 'layout.html' %}
 {% set full_width = true %}
-{% set title = _('Quote by %(user)s', user=quote.user.user_login) %}
+{% set title = _('Quote by %(user)s', user=quote.user.login) %}
 {% block content %}
     <div class="quote-viewer">
         <div class="text">
-            {{ quote.quote_text }}
+            {{ quote.text }}
         </div>
         <div class="corner"></div>
-        <img class="avatar" src="{{ quote.user.avatar_url|safe }}" alt="{{ _("%(user)s's avatar", user=quote.user.user_login) }}" />
+        <img class="avatar" src="{{ quote.user.avatar_url|safe }}" alt="{{ _("%(user)s's avatar", user=quote.user.login) }}" />
         <div class="toolbox">
             {{ utils.render_menu(quote_toolbox) }}
         </div>
         <div class="meta">
-            <a href="{{ url_for('User:get', user_login=quote.user.user_login) }}" class="user">
-                {{ quote.user.user_login }}
+            <a href="{{ url_for('User:get', user_login=quote.user.login) }}" class="user">
+                {{ quote.user.login }}
             </a>
         </div>
     </div>

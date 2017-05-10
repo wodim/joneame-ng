@@ -8,7 +8,7 @@ from joneame.database import db
 def sidebox_categories():
     categories = (
         db.session.query(Category)
-        .order_by(Category.category_name.asc())
+        .order_by(Category.name.asc())
         .all()
     )
 
@@ -21,14 +21,13 @@ def sidebox_top_links():
         db.session
         .query(
             Link,
-            ((Link.link_votes + Link.link_anonymous
-              - Link.link_negatives) *
+            ((Link.positives + Link.anonymous - Link.negatives) *
              (1 - (db.func.unix_timestamp(db.func.now())
-                   - db.func.unix_timestamp(Link.link_date))
+                   - db.func.unix_timestamp(Link.date))
               * 0.8 / 129600)).label('value')
         )
-        .filter(Link.link_status == 'published')
-        .filter(Link.link_date > db.func.from_unixtime(
+        .filter(Link.status == 'published')
+        .filter(Link.date > db.func.from_unixtime(
                 (db.func.unix_timestamp(db.func.now()) - 129600 * 50)))
         .order_by(db.text('value desc'))
         .limit(10)
@@ -46,10 +45,10 @@ def sidebox_top_links():
 def sidebox_top_queued():
     links = (
         db.session.query(Link)
-        .filter(Link.link_status == 'queued')
-        .filter(Link.link_date > db.func.from_unixtime(
+        .filter(Link.status == 'queued')
+        .filter(Link.date > db.func.from_unixtime(
                 (db.func.unix_timestamp(db.func.now()) - 86400 * 7)))
-        .order_by(Link.link_karma.desc())
+        .order_by(Link.karma.desc())
         .limit(10).all()
     )
 
@@ -65,7 +64,7 @@ def sidebox_last_comments():
         db.session.query(Comment)
         .options(db.joinedload(Comment.link))
         .options(db.joinedload(Comment.user))
-        .order_by(Comment.comment_id.desc())
+        .order_by(Comment.id.desc())
         .limit(10).all()
     )
 

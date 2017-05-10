@@ -4,21 +4,23 @@ from joneame.database import db
 class Comment(db.Model):
     __tablename__ = 'comments'
 
-    comment_id = db.Column(db.Integer, primary_key=True)
-    comment_type = db.Column(db.Enum('normal', 'especial', 'admin'))
-    comment_randkey = db.Column(db.Integer)
-    comment_link_id = db.Column(db.Integer, db.ForeignKey('links.link_id'))
-    comment_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    comment_date = db.Column(db.DateTime)
-    comment_ip = db.Column(db.String(24))
-    comment_order = db.Column(db.Integer)
-    comment_votes = db.Column(db.Integer)
-    comment_karma = db.Column(db.Integer)
-    comment_content = db.Column(db.Text)
+    id = db.Column('comment_id', db.Integer, primary_key=True)
+    type = db.Column('comment_type', db.Enum('normal', 'especial', 'admin'))
+    randkey = db.Column('comment_randkey', db.Integer)
+    link_id = db.Column('comment_link_id', db.Integer,
+                        db.ForeignKey('links.link_id'))
+    user_id = db.Column('comment_user_id', db.Integer,
+                        db.ForeignKey('users.user_id'))
+    date = db.Column('comment_date', db.DateTime)
+    ip = db.Column('comment_ip', db.String(24))
+    order = db.Column('comment_order', db.Integer)
+    votes = db.Column('comment_votes', db.Integer)
+    karma = db.Column('comment_karma', db.Integer)
+    content = db.Column('comment_content', db.Text)
 
     link = db.relationship('Link', back_populates='comments')
 
     def __repr__(self):
         return ('<Comment %r, user %r, content %r>' %
-                (self.comment_id, self.user.user_login,
-                 self.comment_content[:100]))
+                (self.id, self.user.login,
+                 self.content[:100]))

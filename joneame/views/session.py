@@ -16,9 +16,9 @@ def login_form():
     if form.validate_on_submit():
         user = (
             User.query
-            .filter((User.user_login == form.login.data) |
-                    (User.user_email == form.login.data))
-            .filter(User.user_level != 'disabled')  # TODO: more levels?
+            .filter((User.login == form.login.data) |
+                    (User.email == form.login.data))
+            .filter(User.level != 'disabled')  # TODO: more levels?
             .first()
         )
 

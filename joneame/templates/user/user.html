@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% set full_width = true %}
-{% set title = user.user_login %}
+{% set title = user.login %}
 {% block content %}
     <ul class="comments">
         {% for post in items %}
@@ -12,16 +12,16 @@
         <table>
             <tr>
                 <th>{{ _('user') }}:</th>
-                <td>{{ user.user_login }} (id: {{ user.user_id }})
-                    (level: {{ user.user_level }})</td>
+                <td>{{ user.login }} (id: {{ user.id }})
+                    (level: {{ user.level }})</td>
             </tr>
             <tr>
                 <th>{{ _('since') }}:</th>
-                <td>{{ user.user_date }}</td>
+                <td>{{ user.date }}</td>
             </tr>
             <tr>
                 <th>{{ _('karma') }}:</th>
-                <td>{{ user.user_karma }}</td>
+                <td>{{ user.karma }}</td>
             </tr>
             <tr>
                 <th>{{ _('links sent') }}:</th>

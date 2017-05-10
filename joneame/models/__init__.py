@@ -3,4 +3,5 @@ from .misc import Ban
 from .post import Post
 from .quote import Quote
 from .comment import Comment
-from .user import Avatar, User, Vote
+from .user import Avatar, User
+from .vote import Vote

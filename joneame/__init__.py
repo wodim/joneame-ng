@@ -1,11 +1,10 @@
 from flask import Flask
 from flask_babel import Babel
-from flask_login import LoginManager
 from jinja2 import FileSystemBytecodeCache, StrictUndefined
 
 from joneame.config import _cfg, _cfgb64
 from joneame.database import db
-from joneame.utils import format_dt
+from joneame.utils import format_dt, format_post_text
 
 
 # initialise the app
@@ -25,6 +24,7 @@ app.jinja_env.lstrip_blocks = True
 app.jinja_env.undefined = StrictUndefined
 
 app.jinja_env.filters['format_dt'] = format_dt
+app.jinja_env.filters['user_text'] = format_post_text
 
 # jinja2 cache
 bcc = FileSystemBytecodeCache('/tmp', 'jinja_jnm_%s.cache')
@@ -34,7 +34,7 @@ app.jinja_env.bytecode_cache = bcc
 babel = Babel(app)
 
 # initialise the login manager
-login_manager = LoginManager(app)
+import joneame.login
 
 # load all views
 import joneame.views

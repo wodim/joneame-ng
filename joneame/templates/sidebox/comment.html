@@ -4,13 +4,13 @@
         {% for comment in comments %}
             <li>
                 <strong>
-                    <a href="{{ url_for('User:get', user_login=comment.user.user_login) }}">
-                        {{ comment.user.user_login }}
+                    <a href="{{ url_for('User:get', user_login=comment.user.login) }}">
+                        {{ comment.user.login }}
                     </a>
                 </strong>
                 {{ _('in') }}
-                <a href="{{ url_for('Link:get', link_uri=comment.link.link_uri) }}">
-                    {{ comment.link.link_title }}
+                <a href="{{ url_for('Link:get', link_uri=comment.link.uri) }}">
+                    {{ comment.link.title }}
                 </a>
         {% endfor %}
     </ul>

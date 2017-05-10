@@ -4,22 +4,22 @@
         {{ _('Warning: %(text)s', text=text) }}
     </div>
 {% endmacro %}
-<article class="status_{{ link.link_status }}">
-    {% if link.link_thumb_status == 'local' %}
+<article class="status_{{ link.status }}">
+    {% if link.thumb_status == 'local' %}
         {# TODO: remove hardcoded domain #}
-        <img class="thumb" src="http://joneame.net{{ link.link_thumb }}">
+        <img class="thumb" src="http://joneame.net{{ link.thumb }}">
     {% endif %}
     <div class="shakebox">
-        <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}" class="square">
+        <a href="{{ url_for('Link:get', link_uri=link.uri) }}" class="square">
             <div class="votes">
-                {{ link.link_total_votes }}
+                {{ link.total_votes }}
             </div>
             <div class="votes_under">
                 {{ _('votes') }}
             </div>
         </a>
-        {% if link.current_user_vote %}
-            {% if link.current_user_vote.vote_value >= 0 %} {# TODO: figure out why can it be 0 #}
+        {% if link.current_vote %}
+            {% if link.current_vote.value >= 0 %} {# TODO: figure out why can it be 0 #}
                 <a class="shakeit disabled" href="#">{{ _('great!') }}</a>
             {% else %}
                 <a class="shakeit disabled" href="#">{{ _(':(') }}</a>
@@ -31,72 +31,76 @@
         {% endif %}
     </div>
     <div class="entry">
-        {% if link.link_status == 'abuse' %}
+        {% if link.status == 'abuse' %}
             {{ warning(_('This link has been discarded for violating our terms of use.')) }}
-        {% elif link.link_status == 'duplicated' %}
+        {% elif link.status == 'duplicated' %}
             {{ warning(_('This link has been discarded for having been submitted before.')) }}
-        {% elif link.link_status == 'published' and link.link_negatives > 2 %}
+        {% elif link.status == 'published' and link.negatives > 2 %}
             {{ warning(_('Controversial link. Check the comments.')) }}
         {% endif %}
         <div class="title">
             <h3>
-                <a href="{{ link.link_url|escape }}"
-                     onmousedown="jnm.ui.link_click(this, {{ link.link_id }})">
-                     {{ link.link_title }}
+                <a href="{{ link.url|escape }}"
+                     onmousedown="jnm.ui.link_click(this, {{ link.id }})">
+                     {{ link.title }}
                 </a>
             </h3>
         </div>
         <ul class="submitted">
             <li>
-                <a href="{{ url_for('User:get', user_login=link.user.user_login) }}">
+                <a href="{{ url_for('User:get', user_login=link.user.login) }}">
                     {{ utils.render_avatar(link.user, link=False) }}
                     {{ utils.render_icon('user') }}
-                    <strong>{{ link.user.user_login }}</strong>
+                    <strong>{{ link.user.login }}</strong>
                 </a>
             </li>
-            {% if link.link_url_domain %}
+            {% if link.url_domain %}
                 <li>
                     {{ utils.render_icon('globe') }}
-                    {{ link.link_url_domain }}
+                    {{ link.url_domain }}
                 </li>
             {% endif %}
             <li>
                 {{ utils.render_icon('clock-o') }}
-                {{ link.link_sent_date|format_dt }}
+                {{ link.sent_date|format_dt }}
             </li>
         </ul>
-        {% if link.link_content and not (link_brief is defined and link_brief) %}
+        {% if link.content and not (link_brief is defined and link_brief) %}
             <div class="text">
-                {{ link.link_content }}
+                {{ link.content|user_text|safe }}
             </div>
         {% endif %}
         <ul class="meta">
             <li class="comments">
-                <a href="{{ url_for('Link:get', link_uri=link.link_uri) }}">
+                <a href="{{ url_for('Link:get', link_uri=link.uri) }}">
                     {{ utils.render_icon('comments') }}
-                    {{ ngettext('%(num)s comment', '%(num)s comments', link.link_comments) }}
+                    {{ ngettext('%(num)s comment', '%(num)s comments', link.comment_count) }}
                 </a>
             </li>
             <li>
-                <strong>{{ _('karma') }}:</strong> {{ link.link_karma }}
-                (+{{ link.link_votes }}, {{ link.link_anonymous }}, -{{ link.link_negatives }})
+                <strong>{{ _('karma') }}:</strong> {{ link.karma }}
+                (+{{ link.positives }}, {{ link.anonymous }}, -{{ link.negatives }})
             </li>
-            <li>
-                {{ utils.render_icon('external-link-square') }}
-                {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.clickcounter_counter) }}
-            </li>
-            <li>
-                {{ utils.render_icon('external-link-square') }}
-                {{ ngettext('%(num)s visit', '%(num)s visits', link.visitcounter.visitcounter_counter) }}
-            </li>
+            {% if link.clickcounter %}
+                <li>
+                    {{ utils.render_icon('external-link-square') }}
+                    {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.counter) }}
+                </li>
+            {% endif %}
+            {% if link.visitcounter %}
+                <li>
+                    {{ utils.render_icon('external-link-square') }}
+                    {{ ngettext('%(num)s visit', '%(num)s visits', link.visitcounter.counter) }}
+                </li>
+            {% endif %}
         </ul>
         <ul class="meta">
             {# TODO: fix links that have no cat in the db #}
             {% if link.category %}
                 <li>
                     <strong>{{ _('category') }}:</strong>
-                    <a href="{{ url_for('Link:list_category', category_id=link.category.category_id) }}">
-                        {{ link.category.category_name }}
+                    <a href="{{ url_for('Link:list_category', category_id=link.category.id) }}">
+                        {{ link.category.name }}
                     </a>
                 </li>
             {% endif %}

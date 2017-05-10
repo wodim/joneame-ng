@@ -13,7 +13,7 @@ def get_quote(quote_id):
     quote = (
         Quote.query
         .options(db.joinedload(Quote.user).joinedload(User.avatar))
-        .filter(Quote.quote_id == quote_id)
+        .filter(Quote.id == quote_id)
         .first_or_404()
     )
 
@@ -31,5 +31,5 @@ def get_quote(quote_id):
 
 @app.route('/cortos', endpoint='Quote:random_redir')
 def random_quote_redir():
-    random_quote_id = get_random_quote().quote_id
+    random_quote_id = get_random_quote().id
     return redirect(url_for('Quote:get', quote_id=random_quote_id))

@@ -1,29 +1,31 @@
 <li>
     {% if article_labels is defined and article_labels %}
-        <a href="{{ url_for('Link:get', link_uri=comment.link.link_uri) }}" class="article-label">
-            {{ comment.link.link_title }}
+        <a href="{{ url_for('Link:get', link_uri=comment.link.uri) }}" class="article-label">
+            {{ comment.link.title }}
         </a>
     {% endif %}
     <div class="comment">
-        {{ utils.render_avatar(comment.user, comment.comment_type == 'admin') }}
+        {{ utils.render_avatar(comment.user, comment.type == 'admin') }}
         <div class="inner">
             <div class="comment-meta">
                 <ul class="left">
                     <li>
-                        {{ utils.render_user(comment.user, comment.comment_type == 'admin' or comment.comment_type == 'especial', comment.comment_type == 'especial') }}
+                        {{ utils.render_user(comment.user, comment.type == 'admin' or comment.type == 'especial', comment.type == 'especial') }}
+                    </li>
                     <li>
                         {{ utils.render_icon('clock-o') }}
-                        {{ comment.comment_date }}
+                        {{ comment.date }}
+                    </li>
                 </ul>
                 <ul class="right">
                     <li>
                         <span title="{{ _('votes') }}">
-                            {{ utils.render_icon('hand-pointer-o') }} {{ comment.comment_votes }}
+                            {{ utils.render_icon('hand-pointer-o') }} {{ comment.votes }}
                         </span>
                     </li>
                     <li>
                         <span title="{{ _('karma') }}">
-                            {{ utils.render_icon('line-chart') }} {{ comment.comment_karma }}
+                            {{ utils.render_icon('line-chart') }} {{ comment.karma }}
                         </span>
                     </li>
                     <li>
@@ -31,8 +33,8 @@
                 </ul>
             </div>
             <div class="comment-text">
-                <a class="order" href="#">#{{ comment.comment_order }}</a>
-                {{ comment.comment_content }}
+                <a class="order" href="#">#{{ comment.order }}</a>
+                {{ comment.content|user_text|safe }}
             </div>
         </div>
     </div>

@@ -51,16 +51,15 @@ table {
 
 /* general */
 body {
-    font-family: /* "Arimo", */ "Arial", sans-serif;
-    font-size: 12px;
+    font-family: "Arial", sans-serif;
+    font-size: 10pt;
     color: #222;
-    /* letter-spacing: -0.3px; */
 }
 a {
     text-decoration: none;
-    color: #4f7ba7; /* #3667ab; */
+    color: #4f7ba7;
 }
-.canvas {
+main {
     width: 1050px;
     margin: 0 auto;
 }
@@ -77,11 +76,18 @@ strong {
     font-weight: bold; /* !!!! */
 }
 
+.cover .header, .subcover .header, .submenu .header,
+main, footer {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
 /* header */
 .cover .header,
 .subcover .header,
 .submenu .header {
     text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    color: white;
 }
 
 /* first */
@@ -93,7 +99,6 @@ strong {
 .cover .header {
     padding: 0 20px;
     margin: 0 auto;
-    max-width: 1050px;
     height: 40px;
 }
 .cover .header a {
@@ -168,7 +173,6 @@ strong {
 .subcover .header {
     padding: 0 10px;
     margin: 0 auto;
-    max-width: 1050px;
     color: white;
 }
 .subcover .header .left {
@@ -214,7 +218,6 @@ strong {
 .submenu .header {
     padding: 0 10px;
     margin: 0 auto;
-    max-width: 1050px;
     color: white;
 }
 .submenu .header ul {
@@ -386,6 +389,15 @@ article .entry .warning {
     padding: 8px 10px;
 }
 
+footer {
+    opacity: .5;
+    border-top: 1px solid #4f7ba7;
+    margin-top: 10px;
+    padding: 15px;
+    font-style: italic;
+    clear: both;
+}
+
 /* link view */
 article {
     width: 720px;
@@ -427,7 +439,6 @@ article.status_published .shakebox .square {
 article.status_queued .shakebox .square {
     background-color: #eee;
     background-image: url('../images/shakebox-queued.png');
-    color: #333;
 }
 article.status_discard .shakebox .square,
 article.status_autodiscard .shakebox > .square {
@@ -697,7 +708,7 @@ img.avatar, .avatar > img {
 
 /* parches de responsividad */
 @media (max-width: 750px) {
-    .canvas, .content,
+    main, .content,
     .cover .header, .subcover .header,
     .subcover .header .quote,
     article {
@@ -706,10 +717,10 @@ img.avatar, .avatar > img {
     .nomobile {
         display: none !important;
     }
-    .canvas .grid .sidebar {
+    main .grid .sidebar {
         display: none;
     }
-    .canvas {
+    main {
         padding: 0 10px;
     }
     ul.comments > li.child {

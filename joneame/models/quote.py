@@ -4,14 +4,14 @@ from joneame.database import db
 class Quote(db.Model):
     __tablename__ = 'cortos'
 
-    quote_id = db.Column('id', db.Integer, primary_key=True)
-    quote_text = db.Column('texto', db.Text)
-    quote_author = db.Column('por', db.Integer, db.ForeignKey('users.user_id'))
-    quote_visible = db.Column('activado', db.Integer)
-    quote_votes = db.Column('votos', db.Integer)
-    quote_karma = db.Column('carisma', db.Integer)
-    quote_edits = db.Column('ediciones', db.Integer)
+    id = db.Column('id', db.Integer, primary_key=True)
+    text = db.Column('texto', db.Text)
+    author = db.Column('por', db.Integer, db.ForeignKey('users.user_id'))
+    visible = db.Column('activado', db.Integer)
+    votes = db.Column('votos', db.Integer)
+    karma = db.Column('carisma', db.Integer)
+    edits = db.Column('ediciones', db.Integer)
 
     def __repr__(self):
         return ('<Quote %r, user %r, text %r>' %
-                (self.quote_id, self.user.user_login, self.quote_text[:300]))
+                (self.id, self.user.login, self.text[:300]))
