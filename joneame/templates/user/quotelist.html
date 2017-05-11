@@ -2,17 +2,23 @@
 {% set full_width = true %}
 {% set title = _('Quotes by %(user)s', user=user.login) %}
 {% block content %}
-    <div class="quotes">
-        <table>
-            {% for quote in items %}
-                <tr>
-                    <th><a href="{{ url_for('Quote:get', quote_id=quote.id) }}">#{{ quote.id }}</a></th>
-                    <td>{{ quote.text }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        {% if pagination %}
-            {{ utils.render_pagination(pagination) }}
-        {% endif %}
-    </div>
+    {% if items %}
+        <div class="quotes">
+            <table>
+                {% for quote in items %}
+                    <tr>
+                        <th><a href="{{ url_for('Quote:get', quote_id=quote.id) }}">#{{ quote.id }}</a></th>
+                        <td>{{ quote.text }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% if pagination %}
+                {{ utils.render_pagination(pagination) }}
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="nothing">
+            {{ _("There's nothing to see here.") }}
+        </div>
+    {% endif %}
 {% endblock %}

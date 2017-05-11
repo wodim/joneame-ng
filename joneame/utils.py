@@ -96,7 +96,7 @@ rx_mention = re.compile(r'\B@([a-z][a-z0-9\-_\.]+(,\d+)?)', re.I)
 rx_mention_fmt = '<a href="{href}">@{user_login}</a>'
 rx_bold = re.compile(r'\B(\*(\S+)\*)\B')
 rx_bold_fmt = r'<strong>\2</strong>'
-rx_italic = re.compile(r'\B(_(\S+)_)\B')
+rx_italic = re.compile(r'\b(_(\S+)_)\b')
 rx_italic_fmt = r'<em>\2</em>'
 rx_del = re.compile(r'\B(\-(\S+)\-)\B')
 rx_del_fmt = r'<del>\2</del>'

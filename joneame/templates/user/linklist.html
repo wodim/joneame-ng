@@ -2,12 +2,18 @@
 {% set title = _('Links submitted by %(user)s', user=user.login) %}
 {% block content %}
     {% set link_brief = true %}
-    <div class="links">
-        {% for link in items %}
-            {% include 'link/link.html' %}
-        {% endfor %}
-    </div>
-    {% if pagination %}
-        {{ utils.render_pagination(pagination) }}
+    {% if items %}
+        <div class="links">
+            {% for link in items %}
+                {% include 'link/link.html' %}
+            {% endfor %}
+        </div>
+        {% if pagination %}
+            {{ utils.render_pagination(pagination) }}
+        {% endif %}
+    {% else %}
+        <div class="nothing">
+            {{ _("There's nothing to see here.") }}
+        </div>
     {% endif %}
 {% endblock %}

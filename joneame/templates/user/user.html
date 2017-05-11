@@ -20,8 +20,16 @@
                 <td>{{ user.date }}</td>
             </tr>
             <tr>
+                <th>{{ _('last seen') }}:</th>
+                <td>{{ user.last_seen_date }}</td>
+            </tr>
+            <tr>
                 <th>{{ _('karma') }}:</th>
                 <td>{{ user.karma }}</td>
+            </tr>
+            <tr>
+                <th>{{ _('ranking') }}:</th>
+                <td>#{{ user.ranking }}</td>
             </tr>
             <tr>
                 <th>{{ _('links sent') }}:</th>

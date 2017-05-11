@@ -32,7 +32,7 @@ class LinkList(object):
     items = None
 
     # state
-    page = 0
+    page = 1
     page_size = 0
 
     def __init__(self):
@@ -112,7 +112,7 @@ class HomeLinkList(LinkList):
         super().__init__()
 
         self.filter_ = (Link.status == 'published')
-        self.query = self.query.order_by(Link.sent_date.desc())
+        self.query = self.query.order_by(Link.published_date.desc())
 
         self.sidebar = [sidebox_top_links, sidebox_categories,
                         sidebox_last_comments]
@@ -127,12 +127,12 @@ class QueuedLinkList(LinkList):
             self.title = _('Discarded')
         else:
             self.filter_ = db.and_(
-                (Link.sent_date > (datetime.utcnow() - timedelta(weeks=8))),
+                (Link.date > (datetime.utcnow() - timedelta(weeks=8))),
                 (Link.status == 'queued')
             )
             self.title = _('Queued')
 
-        self.query = self.query.order_by(Link.sent_date.desc())
+        self.query = self.query.order_by(Link.date.desc())
 
         buttons = [
             MenuButton(text=_('all')),
@@ -161,7 +161,7 @@ class CategoryLinkList(LinkList):
             (Link.category_id == category_id)
         )
 
-        self.query = self.query.order_by(Link.sent_date.desc())
+        self.query = self.query.order_by(Link.published_date.desc())
 
         self.title = _('Category: %(cat_name)s',
                        cat_name=category.name)
@@ -243,5 +243,5 @@ class UserLinkList(LinkList):
     def __init__(self, user_id):
         super().__init__()
 
-        self.filter_ = (Link.author == user_id)
-        self.query = self.query.order_by(Link.sent_date.desc())
+        self.filter_ = (Link.user_id == user_id)
+        self.query = self.query.order_by(Link.date.desc())

@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
-from urllib.parse import urlparse
+from urllib.parse import urlencode, urlparse
 
+from flask import url_for
 from flask_login import current_user
 
 from joneame.config import _cfgi
@@ -11,8 +12,8 @@ class Link(db.Model):
     __tablename__ = 'links'
 
     id = db.Column('link_id', db.Integer, primary_key=True)
-    author = db.Column('link_author', db.Integer,
-                       db.ForeignKey('users.user_id'))
+    user_id = db.Column('link_author', db.Integer,
+                        db.ForeignKey('users.user_id'))
     status = db.Column('link_status',
                        db.Enum('discard', 'queued', 'published', 'abuse',
                                'duplicated', 'autodiscard'))
@@ -25,8 +26,8 @@ class Link(db.Model):
     karma = db.Column('link_karma', db.Float)
     text = db.Column('link_text', db.Text)
     modified = db.Column('link_modified', db.DateTime)
-    date = db.Column('link_date', db.DateTime)
-    sent_date = db.Column('link_sent_date', db.DateTime)
+    published_date = db.Column('link_date', db.DateTime)
+    date = db.Column('link_sent_date', db.DateTime)
     sent = db.Column('link_sent', db.Boolean)
     category_id = db.Column('link_category', db.Integer,
                             db.ForeignKey('categories.category_id'))
@@ -98,7 +99,7 @@ class Link(db.Model):
         if not current_user.is_authenticated:
             return False
 
-        if current_user.id == self.author:
+        if current_user.id == self.user_id:
             return False
 
         if self.status in ('abuse', 'autodiscard', 'duplicated'):
@@ -121,7 +122,7 @@ class Link(db.Model):
         # the user who's submitted the link can edit it for the first 15
         # minutes unless it's been published, marked as abuse, or discarded
         # by himself
-        if (user.id == self.author and
+        if (user.id == self.user_id and
                 self.status not in ('published', 'abuse', 'autodiscard') and
                 self.date + timedelta(minutes=15) < datetime.now()):
             return True
@@ -129,7 +130,7 @@ class Link(db.Model):
         # special users can edit for an hour after the user who submitted
         # the link can't anymore, but not if the user discarded it or it was
         # marked as abuse
-        if (user.id != self.author and user.is_special and
+        if (user.id != self.user_id and user.is_special and
                 self.status not in ('abuse', 'autodiscard') and
                 (self.date + timedelta(minutes=15) > datetime.now() and
                     self.date + timedelta(minutes=60) < datetime.now())):
@@ -164,6 +165,21 @@ class Link(db.Model):
             .first()
         )
 
+    @property
+    def permalink(self):
+        return url_for('Link:get', link_uri=self.uri, _external=True)
+
+    @property
+    def share_urls(self):
+        twitter = ('https://twitter.com/intent/tweet/?' +
+                    urlencode({'url': self.permalink, 'text': self.title,
+                              'via': 'joneame'}))
+        facebook = ('https://www.facebook.com/share.php?' +
+                    urlencode({'u': self.permalink}))
+
+        return {'twitter': twitter, 'facebook': facebook}
+
+    # TODO: these two crash if there's no such row in the clicks/visits tables
     def click(self):
         self.clickcounter.counter += 1
         db.session.commit()

@@ -27,6 +27,9 @@ def get_post(user_login, post_id):
         .all()
     )
 
+    if not thread:
+        abort(404)
+
     if user_login != thread[0].public_user:
         return redirect(url_for('Post:get',
                                 user_login=thread[0].public_user,

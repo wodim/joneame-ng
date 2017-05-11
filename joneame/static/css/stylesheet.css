@@ -75,6 +75,9 @@ main {
 strong {
     font-weight: bold; /* !!!! */
 }
+em {
+    font-style: italic; /* !!!! */
+}
 
 .cover .header, .subcover .header, .submenu .header,
 main, footer {
@@ -526,7 +529,6 @@ article .entry .submitted li {
     line-height: 12px;
 }
 article .entry ul li {
-    font-weight: bold;
     font-size: 10pt;
     display: inline;
     margin-right: 10px;

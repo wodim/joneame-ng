@@ -1,11 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <ul class="comments">
-        {% for post in posts %}
-            {% include 'post/post.html' %}
-        {% endfor %}
-    </ul>
-    {% if pagination %}
-        {{ utils.render_pagination(pagination) }}
+    {% if posts %}
+        <ul class="comments">
+            {% for post in posts %}
+                {% include 'post/post.html' %}
+            {% endfor %}
+        </ul>
+        {% if pagination %}
+            {{ utils.render_pagination(pagination) }}
+        {% endif %}
+    {% else %}
+        <div class="nothing">
+            {{ _("There's nothing to see here.") }}
+        </div>
     {% endif %}
 {% endblock %}

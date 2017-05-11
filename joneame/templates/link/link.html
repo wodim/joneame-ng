@@ -62,7 +62,7 @@
             {% endif %}
             <li>
                 {{ utils.render_icon('clock-o') }}
-                {{ link.sent_date|format_dt }}
+                {{ link.date|format_dt }}
             </li>
         </ul>
         {% if link.content and not (link_brief is defined and link_brief) %}
@@ -79,20 +79,12 @@
             </li>
             <li>
                 <strong>{{ _('karma') }}:</strong> {{ link.karma }}
-                (+{{ link.positives }}, {{ link.anonymous }}, -{{ link.negatives }})
             </li>
-            {% if link.clickcounter %}
-                <li>
-                    {{ utils.render_icon('external-link-square') }}
-                    {{ ngettext('%(num)s click', '%(num)s clicks', link.clickcounter.counter) }}
-                </li>
-            {% endif %}
-            {% if link.visitcounter %}
-                <li>
-                    {{ utils.render_icon('external-link-square') }}
-                    {{ ngettext('%(num)s visit', '%(num)s visits', link.visitcounter.counter) }}
-                </li>
-            {% endif %}
+            <li>
+                <strong>{{ _('users') }}:</strong> {{ link.positives }},
+                <strong>{{ _('anonymous') }}:</strong> {{ link.anonymous }},
+                <strong>{{ _('negatives') }}:</strong> {{ link.negatives }}
+            </li>
         </ul>
         <ul class="meta">
             {# TODO: fix links that have no cat in the db #}
@@ -104,11 +96,27 @@
                     </a>
                 </li>
             {% endif %}
+            {% if link.clickcounter %}
+                <li>
+                    {{ utils.render_icon('external-link-square') }}
+                    <strong>{{ _('clicks') }}:</strong> {{ link.clickcounter.counter }}
+                </li>
+            {% endif %}
+            {% if link.visitcounter %}
+                <li>
+                    {{ utils.render_icon('external-link-square') }}
+                    <strong>{{ _('visits') }}:</strong> {{ link.visitcounter.counter }}
+                </li>
+            {% endif %}
             <li>
-                {{ utils.render_icon('twitter') }}
+                <a href="{{ link.share_urls.twitter }}">
+                    {{ utils.render_icon('twitter') }}
+                </a>
             </li>
             <li>
-                {{ utils.render_icon('facebook') }}
+                <a href="{{ link.share_urls.facebook }}">
+                    {{ utils.render_icon('facebook') }}
+                </a>
             </li>
         </ul>
     </div>

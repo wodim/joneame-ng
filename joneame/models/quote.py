@@ -6,7 +6,7 @@ class Quote(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True)
     text = db.Column('texto', db.Text)
-    author = db.Column('por', db.Integer, db.ForeignKey('users.user_id'))
+    user_id = db.Column('por', db.Integer, db.ForeignKey('users.user_id'))
     visible = db.Column('activado', db.Integer)
     votes = db.Column('votos', db.Integer)
     karma = db.Column('carisma', db.Integer)

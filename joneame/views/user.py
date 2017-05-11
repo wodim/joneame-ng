@@ -27,18 +27,20 @@ def get_user(user_login):
         query = (
             Post.query
             .filter(Post.user_id == user.id)
+            .filter(Post.type != 'admin')
             .order_by(Post.id.desc())
         )
         page_size = 1
     elif request.endpoint == 'User:get_quotes':
         template = 'user/quotelist.html'
         query = Quote.query
-        query = query.filter(Quote.author == user.id)
+        query = query.filter(Quote.user_id == user.id)
         query = query.order_by(Quote.id.asc())
         page_size *= 2.5
     elif request.endpoint == 'User:get_links':
         template = 'user/linklist.html'
         link_list = UserLinkList(user_id=user.id)
+        link_list.page = request.args.get('page', 1, type=int)
         link_list.fetch()
     elif request.endpoint == 'User:get_comments':
         template = 'user/commentlist.html'
