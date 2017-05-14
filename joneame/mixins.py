@@ -17,5 +17,9 @@ class MyUserMixin(UserMixin, CommonUserMixin):
 
 class MyAnonymousUserMixin(AnonymousUserMixin, CommonUserMixin):
     @property
+    def is_admin(self):
+        return False
+
+    @property
     def id(self):
         return 0

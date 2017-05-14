@@ -2,11 +2,17 @@
 {% set title = link.title %}
 {% block content %}
     {% include 'link/link.html' %}
-    <ul class="comments">
-        {% for comment in comments %}
-            {% include 'link/comment.html' %}
-        {% endfor %}
-    </ul>
+    {% if comments %}
+        <ul class="comments">
+            {% for comment in comments %}
+                {% include 'link/comment.html' %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="nothing">
+            {{ _("There's nothing to see here.") }}
+        </div>
+    {% endif %}
     {% if pagination %}
         {{ utils.render_pagination(pagination) }}
     {% endif %}

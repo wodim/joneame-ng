@@ -1,3 +1,8 @@
+from datetime import datetime
+from random import randint
+
+from flask_login import current_user
+
 from joneame.database import db
 
 
@@ -27,6 +32,26 @@ class Post(db.Model):
         if self.type == 'admin':
             return 'admin'
         return self.user.login
+
+    @classmethod
+    def create(cls, form):
+        post = cls()
+
+        post.randkey = randint(0, 2147483647)
+        post.src = 'web'
+        post.date = post.post_last_answer = datetime.now()
+        post.user_id = current_user.id
+        post.ip_int = db.func.inet_aton(current_user.remote_ip)
+        post.votes = 0
+        post.karma = 0  # posts, unlike comments, start with a karma of 0
+        post.content = form.text.data
+        post.type = 'normal'  # TODO
+        post.parent = 0  # TODO
+
+        db.session.add(post)
+        db.session.commit()
+
+        return post
 
     def __repr__(self):
         return ('<Post %r, author %r, content %r>' %

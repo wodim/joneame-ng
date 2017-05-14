@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
+    {% if form %}
+        {% include 'post/newpost.html' %}
+    {% endif %}
     {% if posts %}
         <ul class="comments">
             {% for post in posts %}

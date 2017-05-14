@@ -1,4 +1,3 @@
-import base64
 import hashlib
 
 from flask import url_for
@@ -13,6 +12,7 @@ class User(MyUserMixin, db.Model):
 
     id = db.Column('user_id', db.Integer, primary_key=True)
     login = db.Column('user_login', db.String(32))
+
     level = db.Column('user_level',
                       db.Enum('disabled', 'devel', 'normal', 'special',
                               'admin', 'god'))
@@ -23,7 +23,7 @@ class User(MyUserMixin, db.Model):
     ip = db.Column('user_ip', db.String(32))
     password = db.Column('user_pass', db.String(64))
     email = db.Column('user_email', db.String(64))
-    names = db.Column('user_names', db.String(60))
+    name = db.Column('user_names', db.String(60))
     _status = db.Column('user_estado', db.String(60))
     login_register = db.Column('user_login_register', db.String(32))
     email_register = db.Column('user_email_register', db.String(64))
@@ -40,10 +40,13 @@ class User(MyUserMixin, db.Model):
 
     @property
     def avatar_url(self, size=80):
+        if size not in Avatar.AVATAR_SIZES:
+            raise ValueError('avatar size %d is not valid' % size)
         if self.avatar:
+            folder = '{:04d}'.format(self.id)[:1]
             # TODO
-            return ('data:image/jpeg;base64,' +
-                    base64.b64encode(self.avatar.image).decode('utf-8'))
+            return ('http://joneame.net/cache/avatars/{}/{}-{}.jpg'
+                    .format(folder, self.id, size))
         return url_for('static', filename='images/no-avatar.png')
 
     @property
@@ -129,8 +132,15 @@ class User(MyUserMixin, db.Model):
         return self.id
 
     @property
+    def is_active(self):
+        return self.level != 'disabled'
+
+    @property
     def is_admin(self):
         return self.level in ('god', 'admin')
+
+    def __eq__(self, other):
+        return self.id == other.id
 
     def __repr__(self):
         return '<User %r, nick %r>' % (self.id, self.login)
@@ -138,6 +148,7 @@ class User(MyUserMixin, db.Model):
 
 class Avatar(db.Model):
     __tablename__ = 'avatars'
+    AVATAR_SIZES = (20, 25, 40, 80)
 
     id = db.Column('avatar_id', db.Integer, db.ForeignKey('users.user_id'),
                    primary_key=True)
@@ -150,3 +161,17 @@ class Avatar(db.Model):
     def __repr__(self):
         return '<Avatar %r, modified %r>' % (self.id,
                                              self.modified)
+
+
+class Friend(db.Model):
+    __tablename__ = 'friends'
+
+    kind = db.Column('friend_type',
+                     db.Enum('affiliate', 'manual', 'hide', 'affinity'))
+    from_ = db.Column('friend_from', db.Integer, primary_key=True)
+    to = db.Column('friend_to', db.Integer, primary_key=True)
+    value = db.Column('value', db.Integer)
+
+    def __repr__(self):
+        return ('<Friend kind %r, users %r->%r, value %r>' %
+                (self.kind, self.from_, self.to, self.value))

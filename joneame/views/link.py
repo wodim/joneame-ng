@@ -29,6 +29,7 @@ def get_link(link_uri):
     comments = pagination.items
 
     # count this visit
+    # TODO implement l_v stuff
     link.visit()
 
     return render_page('link/linksingle.html', link=link, comments=comments,

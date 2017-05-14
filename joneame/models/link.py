@@ -172,7 +172,7 @@ class Link(db.Model):
     @property
     def share_urls(self):
         twitter = ('https://twitter.com/intent/tweet/?' +
-                    urlencode({'url': self.permalink, 'text': self.title,
+                   urlencode({'url': self.permalink, 'text': self.title,
                               'via': 'joneame'}))
         facebook = ('https://www.facebook.com/share.php?' +
                     urlencode({'u': self.permalink}))

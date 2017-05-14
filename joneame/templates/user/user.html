@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% set full_width = true %}
-{% set title = user.login %}
+{% if user.name %}
+    {% set title = '%(login)s (%(name)s)'|format(login=user.login, name=user.name) %}
+{% else %}
+    {% set title = user.login %}
+{% endif %}
 {% block content %}
     <ul class="comments">
         {% for post in items %}
@@ -12,9 +16,21 @@
         <table>
             <tr>
                 <th>{{ _('user') }}:</th>
-                <td>{{ user.login }} (id: {{ user.id }})
-                    (level: {{ user.level }})</td>
+                <td>{{ user.login }}
+                    {% if current_user == user or current_user.is_admin %}
+                        (id: {{ user.id }}) (level: {{ user.level }})
+                    {% endif %}
+                    {% if current_user.is_admin and user.login != user.login_register %}
+                        <em>({{ user.login_register }})</em>
+                    {% endif %}
+                </td>
             </tr>
+            {% if user.name %}
+                <tr>
+                    <th>{{ _('name') }}:</th>
+                    <td>{{ user.name }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>{{ _('since') }}:</th>
                 <td>{{ user.date }}</td>
@@ -23,6 +39,22 @@
                 <th>{{ _('last seen') }}:</th>
                 <td>{{ user.last_seen_date }}</td>
             </tr>
+            {% if current_user == user or current_user.is_admin %}
+                <tr>
+                    <th>{{ _('email') }}:</th>
+                    <td>{{ user.email }}
+                        {% if current_user.is_admin and user.email != user.email_register %}
+                            <em>({{ user.email_register }})</em>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% if current_user.is_admin %}
+                <tr>
+                    <th>{{ _('last ip address') }}:</th>
+                    <td>{{ user.ip }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>{{ _('karma') }}:</th>
                 <td>{{ user.karma }}</td>

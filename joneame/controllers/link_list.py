@@ -14,11 +14,8 @@ from joneame.utils import arg_to_timedelta
 
 
 class LinkList(object):
-    query = None
-
-    # filter to be applied to the links table, separated for counting purposes,
-    # i.e., this way there's no need to apply joins or orders to what simply
-    # is a count()
+    join = None
+    order = None
     filter_ = None
 
     count = None
@@ -36,9 +33,7 @@ class LinkList(object):
     page_size = 0
 
     def __init__(self):
-        self.items = []
-
-        self.query = db.session.query(Link, Vote)
+        self.items = self.join = []
 
         buttons = [
             MenuButton(endpoint='Link:list_home', text=_('home'),),
@@ -63,9 +58,8 @@ class LinkList(object):
 
         self.count = db.session.query(Link).filter(self.filter_).count()
 
-        self.query = (
-            self.query
-            .filter(self.filter_)
+        query = (
+            db.session.query(Link, Vote)
             .options(db.joinedload(Link.user).joinedload(User.avatar))
             .options(db.joinedload(Link.category))
             .options(db.joinedload(Link.clickcounter))
@@ -75,17 +69,26 @@ class LinkList(object):
                                      vote_cond))
         )
 
+        if self.filter_ is not None:
+            query = query.filter(self.filter_)
+
+        if self.order is not None:
+            query = query.order_by(self.order)
+
+        for join in self.join:
+            query = query.outerjoin(join)
+
         # apply limit/offset to the query manually
         start = self.page_size * (self.page - 1)
         end = start + self.page_size
-        res = self.query.slice(start, end).all()
+        res = query.slice(start, end).all()
 
         # populate the current_vote field of every link if it exists
         for link, vote in res:
             link.current_vote = vote
             self.items.append(link)
 
-        self.pagination = Pagination(query=self.query, page=self.page,
+        self.pagination = Pagination(query=query, page=self.page,
                                      per_page=self.page_size, total=self.count,
                                      items=self.items)
 
@@ -111,8 +114,8 @@ class HomeLinkList(LinkList):
     def __init__(self):
         super().__init__()
 
-        self.filter_ = (Link.status == 'published')
-        self.query = self.query.order_by(Link.published_date.desc())
+        self.filter_ = Link.status == 'published'
+        self.order = Link.published_date.desc()
 
         self.sidebar = [sidebox_top_links, sidebox_categories,
                         sidebox_last_comments]
@@ -132,7 +135,7 @@ class QueuedLinkList(LinkList):
             )
             self.title = _('Queued')
 
-        self.query = self.query.order_by(Link.date.desc())
+        self.order = Link.date.desc()
 
         buttons = [
             MenuButton(text=_('all')),
@@ -161,7 +164,7 @@ class CategoryLinkList(LinkList):
             (Link.category_id == category_id)
         )
 
-        self.query = self.query.order_by(Link.published_date.desc())
+        self.order = Link.published_date.desc()
 
         self.title = _('Category: %(cat_name)s',
                        cat_name=category.name)
@@ -203,10 +206,7 @@ class TopVotesLinkList(TopLinkList):
     def __init__(self, range):
         super().__init__(range)
 
-        self.query = (
-            self.query
-            .order_by(Link.positives + Link.anonymous.desc())
-        )
+        self.order = Link.positives + Link.anonymous.desc()
 
         self.title = _('Top links')
 
@@ -215,11 +215,8 @@ class TopClicksLinkList(TopLinkList):
     def __init__(self, range):
         super().__init__(range)
 
-        self.query = (
-            self.query
-            .outerjoin(Link.clickcounter)
-            .order_by(ClickCounter.counter.desc())
-        )
+        self.join = [Link.clickcounter]
+        self.order = ClickCounter.counter.desc()
 
         self.title = _('Most clicked')
 
@@ -244,4 +241,5 @@ class UserLinkList(LinkList):
         super().__init__()
 
         self.filter_ = (Link.user_id == user_id)
-        self.query = self.query.order_by(Link.date.desc())
+
+        self.order = Link.date.desc()

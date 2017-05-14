@@ -2,11 +2,13 @@ from datetime import datetime
 
 from flask import abort, redirect, request, url_for
 from flask_babel import gettext as _
+from flask_login import current_user
 
 from joneame import app
 from joneame.database import db
 from joneame.models import Post, User
 from joneame.views.base import paginate, render_page
+from joneame.views.forms import PostForm
 from joneame.views.menus import Menu, MenuButton
 from joneame.utils import arg_to_timedelta, flatten
 
@@ -85,9 +87,11 @@ def get_post_list(user_login=None):
     submenu = Menu(buttons=post_buttons)
     toolbox = Menu(buttons=buttons)
 
+    form = PostForm() if current_user.is_authenticated else None
+
     return render_page('post/postlist.html', posts=posts, children=children,
                        pagination=pagination, user_login=user_login,
-                       submenu=submenu, toolbox=toolbox)
+                       submenu=submenu, toolbox=toolbox, form=form)
 
 
 @app.route('/notitas/_mejores', endpoint='Post:list_top')

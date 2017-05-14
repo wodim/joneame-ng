@@ -1,0 +1,18 @@
+{% block content %}
+    <div class="new-post">
+        <fieldset>
+            <legend>new post</legend>
+            {{ utils.render_avatar(current_user) }}
+            <form action="{{ url_for('Ajax:new_post') }}" method="post">
+                {% if form.hidden_errors is defined %}
+                    {% for error in form.hidden_errors %}
+                        <div class="errors">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+                {{ form.hidden_tag() }}
+                <textarea name="text"></textarea>
+                <input type="submit" name="submit" value="{{ _('submit') }}">
+            </form>
+        </fieldset>
+    </div>
+{% endblock %}
