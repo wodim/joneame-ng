@@ -89,13 +89,7 @@
         <div class="row">
             {{ field.label }}
             {{ field(**kwargs)|safe }}
-            {% if field.errors %}
-                <ul class="errors">
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            {{ render_field_errors(field) }}
         </div>
     {% endif %}
 {% endmacro %}
@@ -114,4 +108,14 @@
             {% endfor %}
         </form>
     </div>
+{% endmacro %}
+
+{% macro render_field_errors(field) %}
+    {% if field.errors %}
+        <ul class="errors">
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endmacro %}

@@ -34,7 +34,7 @@
                         {% else %}
                             <li><a href="{{ url_for('Session:login_form') }}">{{ _('log in') }}</a></li>
                         {% endif %}
-                        ({{ current_user.remote_ip }})
+                        <li>({{ current_user.remote_ip }})</li>
                     </ul>
                 </div>
             </div></div>

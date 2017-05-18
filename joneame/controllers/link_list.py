@@ -225,8 +225,10 @@ class RandomLinkList(LinkList):
     def __init__(self):
         super().__init__()
 
+        filter_ = ~(Link.status.in_(('abuse', 'autodiscard', 'duplicated')))
         link_ids = [x for y in (
                         db.session.query(Link.id)
+                        .filter(filter_)
                         .order_by(db.func.rand())
                         .limit(self.page_size).all()
                     ) for x in y]
