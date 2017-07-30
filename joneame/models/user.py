@@ -45,7 +45,7 @@ class User(MyUserMixin, db.Model):
         if self.avatar:
             folder = '{:04d}'.format(self.id)[:1]
             # TODO
-            return ('http://joneame.net/cache/avatars/{}/{}-{}.jpg'
+            return ('//joneame.net/cache/avatars/{}/{}-{}.jpg'
                     .format(folder, self.id, size))
         return url_for('static', filename='images/no-avatar.png')
 

@@ -6,8 +6,7 @@
 {% endmacro %}
 <article class="status_{{ link.status }}">
     {% if link.thumb_status == 'local' %}
-        {# TODO: remove hardcoded domain #}
-        <img class="thumb" src="http://joneame.net{{ link.thumb }}" alt="{{ _('thumbnail of this link') }}">
+        <img class="thumb" src="{{ link.thumb_url }}" alt="{{ _('thumbnail of this link') }}">
     {% endif %}
     <div class="shakebox">
         <a href="{{ url_for('Link:get', link_uri=link.uri) }}" class="square">

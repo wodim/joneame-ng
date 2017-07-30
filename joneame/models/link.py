@@ -179,6 +179,11 @@ class Link(db.Model):
 
         return {'twitter': twitter, 'facebook': facebook}
 
+    @property
+    def thumb_url(self):
+        # TODO: remove hardcoded url
+        return '//joneame.net{}'.format(self.thumb)
+
     # TODO: these two crash if there's no such row in the clicks/visits tables
     def click(self):
         self.clickcounter.counter += 1
