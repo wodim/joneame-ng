@@ -1,9 +1,9 @@
 [database]
-uri = mysql+pymysql://joneame:joneame@localhost/joneame
+uri = mysql+pymysql://joneame:joneame@localhost/joneame?charset=utf8mb4
 
 [misc]
 page_size = 12
-secret_key = lalala
+secret_key = bGFsYWxh
 
 [links]
 ; 2 months

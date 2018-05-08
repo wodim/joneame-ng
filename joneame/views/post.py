@@ -81,7 +81,7 @@ def get_post_list(user_login=None):
         abort(404)
 
     buttons = [
-        MenuButton(endpoint='Quote:random_redir', text=_('new post'),
+        MenuButton(endpoint='Post:list', text=_('new post'),
                    icon='plus-square'),
     ]
     submenu = Menu(buttons=post_buttons)

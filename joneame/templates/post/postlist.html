@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-    {% if form %}
+    {% if form is defined and form %}
         {% include 'post/newpost.html' %}
     {% endif %}
     {% if posts %}
